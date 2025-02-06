@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "Florie-app",
             targets: ["AppModule"],
-            bundleIdentifier: "com.example.Florie-app",
+            bundleIdentifier: "com.example.Florieapp",
             teamIdentifier: "8GKUH9M4ZV",
             displayVersion: "1.0",
             bundleVersion: "1",

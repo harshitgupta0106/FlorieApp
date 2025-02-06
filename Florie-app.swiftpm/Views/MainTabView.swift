@@ -29,6 +29,6 @@ struct MainTabView: View {
                     Label("Florie's Logs", systemImage: "chart.bar.doc.horizontal")
                 }
         }
-        .accentColor(.purple) // Match your app's theme
+//        .accentColor(Color(hue: 330, saturation: 89, brightness: 83)) // Match your app's theme
     }
 }
