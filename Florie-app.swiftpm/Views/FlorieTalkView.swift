@@ -13,22 +13,22 @@ struct FlorieTalkView: View {
     @State private var scrollProxy: ScrollViewProxy? = nil
     @FocusState private var isTextFieldFocused: Bool
     
-    var username = "Harshit"
+    var username = "Harshit" // To add dynamically
     
     var body: some View {
         VStack {
-//            Spacer()
+            Spacer()
             Image("Florie-logo")
 //                        .renderingMode(.original)
                 .resizable()
-                .frame(width: 150, height: 150)
+                .frame(width: 200, height: 200)
             if messages.isEmpty {
-                VStack(alignment: .leading, spacing: 10.0) {
+                VStack(alignment: .leading, spacing: 5.0) {
                     
                     Text("Hello \(username)")
-                        .font(.title)
-                    Text("How can I help?")
-                        .font(.title)
+                        .font(.largeTitle)
+                    Text("How can I help you?")
+                        .font(.largeTitle)
                 }
                 Spacer()
             } else {
@@ -122,7 +122,12 @@ struct FlorieTalkView: View {
         let botResponse = Message(text: getBotResponse(for: inputText), isUser: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             messages.removeLast()
-            messages.append(botResponse)
+            if messages.count == 1 {
+                messages.append(Message(text: "Florie here, \(botResponse.text)", isUser: false))
+            } else {
+                
+                messages.append(botResponse)
+            }
             generator.impactOccurred()
         }
                 
