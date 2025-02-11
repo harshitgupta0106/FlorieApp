@@ -17,7 +17,6 @@ struct SvaraaTalkView: View {
         VStack {
             Spacer()
             Image("App-Logo")
-//                        .renderingMode(.original)
                 .resizable()
                 .cornerRadius(25)
                 .frame(width: 200, height: 200)
@@ -39,21 +38,21 @@ struct SvaraaTalkView: View {
                                     Spacer()
                                     Text(message.text)
                                         .padding()
-                                        .background(Color.pink)
+                                        .background(Color.indigo)
                                         .foregroundColor(.white)
                                         .cornerRadius(10)
                                     VStack {
                                         Spacer()
                                         Image(systemName: "person.crop.circle.fill")
                                             .resizable()
-                                            .foregroundStyle(.pink)
+                                            .foregroundStyle(.indigo)
                                             .frame(width: 25, height: 25)
                                             .padding(.bottom, 6)
                                     }
                                 } else {
                                     VStack {
                                         Spacer()
-                                        Image("Svaraa-logo")
+                                        Image("App-Logo")
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .padding(.bottom, 6)
@@ -103,6 +102,7 @@ struct SvaraaTalkView: View {
         }
     }
     
+    
     private func sendMessage() {
         guard !inputText.isEmpty else { return }
         
@@ -119,7 +119,7 @@ struct SvaraaTalkView: View {
         
         messages.append(Message(text: "Svaraa is thinking.", isUser: false))
         let botResponse = Message(text: getBotResponse(for: inputText), isUser: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             messages.removeLast()
             if messages.count == 1 {
                 messages.append(Message(text: "Svaraa here, \(botResponse.text)", isUser: false))
