@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 struct Message: Identifiable, Equatable {
     let id = UUID()

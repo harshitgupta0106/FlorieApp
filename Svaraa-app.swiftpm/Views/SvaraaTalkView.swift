@@ -1,10 +1,10 @@
 //
 //  SwiftUIView.swift
-//  Florie-app
+//  Svaraa-app
 //
 //  Created by Harshit Gupta on 06/02/25.
 //
-// FlorieTalkView.swift
+// SvaraaTalkView.swift
 import SwiftUI
 
 struct SvaraaTalkView: View {
@@ -13,19 +13,18 @@ struct SvaraaTalkView: View {
     @State private var scrollProxy: ScrollViewProxy? = nil
     @FocusState private var isTextFieldFocused: Bool
     
-    var username = "Harshit" // To add dynamically
-    
     var body: some View {
         VStack {
             Spacer()
-            Image("Florie-logo")
+            Image("App-Logo")
 //                        .renderingMode(.original)
                 .resizable()
+                .cornerRadius(25)
                 .frame(width: 200, height: 200)
             if messages.isEmpty {
                 VStack(alignment: .leading, spacing: 5.0) {
                     
-                    Text("Hello \(username)")
+                    Text("Hello, \(DataController.shared.getUserName())")
                         .font(.largeTitle)
                     Text("How can I help you?")
                         .font(.largeTitle)
@@ -54,7 +53,7 @@ struct SvaraaTalkView: View {
                                 } else {
                                     VStack {
                                         Spacer()
-                                        Image("Florie-logo")
+                                        Image("Svaraa-logo")
                                             .resizable()
                                             .frame(width: 25, height: 25)
                                             .padding(.bottom, 6)
@@ -83,7 +82,7 @@ struct SvaraaTalkView: View {
             }
             
             HStack {
-                TextField("Let's talk with Florie", text: $inputText)
+                TextField("Let's talk with Svaraa", text: $inputText)
                     .textFieldStyle(.roundedBorder)
                     .focused($isTextFieldFocused)
                     .onSubmit {
@@ -118,12 +117,12 @@ struct SvaraaTalkView: View {
         }
         messages.append(userMessage)
         
-        messages.append(Message(text: "Florie is thinking.", isUser: false))
+        messages.append(Message(text: "Svaraa is thinking.", isUser: false))
         let botResponse = Message(text: getBotResponse(for: inputText), isUser: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             messages.removeLast()
             if messages.count == 1 {
-                messages.append(Message(text: "Florie here, \(botResponse.text)", isUser: false))
+                messages.append(Message(text: "Svaraa here, \(botResponse.text)", isUser: false))
             } else {
                 
                 messages.append(botResponse)
