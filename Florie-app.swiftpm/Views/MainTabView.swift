@@ -11,22 +11,22 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            // Tab 1: Florie's Life (Game)
-            FlorieLifeView()
+            // Tab 1: Svaraa's Life (Game)
+            SvaraaLifeView()
                 .tabItem {
-                    Label("Florie's Life", systemImage: "dpad.fill")
+                    Label("Svaraa's Life", systemImage: "dpad.fill")
                 }
             
-            // Tab 2: Florie's Talk (AI Chatbot)
-            FlorieTalkView()
+            // Tab 2: Svaraa's Talk (AI Chatbot)
+            SvaraaTalkView()
                 .tabItem {
-                    Label("Florie's Talk", systemImage: "ellipsis.message.fill")
+                    Label("Svaraa's Talk", systemImage: "ellipsis.message.fill")
                 }
             
-            // Tab 3: Florie's Logs (Health Data)
-            FlorieLogsView()
+            // Tab 3: Svaraa's Logs (Health Data)
+            SvaraaLogsView()
                 .tabItem {
-                    Label("Florie's Logs", systemImage: "chart.bar.doc.horizontal")
+                    Label("Svaraa's Logs", systemImage: "chart.bar.doc.horizontal")
                 }
         }
 //        .accentColor(Color(hue: 330, saturation: 89, brightness: 83)) // Match your app's theme

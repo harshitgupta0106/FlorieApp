@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Florie-app",
+    name: "Svaraa",
     platforms: [
         .iOS("16.0")
     ],
     products: [
         .iOSApplication(
-            name: "Florie-app",
+            name: "Svaraa",
             targets: ["AppModule"],
             bundleIdentifier: "com.example.Florieapp",
             teamIdentifier: "8GKUH9M4ZV",

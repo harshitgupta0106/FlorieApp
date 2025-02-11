@@ -7,7 +7,7 @@
 // FlorieTalkView.swift
 import SwiftUI
 
-struct FlorieTalkView: View {
+struct SvaraaTalkView: View {
     @State private var messages: [Message] = []
     @State private var inputText: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil

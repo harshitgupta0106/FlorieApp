@@ -9,12 +9,12 @@
 import SpriteKit
 import SwiftUI
 
-struct FlorieLifeView: View {
+struct SvaraaLifeView: View {
     var body: some View {
-        Text("FlorieLifeView")
+        Text("SvaraaLifeView")
     }
 }
 
 #Preview {
-    FlorieLifeView()
+    SvaraaLifeView()
 }
