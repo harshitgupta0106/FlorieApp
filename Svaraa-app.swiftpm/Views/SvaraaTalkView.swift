@@ -18,56 +18,20 @@ struct SvaraaTalkView: View {
             Spacer()
             Image("App-Logo")
                 .resizable()
+                .scaledToFit()
                 .cornerRadius(25)
-                .frame(width: 200, height: 200)
+                .frame(width: 100, height: 100)
             if messages.isEmpty {
-                VStack(alignment: .leading, spacing: 5.0) {
-                    
-                    Text("Hello, \(DataController.shared.getUserName())")
-                        .font(.largeTitle)
-                    Text("How can I help you?")
-                        .font(.largeTitle)
-                }
+                InitialView()
                 Spacer()
             } else {
                 ScrollViewReader { proxy in
                     List {
                         ForEach(messages) { message in
-                            HStack {
-                                if message.isUser {
-                                    Spacer()
-                                    Text(message.text)
-                                        .padding()
-                                        .background(Color.indigo)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
-                                    VStack {
-                                        Spacer()
-                                        Image(systemName: "person.crop.circle.fill")
-                                            .resizable()
-                                            .foregroundStyle(.indigo)
-                                            .frame(width: 25, height: 25)
-                                            .padding(.bottom, 6)
-                                    }
-                                } else {
-                                    VStack {
-                                        Spacer()
-                                        Image("App-Logo")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .padding(.bottom, 6)
-                                            .padding(.leading, -10)
-                                    }
-                                    Text(message.text)
-                                        .padding()
-                                        .background(Color.gray.opacity(0.2))
-                                        .cornerRadius(10)
-                                    Spacer()
-                                }
-                            }
-                            .id(message.id)  // Required for ScrollViewReader
+                            MessagesView(message: message)
                         }
                     }
+                    .listStyle(.plain)
                     .onAppear {
                         scrollProxy = proxy
                     }
@@ -150,3 +114,71 @@ struct SvaraaTalkView: View {
         }
 }
 
+
+struct InitialView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5.0) {
+            
+            Text("Hello, \(DataController.shared.getUserName())")
+                .font(.title)
+            
+            
+            Text("How can I help you?")
+                .font(.title)
+        }
+        .padding(.top, 20.0)
+    }
+}
+
+struct UserImageAsideMessages: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Image(systemName: "person.crop.circle.fill")
+                .resizable()
+                .foregroundStyle(.indigo)
+                .frame(width: 25, height: 25)
+                .padding(.bottom, 6)
+        }
+    }
+}
+
+struct SvaraaImageAsideMessages: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Image("App-Logo")
+                .resizable()
+                .frame(width: 25, height: 25)
+                .cornerRadius(12.5)
+                .padding(.bottom, 6)
+                .padding(.leading, -10)
+        }
+    }
+}
+
+struct MessagesView: View {
+    var message: Message
+    var body: some View {
+        HStack {
+            if message.isUser {
+                Spacer()
+                Text(message.text)
+                    .padding()
+                    .background(Color.indigo)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                UserImageAsideMessages()
+            } else {
+                SvaraaImageAsideMessages()
+                Text(message.text)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                Spacer()
+            }
+        }
+        .listRowSeparator(.hidden)
+        .id(message.id)
+    }
+}
