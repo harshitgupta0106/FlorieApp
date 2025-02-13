@@ -31,6 +31,7 @@ struct SvaraaTalkView: View {
                             MessagesView(message: message)
                         }
                     }
+                    .animation(.smooth, value: true)
                     .listStyle(.plain)
                     .onAppear {
                         scrollProxy = proxy
@@ -83,7 +84,7 @@ struct SvaraaTalkView: View {
         
         messages.append(Message(text: "Svaraa is thinking.", isUser: false))
         let botResponse = Message(text: getBotResponse(for: inputText), isUser: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double.random(in: 0.5...2)) {
             messages.removeLast()
             if messages.count == 1 {
                 messages.append(Message(text: "Svaraa here, \(botResponse.text)", isUser: false))
@@ -120,11 +121,13 @@ struct InitialView: View {
         VStack(alignment: .leading, spacing: 5.0) {
             
             Text("Hello, \(DataController.shared.getUserName())")
-                .font(.title)
+                .font(.largeTitle)
+                .foregroundColor(Color.yellow)
+                
             
             
             Text("How can I help you?")
-                .font(.title)
+                .font(.body)
         }
         .padding(.top, 20.0)
     }
@@ -181,4 +184,10 @@ struct MessagesView: View {
         .listRowSeparator(.hidden)
         .id(message.id)
     }
+}
+
+//To preview, this code will be written
+
+#Preview {
+    SvaraaTalkView()
 }
