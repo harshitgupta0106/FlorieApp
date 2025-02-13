@@ -11,7 +11,7 @@ import SwiftUI
 
 struct SvaraaLifeView: View {
     var body: some View {
-        Text("SvaraaLifeView")
+        GameSceneView()
     }
 }
 

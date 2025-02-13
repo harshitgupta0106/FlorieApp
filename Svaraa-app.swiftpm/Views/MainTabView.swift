@@ -11,13 +11,13 @@ import SwiftUI
 struct MainTabView: View {
     var body: some View {
         TabView {
-            SvaraaLifeView()
-                .tabItem {
-                    Label("Svaraa's Life", systemImage: "dpad.fill")
-                }
             SvaraaTalkView()
                 .tabItem {
                     Label("Svaraa's Talk", systemImage: "ellipsis.message.fill")
+                }
+            SvaraaLifeView()
+                .tabItem {
+                    Label("Svaraa's Life", systemImage: "dpad.fill")
                 }
             SvaraaLogsView()
                 .tabItem {

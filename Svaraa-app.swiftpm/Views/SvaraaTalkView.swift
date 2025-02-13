@@ -9,61 +9,71 @@ import SwiftUI
 
 struct SvaraaTalkView: View {
     @State private var messages: [Message] = []
+    @State var isConversing: Bool = false
     @State private var inputText: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
-        VStack {
-            Spacer()
-            Image("App-Logo")
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(25)
-                .frame(width: 100, height: 100)
-            if messages.isEmpty {
-                InitialView()
+        ZStack {
+            GradientChatBot(isConversing: $isConversing)
+            VStack {
                 Spacer()
-            } else {
-                ScrollViewReader { proxy in
-                    List {
-                        ForEach(messages) { message in
-                            MessagesView(message: message)
+                Image("App-Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(25)
+                    .frame(width: 100, height: 100)
+                    .shadow(color: .purple, radius: 75, x: 3, y: 3)
+                if messages.isEmpty {
+                    InitialView()
+                    Spacer()
+                } else {
+                    ScrollViewReader { proxy in
+                        List {
+                            ForEach(messages) { message in
+                                MessagesView(message: message)
+                                    .listRowBackground(Color.clear)
+                            }
                         }
-                    }
-                    .animation(.smooth, value: true)
-                    .listStyle(.plain)
-                    .onAppear {
-                        scrollProxy = proxy
-                    }
-                    .scrollDismissesKeyboard(.interactively)
-                    .onChange(of: messages) { _ in
-                        withAnimation {
-                            proxy.scrollTo(messages.last?.id, anchor: .bottom)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                        .animation(.smooth, value: true)
+                        .listStyle(.plain)
+                        .onAppear {
+                            scrollProxy = proxy
+                        }
+                        .scrollDismissesKeyboard(.interactively)
+                        .onChange(of: messages) { _ in
+                            withAnimation {
+                                proxy.scrollTo(messages.last?.id, anchor: .bottom)
+                            }
                         }
                     }
                 }
-            }
-            
-            HStack {
-                TextField("Let's talk with Svaraa", text: $inputText)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($isTextFieldFocused)
-                    .onSubmit {
+                
+                HStack {
+                    TextField("Let's talk with Svaraa", text: $inputText)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($isTextFieldFocused)
+                        .onSubmit {
+                            if !inputText.isEmpty {
+                                sendMessage()
+                                isConversing = true
+                            }
+                        }
+                    Button("Send") {
                         if !inputText.isEmpty {
                             sendMessage()
+                            isConversing = true
                         }
                     }
-                Button("Send") {
-                    if !inputText.isEmpty {
-                        sendMessage()
-                    }
                 }
+                .padding()
             }
-            .padding()
-        }
-        .onTapGesture {
-            isTextFieldFocused = false
+            .onTapGesture {
+                isTextFieldFocused = false
+            }
         }
     }
     
@@ -122,12 +132,10 @@ struct InitialView: View {
             
             Text("Hello, \(DataController.shared.getUserName())")
                 .font(.largeTitle)
-                .foregroundColor(Color.yellow)
-                
-            
-            
+                .foregroundColor(Color.black)
             Text("How can I help you?")
                 .font(.body)
+                .fontWeight(.semibold)
         }
         .padding(.top, 20.0)
     }
@@ -190,4 +198,22 @@ struct MessagesView: View {
 
 #Preview {
     SvaraaTalkView()
+}
+
+struct GradientChatBot: View {
+    @Binding var isConversing: Bool
+    var body: some View {
+        var color = !isConversing ? Color.purple : Color.white
+        LinearGradient(
+            gradient: Gradient(colors: [
+                color.opacity(0.5), // Fully black at the bottom
+                color.opacity(0.1),
+                color.opacity(0)  // Fully transparent at the top
+            ]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .ignoresSafeArea()
+        .animation(.easeInOut(duration: 2), value: isConversing)
+    }
 }
