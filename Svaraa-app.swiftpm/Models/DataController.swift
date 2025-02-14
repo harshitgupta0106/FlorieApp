@@ -60,15 +60,55 @@ class DataController {
                 ),
                 finalScene: StoryScene(
                     descriptions: [
-                            "Svaraa hesitates, but then she takes a deep breath and calls her mom.",
-                            "\"Mom, I think I started my period.\"",
-                            "Her mother smiles gently, \"That’s wonderful, Svaraa. This is a sign that you’re growing up.\"",
-                            "She helps Svaraa change into fresh clothes and hands her a pad. \"This will keep you comfortable. Let’s talk about how to use it.\""
+                        "Svaraa hesitates, then calls her mom. \"Mom, I think I started my period.\"\n\nHer mom smiles warmly. \"That's wonderful! You’re growing up.\"\n\nShe gives Svaraa a pad. \"This will keep you comfortable. Let’s go over how to use it.\""
                     ],
                     backgroundImageName: "",
                     svaraaImageName: "Svaraa_Satisfied"
                 )
+            ),
+            
+            Story(
+                title: "Understanding Periods & Breaking Taboos",
+                storyScenes: [
+                    StoryScene(
+                        descriptions: [
+                            "Later that night, Svaraa sits on her bed, thinking about everything. She has so many questions. She texts Anaya:",
+                            "Svaraa: \"Hey, I got my period today 😳\"",
+                            "Anaya: \"Omg, really? I haven’t gotten mine yet. Does it hurt?\"",
+                            "Svaraa: \"Not really, but I feel weird. Also, why don’t people talk about this more?\""
+                        ],
+                        backgroundImageName: "",
+                        svaraaImageName: "Svaraa_Casual"
+                    ),
+                    StoryScene(
+                        descriptions: [
+                            "Her mother knocks on the door. \"Hey, Svaraa. Want to ask me anything?\""
+                        ],
+                        backgroundImageName: "",
+                        svaraaImageName: "Svaraa_Shocked"
+                    )
+                ],
+                mcqScene: MCQScene(
+                    question: "What should Svaraa ask?",
+                    options: [
+                        "Can I go swimming during my period?",
+                        "Will everyone know I’m on my period?",
+                        "Why do some people think periods are ‘dirty’?",
+                        "All of the above."
+                    ],
+                    correctOptionIndex: 3,
+                    backgroundImageName: "",
+                    svaraaImageName: "Svaraa_Curious"
+                ),
+                finalScene: StoryScene(
+                    descriptions: [
+                        "There are so many questions worth asking!\n\nThere are a lot of myths about periods.\n\nSome people believe girls shouldn’t touch pickles or enter temples during their cycle—but those are just taboos, not science. \n\nYou can do everything you normally do, just with a little extra care."
+                    ],
+                    backgroundImageName: "",
+                    svaraaImageName: "Svaraa_Smiling"
+                )
             )
+
         ]
     }
     

@@ -22,7 +22,7 @@ struct StorySceneView: View {
             }
             
             GradientView()
-            VStack(alignment: .center, spacing: 100) {
+            VStack(alignment: .center, spacing: 30) {
                 Spacer()
                 Spacer()
                 Spacer()
@@ -37,7 +37,6 @@ struct StorySceneView: View {
                 
                 Text("Tap to continue")
                     .foregroundStyle(.white)
-//                    .shadow(radius: 70)
             }
             .padding(.bottom, 20.0)
             

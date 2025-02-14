@@ -88,12 +88,15 @@ struct SvaraaTalkView: View {
         generator.impactOccurred()
 
         let userMessage = Message(text: inputText, isUser: true)
+        messages.append(userMessage)
         if inputText.lowercased().contains("bye") {
-            messages.removeAll()
-            inputText = ""
+            messages.append(Message(text: "B-bye, \(DataController.shared.getUserName())!", isUser: false))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                messages.removeAll()
+                inputText = ""
+            }
             return false
         }
-        messages.append(userMessage)
         
         messages.append(Message(text: "Svaraa is thinking.", isUser: false))
         let botResponse = Message(text: getBotResponse(for: inputText), isUser: false)
