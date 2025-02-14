@@ -24,9 +24,13 @@ struct SvaraaTalkView: View {
                     .scaledToFit()
                     .cornerRadius(25)
                     .frame(width: 100, height: 100)
-                    .shadow(color: .purple, radius: 75, x: 3, y: 3)
+                
+                    .animation(.bouncy(duration: 4), value: isConversing)
+                    .if(!isConversing) { view in
+                            view.shadow(color: Color.purple, radius: 75, x: 3, y: 3)
+                    }
                 if messages.isEmpty {
-                    InitialView()
+                    InitialView(isConversing: $isConversing)
                     Spacer()
                 } else {
                     ScrollViewReader { proxy in
@@ -58,37 +62,36 @@ struct SvaraaTalkView: View {
                         .focused($isTextFieldFocused)
                         .onSubmit {
                             if !inputText.isEmpty {
-                                sendMessage()
-                                isConversing = true
+                                //sending message & handling animation
+                                isConversing = sendMessage()
                             }
                         }
                     Button("Send") {
                         if !inputText.isEmpty {
-                            sendMessage()
-                            isConversing = true
+                            isConversing = sendMessage()
                         }
                     }
                 }
                 .padding()
             }
-            .onTapGesture {
-                isTextFieldFocused = false
-            }
+        }
+        .onTapGesture {
+            isTextFieldFocused = false
         }
     }
     
     
-    private func sendMessage() {
-        guard !inputText.isEmpty else { return }
+    private func sendMessage() -> Bool{
+        guard !inputText.isEmpty else { return false }
         
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
 
         let userMessage = Message(text: inputText, isUser: true)
-        if inputText == "/clear" {
+        if inputText.lowercased().contains("bye") {
             messages.removeAll()
             inputText = ""
-            return
+            return false
         }
         messages.append(userMessage)
         
@@ -107,6 +110,7 @@ struct SvaraaTalkView: View {
                 
         inputText = ""
         isTextFieldFocused = false
+        return true
     }
     
     
@@ -127,17 +131,22 @@ struct SvaraaTalkView: View {
 
 
 struct InitialView: View {
+    @Binding var isConversing: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 5.0) {
             
             Text("Hello, \(DataController.shared.getUserName())")
                 .font(.largeTitle)
-                .foregroundColor(Color.black)
+                .foregroundColor(Color.primary)
             Text("How can I help you?")
                 .font(.body)
                 .fontWeight(.semibold)
+                .foregroundStyle(.purple)
         }
         .padding(.top, 20.0)
+        .onAppear {
+            isConversing = false
+        }
     }
 }
 
@@ -194,26 +203,25 @@ struct MessagesView: View {
     }
 }
 
-//To preview, this code will be written
-
-#Preview {
-    SvaraaTalkView()
-}
-
 struct GradientChatBot: View {
     @Binding var isConversing: Bool
     var body: some View {
-        var color = !isConversing ? Color.purple : Color.white
+        let color = !isConversing ? Color.purple : Color.white
         LinearGradient(
             gradient: Gradient(colors: [
-                color.opacity(0.5), // Fully black at the bottom
+                color.opacity(0.5),
                 color.opacity(0.1),
-                color.opacity(0)  // Fully transparent at the top
+                color.opacity(0)
             ]),
             startPoint: .top,
             endPoint: .bottom
         )
         .ignoresSafeArea()
-        .animation(.easeInOut(duration: 2), value: isConversing)
+        .animation(.easeInOut(duration: 1), value: isConversing)
     }
 }
+
+#Preview {
+    SvaraaTalkView()
+}
+
