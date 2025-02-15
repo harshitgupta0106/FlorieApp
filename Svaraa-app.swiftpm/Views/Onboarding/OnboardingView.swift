@@ -6,19 +6,54 @@
 //
 
 import SwiftUI
-
 struct OnboardingView: View {
+    @State private var inputText: String = ""
     var body: some View {
-        ZStack {
-            
-        }
-    }
-}
+        NavigationStack {
+            ZStack {
+                OnboardingGradientView()
+                VStack/*(spacing: 60)*/ {
+                    Spacer()
+                        VStack(spacing: 5) {
+                            Text("Enter your name")
+                                .font(.largeTitle)
+                                .fontWeight(.heavy)
+                            Image("Heart_3D")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 200)
+                        }
+                    Spacer()
+                    TextField("Enter your beautiful name", text: $inputText)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(15)
+                        .foregroundColor(.primary)
+                        .font(.title2)
+                        .padding([.leading, .trailing], 50)
+                        .textFieldStyle(PlainTextFieldStyle()) // Removes default border
+                        .onSubmit {
+                            DataController.shared.setUserName(name: inputText)
+                        }
 
-struct NameFormView: View {
-    var body: some View {
-        ZStack {
-            
+                    Spacer()
+                        VStack(spacing: 10) {
+                                NavigationLink(destination: AgeFormView().onAppear {
+                                    DataController.shared.setUserName(name: inputText)
+                                }) {
+                                    Text("Continue")
+                                }
+                                .disabled(inputText.isEmpty)
+                                .font(.title2)
+                                .buttonStyle(.borderedProminent)
+                                .padding()
+                                NavigationLink(destination: MainTabView()) {
+                                    Text("Skip")
+                                }
+                    }
+                    Spacer()
+                }
+            }
         }
     }
 }
@@ -26,49 +61,53 @@ struct NameFormView: View {
 struct AgeFormView: View {
     @State var age: Int = 10
     var body: some View {
-        ZStack {
-            OnboardingGradientView()
-            VStack(spacing: 10) {
-                Spacer()
-                Text("Enter your age")
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
-                Spacer()
-                HStack {
-                    Button("", systemImage: "minus.circle.fill") {
-                        if age > 1 {
-                            age -= 1
-                        }
-                    }
-                    .font(.system(size: 50))
-//                    .imageScale(.small)
-                    .background(Color.clear)
+        NavigationStack {
+            ZStack {
+                OnboardingGradientView()
+                VStack(spacing: 10) {
                     Spacer()
-                    Text("\(age)")
+                    Text("Enter your age")
                         .font(.largeTitle)
-                        .padding(10)
+                        .fontWeight(.heavy)
                     Spacer()
-                    Button("", systemImage: "plus.circle.fill") {
-                        if age < 100 {
-                            age += 1
+                    HStack {
+                        Button("", systemImage: "minus.circle.fill") {
+                            if age > 1 {
+                                age -= 1
+                            }
                         }
+                        .font(.system(size: 50))
+                        //                    .imageScale(.small)
+                        .background(Color.clear)
+                        Spacer()
+                        Text("\(age)")
+                            .font(.largeTitle)
+                            .padding(10)
+                        Spacer()
+                        Button("", systemImage: "plus.circle.fill") {
+                            if age < 100 {
+                                age += 1
+                            }
+                        }
+                        .font(.system(size: 50))
+                        .background(Color.clear)
                     }
-                    .font(.system(size: 50))
-                    .background(Color.clear)
+                    .padding(70)
+                    NavigationLink(destination: MainTabView().onAppear {
+                        DataController.shared.setUserAge(age: age)
+                        print(DataController.shared.getUserAge())
+                    }) {
+                        Text("Continue")
+                    }
+                    .font(.title2)
+                    .buttonStyle(.borderedProminent)
+                    .padding()
+                    Spacer()
+                    Spacer()
                 }
-                .padding(70)
-                Button("Continue") {
-                    DataController.shared.setUserAge(age: age)
-//                    NavigationLink(<#T##titleKey: LocalizedStringKey##LocalizedStringKey#>, destination: <#T##() -> View#>)
-                }
-                .font(.title2)
-                .buttonStyle(.borderedProminent)
-                .padding()
-                Spacer()
-                Spacer()
             }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
     }
 }
 
@@ -90,5 +129,5 @@ struct OnboardingGradientView: View {
 }
 
 #Preview {
-    AgeFormView()
+    OnboardingView()
 }
