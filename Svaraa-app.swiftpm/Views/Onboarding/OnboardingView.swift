@@ -8,20 +8,25 @@
 import SwiftUI
 struct OnboardingView: View {
     @State private var inputText: String = ""
+    @FocusState private var isTextFieldFocused: Bool
     var body: some View {
+        let generator = UIImpactFeedbackGenerator(style: .light)
         NavigationStack {
             ZStack {
                 OnboardingGradientView()
-                VStack/*(spacing: 60)*/ {
+                VStack(spacing: 30) {
                     Spacer()
-                        VStack(spacing: 5) {
+                        VStack(spacing: 20) {
                             Text("Enter your name")
                                 .font(.largeTitle)
                                 .fontWeight(.heavy)
-                            Image("Heart_3D")
+                                .foregroundStyle(.white)
+                                .shadow(color: .accentColor, radius: 25)
+                            Image("Svaraa_Onboarding")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 200)
+                                .frame(width: 300)
+                                .shadow(color: .purple, radius: 170)
                         }
                     Spacer()
                     TextField("Enter your beautiful name", text: $inputText)
@@ -31,28 +36,38 @@ struct OnboardingView: View {
                         .foregroundColor(.primary)
                         .font(.title2)
                         .padding([.leading, .trailing], 50)
-                        .textFieldStyle(PlainTextFieldStyle()) // Removes default border
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .focused($isTextFieldFocused)
                         .onSubmit {
                             DataController.shared.setUserName(name: inputText)
                         }
-
-                    Spacer()
                         VStack(spacing: 10) {
                                 NavigationLink(destination: AgeFormView().onAppear {
                                     DataController.shared.setUserName(name: inputText)
+                                    generator.impactOccurred()
                                 }) {
                                     Text("Continue")
+                                        .frame(maxWidth: .infinity)
+                                        .frame(maxHeight: 12)
+                                        .padding()
+                                        .background(inputText.isEmpty ? Color.gray : Color.accentColor)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(15)
                                 }
-                                .disabled(inputText.isEmpty)
                                 .font(.title2)
-                                .buttonStyle(.borderedProminent)
-                                .padding()
-                                NavigationLink(destination: MainTabView()) {
+                                .padding(.horizontal, 50)
+                                .disabled(inputText.isEmpty)
+                            NavigationLink(destination: MainTabView().onAppear {
+                                generator.impactOccurred()
+                            }) {
                                     Text("Skip")
                                 }
                     }
                     Spacer()
                 }
+            }
+            .onTapGesture {
+                isTextFieldFocused = false
             }
         }
     }
@@ -60,6 +75,7 @@ struct OnboardingView: View {
 
 struct AgeFormView: View {
     @State var age: Int = 10
+    let generator = UIImpactFeedbackGenerator(style: .light)
     var body: some View {
         NavigationStack {
             ZStack {
@@ -69,15 +85,17 @@ struct AgeFormView: View {
                     Text("Enter your age")
                         .font(.largeTitle)
                         .fontWeight(.heavy)
+                        .foregroundStyle(.white)
+                        .shadow(color: .accentColor, radius: 35)
                     Spacer()
                     HStack {
                         Button("", systemImage: "minus.circle.fill") {
+                            generator.impactOccurred()
                             if age > 1 {
                                 age -= 1
                             }
                         }
                         .font(.system(size: 50))
-                        //                    .imageScale(.small)
                         .background(Color.clear)
                         Spacer()
                         Text("\(age)")
@@ -85,6 +103,7 @@ struct AgeFormView: View {
                             .padding(10)
                         Spacer()
                         Button("", systemImage: "plus.circle.fill") {
+                            generator.impactOccurred()
                             if age < 100 {
                                 age += 1
                             }
@@ -94,19 +113,24 @@ struct AgeFormView: View {
                     }
                     .padding(70)
                     NavigationLink(destination: MainTabView().onAppear {
+                        generator.impactOccurred()
                         DataController.shared.setUserAge(age: age)
-                        print(DataController.shared.getUserAge())
                     }) {
                         Text("Continue")
+                            .frame(maxWidth: .infinity)
+                            .frame(maxHeight: 12)
+                            .padding()
+                            .background(Color.accentColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(15)
                     }
                     .font(.title2)
-                    .buttonStyle(.borderedProminent)
-                    .padding()
+                    .padding(.horizontal, 50)
+
                     Spacer()
                     Spacer()
                 }
             }
-            .ignoresSafeArea()
         }
     }
 }
