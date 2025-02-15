@@ -90,10 +90,12 @@ struct SvaraaTalkView: View {
         let userMessage = Message(text: inputText, isUser: true)
         messages.append(userMessage)
         if inputText.lowercased().contains("bye") {
+            inputText = ""
+            isTextFieldFocused = false
             messages.append(Message(text: "B-bye, \(DataController.shared.getUserName())!", isUser: false))
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 messages.removeAll()
-                inputText = ""
+                generator.impactOccurred()
             }
             return false
         }
@@ -209,7 +211,7 @@ struct MessagesView: View {
 struct GradientChatBot: View {
     @Binding var isConversing: Bool
     var body: some View {
-        let color = !isConversing ? Color.purple : Color.white
+        let color = !isConversing ? Color.purple : Color.clear
         LinearGradient(
             gradient: Gradient(colors: [
                 color.opacity(0.5),

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MainTabView: View {
     var body: some View {
+//        OnbaordingView()
         TabView {
             SvaraaTalkView()
                 .tabItem {
@@ -24,5 +25,6 @@ struct MainTabView: View {
                     Label("Svaraa's Logs", systemImage: "chart.bar.doc.horizontal")
                 }
         }
+        .navigationBarBackButtonHidden()
     }
 }

@@ -11,7 +11,11 @@ import Foundation
 //Creating Singleton class
 @MainActor
 class DataController {
-    private var user: User?
+    private var user: User =
+    User(
+        name: UserDefaults.standard.string(forKey: "userName") ?? "User",
+        age: UserDefaults.standard.integer(forKey: "userAge") == 0 ? Int.max : UserDefaults.standard.integer(forKey: "userAge")
+    )
     private var stories: [Story] = []
     static let shared = DataController()
     
@@ -156,18 +160,20 @@ class DataController {
     
     //MARK: - User functions
     func getUserName() -> String {
-        if let userName = user?.name {
-            return userName
-        } else {
-            return "User"
-        }
+        user.name
+    }
+    
+    func setUserName(name: String) {
+        user.name = name
+        UserDefaults.standard.set(name, forKey: "userName")
     }
     
     func getUserAge() -> Int {
-        if let userAge = user?.age {
-            return userAge
-        } else {
-            return Int.max //considering all age's diseases
-        }
+        user.age
+    }
+    
+    func setUserAge(age: Int) {
+        user.age = age
+        UserDefaults.standard.set(age, forKey: "userAge")
     }
 }

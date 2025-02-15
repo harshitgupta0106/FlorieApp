@@ -37,16 +37,16 @@ struct GradientView: View {
         ZStack {
             LinearGradient(
                 gradient: Gradient(colors: [
-                    Color.purple.opacity(0.8), // Fully black at the bottom
+                    Color.purple.opacity(0.8),
                     Color.purple.opacity(0.7),
-                    Color.purple.opacity(0.3),  // Fully transparent at the top
-                    Color.purple.opacity(0.1),  // Fully transparent at the top
-                    Color.purple.opacity(0),  // Fully transparent at the top
+                    Color.purple.opacity(0.3),
+                    Color.purple.opacity(0.1),
+                    Color.purple.opacity(0),
                 ]),
                 startPoint: .bottom,
                 endPoint: .top
-            ) // Adjust height as needed
-        } // Extend gradient to edges if necessary
+            ) 
+        }
         
     }
 }

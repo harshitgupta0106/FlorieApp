@@ -55,7 +55,7 @@ struct MCQSceneView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 40) // Push options closer to the bottom
             }
-            .frame(maxHeight: .infinity, alignment: .bottom) // Ensures bottom positioning
+            .frame(maxHeight: .infinity, alignment: .bottom) 
         }
         .onChange(of: selectedOptionIndex) { newValue in
             if newValue != nil {
