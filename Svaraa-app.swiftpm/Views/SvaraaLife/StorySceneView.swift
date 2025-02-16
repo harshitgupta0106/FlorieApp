@@ -18,6 +18,7 @@ struct StorySceneView: View {
                 Image(svaraaImage ?? "Svaraa_VeryHappy")
                     .resizable()
                     .scaledToFit()
+                    .animation(.smooth, value: true)
                 Spacer()
             }
             

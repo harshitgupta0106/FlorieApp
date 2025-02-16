@@ -10,7 +10,7 @@ import AppleProductTypes
 let package = Package(
     name: "Svaraa",
     platforms: [
-        .iOS("16.0")
+        .iOS("17.0")
     ],
     products: [
         .iOSApplication(
@@ -40,6 +40,5 @@ let package = Package(
             name: "AppModule",
             path: "."
         )
-    ],
-    swiftLanguageVersions: [.version("6")]
+    ]
 )

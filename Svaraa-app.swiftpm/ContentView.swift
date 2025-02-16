@@ -2,11 +2,13 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-//        if DataController.shared.getUserAge() < Int.max {
-//            MainTabView()
-//        } else {
-//            OnboardingView()
-//        }
-        OnboardingView()
+//        Uncomment the code to 
+        
+        if DataController.shared.getUserAge() < Int.max {
+            MainTabView()
+        } else {
+            OnboardingView()
+        }
+//        OnboardingView()
     }
 }

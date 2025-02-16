@@ -15,21 +15,31 @@ struct OnboardingView: View {
             ZStack {
                 OnboardingGradientView()
                 VStack(spacing: 30) {
+                    HStack {
+                        Spacer()
+                        NavigationLink(destination: MainTabView().onAppear {
+                            generator.impactOccurred()
+                        }) {
+                                Text("Skip")
+                            }
+                    }
+                    .padding([.top, .trailing])
                     Spacer()
                         VStack(spacing: 20) {
                             Text("Enter your name")
                                 .font(.largeTitle)
                                 .fontWeight(.heavy)
                                 .foregroundStyle(.white)
-                                .shadow(color: .accentColor, radius: 25)
+                                .shadow(color: .accentColor, radius: 20)
                             Image("Svaraa_Onboarding")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 300)
-                                .shadow(color: .purple, radius: 170)
+                                .shadow(color: .accentColor, radius: 100)
                         }
                     Spacer()
                     TextField("Enter your beautiful name", text: $inputText)
+                        .frame(maxHeight: 12)
                         .padding()
                         .foregroundColor(.primary)
                         .font(.title2)
@@ -37,7 +47,6 @@ struct OnboardingView: View {
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(.primary, lineWidth: 0.3)
                         )
-//                        .cornerRadius(15)
                         .padding([.leading, .trailing], 50)
                         .textFieldStyle(PlainTextFieldStyle())
                         .focused($isTextFieldFocused)
@@ -50,21 +59,14 @@ struct OnboardingView: View {
                                     generator.impactOccurred()
                                 }) {
                                     Text("Continue")
-                                        .frame(maxWidth: .infinity)
                                         .frame(maxHeight: 12)
                                         .padding()
-                                        .background(inputText.isEmpty ? Color.gray : Color.accentColor)
+                                        .background(Color.accentColor)
                                         .foregroundColor(.white)
-                                        .cornerRadius(15)
+                                        .cornerRadius(12)
                                 }
-                                .font(.title2)
                                 .padding(.horizontal, 50)
                                 .disabled(inputText.isEmpty)
-                            NavigationLink(destination: MainTabView().onAppear {
-                                generator.impactOccurred()
-                            }) {
-                                    Text("Skip")
-                                }
                     }
                     Spacer()
                 }
@@ -89,7 +91,7 @@ struct AgeFormView: View {
                         .font(.largeTitle)
                         .fontWeight(.heavy)
                         .foregroundStyle(.white)
-                        .shadow(color: .accentColor, radius: 35)
+                        .shadow(color: .accentColor, radius: 25)
                     Spacer()
                     HStack {
                         Button("", systemImage: "minus.circle.fill") {
@@ -120,14 +122,12 @@ struct AgeFormView: View {
                         DataController.shared.setUserAge(age: age)
                     }) {
                         Text("Continue")
-                            .frame(maxWidth: .infinity)
                             .frame(maxHeight: 12)
                             .padding()
                             .background(Color.accentColor)
                             .foregroundColor(.white)
-                            .cornerRadius(15)
+                            .cornerRadius(12)
                     }
-                    .font(.title2)
                     .padding(.horizontal, 50)
 
                     Spacer()
