@@ -49,18 +49,15 @@ struct MCQSceneView: View {
                                 .cornerRadius(12)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
-//                        .disabled(selectedOptionIndex != nil) // Disable after selection
                     }
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 40) // Push options closer to the bottom
+                .padding(.bottom, 40)
             }
             .frame(maxHeight: .infinity, alignment: .bottom) 
         }
-        .onChange(of: selectedOptionIndex) { newValue, _ in
-            if newValue != nil {
+        .onChange(of: selectedOptionIndex) {
                 checkIfRight()
-            }
         }
     }
 
@@ -73,7 +70,7 @@ struct MCQSceneView: View {
                 return selected == correctOptionIndex ? Color.green.opacity(0.7) : Color.red.opacity(0.7)
             }
         }
-        return Color.indigo.opacity(0.8) // Default color
+        return Color.indigo.opacity(0.8)
     }
     
     func checkIfRight() {
@@ -82,7 +79,7 @@ struct MCQSceneView: View {
                 let generator = UIImpactFeedbackGenerator(style: .light)
                 generator.impactOccurred()
                 // Show final scene after a delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     showFinalScene = true
                     showMCQScene = false
                 }
