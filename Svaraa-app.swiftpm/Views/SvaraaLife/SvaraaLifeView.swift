@@ -6,6 +6,8 @@ struct SvaraaLifeView: View {
     @State private var currentSceneTextIndex: Int = 0
     @State var showMCQScene: Bool = false
     @State var showFinalScene: Bool = false
+    @State private var moveToCenter = false
+    @State private var moveToLeft = false
 
     var body: some View {
         ZStack {
@@ -56,10 +58,36 @@ struct SvaraaLifeView: View {
                             .frame(width: 350)
                         Spacer()
                     }
+                    GeometryReader { geometry in
+                        NewStoryGradientView()
+                            .ignoresSafeArea()
+                            .position(x: moveToLeft ? -200 : (moveToCenter ? geometry.size.width / 2 : geometry.size.width + 100),
+                                      y: geometry.size.height / 2)
+                            .onAppear { restartAnimation(geometry: geometry) }
+                            .onChange(of: currentStoryIndex) { restartAnimation(geometry: geometry) }
+                    }
                 }
             }
         }
     }
+    
+    private func restartAnimation(geometry: GeometryProxy) {
+        moveToCenter = false
+        moveToLeft = false
+
+        withAnimation(.bouncy(duration: 1)) {
+            moveToCenter = true
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // Delay for smooth transition
+                withAnimation(.bouncy(duration: 1)) {
+                    moveToLeft = true
+                }
+            }
+        }
+    }
+
+
+
 
     private func progressStory() {
         let generator = UIImpactFeedbackGenerator(style: .light)
@@ -95,6 +123,7 @@ struct SvaraaLifeView: View {
             showMCQScene = true
         }
     }
+    
     private func moveToNextStory() {
         let totalStories = DataController.shared.getNumberOfStories()
 

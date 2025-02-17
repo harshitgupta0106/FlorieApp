@@ -16,6 +16,8 @@ class DataController {
         name: UserDefaults.standard.string(forKey: "userName") ?? "User",
         age: UserDefaults.standard.integer(forKey: "userAge") == 0 ? Int.max : UserDefaults.standard.integer(forKey: "userAge")
     )
+    
+    private var pcodDetectQuestions: [String] = []
     private var stories: [Story] = []
     static let shared = DataController()
     
@@ -114,6 +116,13 @@ class DataController {
             )
 
         ]
+        
+        pcodDetectQuestions = [
+            "Enter your height",
+            "Enter your weight",
+            "What is the length of your menstrual cycle?",
+            "Do you have unsual bleeding? (yes/no)"
+        ]
     }
     
     //MARK: - Svaraa's Life functions
@@ -157,6 +166,13 @@ class DataController {
     func getNumberOfDescriptionsInScene(ofStoryIndex index: Int, sceneIndex: Int) -> Int {
         stories[index].storyScenes[sceneIndex].descriptions.count
     }
+    
+    //MARK: - Svaraa's Talk functions
+    func getAllPCODQuestions() -> [String] {
+        pcodDetectQuestions
+    }
+    
+    
     
     //MARK: - User functions
     func getUserName() -> String {

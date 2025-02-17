@@ -18,6 +18,7 @@ struct StorySceneView: View {
                 Image(svaraaImage ?? "Svaraa_VeryHappy")
                     .resizable()
                     .scaledToFit()
+                    .animation(.smooth, value: true)
                 Spacer()
             }
             
@@ -44,7 +45,37 @@ struct StorySceneView: View {
     }
 }
 
+struct NewStoryGradientView: View {
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.purple.opacity(0.7),
+                    Color.purple.opacity(0.3),
+                    Color.purple.opacity(0.1),
+                    Color.purple.opacity(0.3),
+                    Color.purple.opacity(0.7),
+                ]),
+                startPoint: .bottom,
+                endPoint: .top
+            )
+            Text("New Story")
+                .font(.system(size: 50,weight: .bold))
+                .bold()
+                .foregroundColor(.yellow)
+                .shadow(color: .purple, radius: 30)
+//                .shadow(color: .purple, radius: 30)
+                .shadow(color: .purple, radius: 50)
+                .shadow(color: .purple, radius: 50)
+                .shadow(color: .purple, radius: 50)
+//                .shadow(color: .purple, radius: 10)
+//                .shadow(color: .black, radius: 60)
+            
+        }
+    }
+}
 
 #Preview {
-    StorySceneView()
+    NewStoryGradientView()
 }
