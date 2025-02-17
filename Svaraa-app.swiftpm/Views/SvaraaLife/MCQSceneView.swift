@@ -12,7 +12,7 @@ struct MCQSceneView: View {
     var body: some View {
         ZStack {
             VStack {
-                Image("Svaraa_Confused")
+                Image("Svaraa_Question")
                     .resizable()
                     .scaledToFit()
                 Spacer()
@@ -57,7 +57,7 @@ struct MCQSceneView: View {
             }
             .frame(maxHeight: .infinity, alignment: .bottom) 
         }
-        .onChange(of: selectedOptionIndex) { newValue in
+        .onChange(of: selectedOptionIndex) { newValue, _ in
             if newValue != nil {
                 checkIfRight()
             }

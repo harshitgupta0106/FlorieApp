@@ -18,6 +18,10 @@ struct SvaraaTalkView: View {
     @State private var pcodQuestionIndex = 0
     @State private var pcodResponses: [String] = []
     @State private var showPcodResult = false
+    @State var isPcosTest = false
+    @State private var pcosQuestionIndex = 0
+    @State private var pcosResponses: [String] = []
+    @State private var showPcosResult = false
     
     var body: some View {
         ZStack {
@@ -34,7 +38,7 @@ struct SvaraaTalkView: View {
                         view.shadow(color: Color.purple, radius: 75, x: 3, y: 3)
                     }
                 if messages.isEmpty {
-                    InitialView(isConversing: $isConversing, messages: $messages, isPcodTest: $isPcodTest, pcodQuestionIndex: $pcodQuestionIndex)
+                    InitialView(isConversing: $isConversing, messages: $messages, isPcodTest: $isPcodTest, pcodQuestionIndex: $pcodQuestionIndex, isPcosTest: $isPcosTest, pcosQuestionIndex: $pcosQuestionIndex)
                     Spacer()
                 } else {
                     ScrollViewReader { proxy in
@@ -94,6 +98,14 @@ struct SvaraaTalkView: View {
         
         if isPcodTest {
             handlePcodTestResponse()
+            inputText = ""
+            isTextFieldFocused = false
+            return true
+        }
+        
+        // In the sendMessage() function, add this check:
+        if isPcosTest {
+            handlePcosTestResponse()
             inputText = ""
             isTextFieldFocused = false
             return true
@@ -219,6 +231,71 @@ struct SvaraaTalkView: View {
             return "I’m here to help! Let’s talk to a doctor if you’re worried."
         }
     }
+    
+    private func handlePcosTestResponse() {
+        let questions = DataController.shared.getAllPCOSQuestions()
+        pcosResponses.append(inputText)
+
+        if pcosQuestionIndex < questions.count - 1 {
+            pcosQuestionIndex += 1
+            messages.append(Message(
+                text: questions[pcosQuestionIndex],
+                isUser: false
+            ))
+        } else {
+            let result = calculatePcosResults()
+            let riskMessage = getPcosRiskMessage(for: result)
+
+            messages.append(Message(
+                text: riskMessage,
+                isUser: false
+            ))
+            messages.append(Message(
+                text: "Type 'bye' to exit the test",
+                isUser: false
+            ))
+
+            isPcosTest = false
+            pcosQuestionIndex = 0
+            pcosResponses.removeAll()
+        }
+    }
+
+    private func calculatePcosResults() -> Int {
+        guard pcosResponses.count >= 8 else {
+            print("Error: Not enough responses")
+            return -1
+        }
+
+        var score = 0
+
+        // Assign risk points
+        if pcosResponses[0].lowercased().contains("yes") { score += 2 }
+        if let weight = Double(pcosResponses[1]), let height = Double(pcosResponses[2]), height > 0 {
+            let bmi = weight / (height * height)
+            if bmi >= 25 { score += 1 }
+        }
+        if pcosResponses[3].lowercased().contains("yes") { score += 2 }
+        if ["moderate", "severe"].contains(pcosResponses[4].lowercased()) { score += 1 }
+        if Int(pcosResponses[4]) ?? 0 > 1 { score += 1 }
+        if pcosResponses[5].lowercased().contains("yes") { score += 2 }
+        if pcosResponses[6].lowercased().contains("yes") { score += 2 }
+        if pcosResponses[7].lowercased().contains("high") { score += 1 }
+        if Int(pcosResponses[8]) ?? 0 < 4 { score += 1 }
+
+        return score
+    }
+
+    private func getPcosRiskMessage(for score: Int) -> String {
+        switch score {
+        case 8...:
+            return "Your responses suggest a higher likelihood of PCOS. Consider consulting a doctor for professional guidance."
+        case 5...7:
+            return "You show some signs linked to PCOS. It may be helpful to track your symptoms and maintain a healthy lifestyle."
+        default:
+            return "Your responses don’t strongly indicate PCOS. If you have concerns, a doctor’s advice is always recommended."
+        }
+    }
 }
 
 struct InitialView: View {
@@ -226,6 +303,8 @@ struct InitialView: View {
     @Binding var messages: [Message]
     @Binding var isPcodTest: Bool
     @Binding var pcodQuestionIndex: Int
+    @Binding var isPcosTest: Bool
+    @Binding var pcosQuestionIndex: Int
     
     var responses: [Int] = []
     var body: some View {
@@ -249,7 +328,9 @@ struct InitialView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 Button("Test for PCOS") {
-                    
+                    isPcosTest = true
+                    pcosQuestionIndex = 0
+                    pcosTest()
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -268,6 +349,16 @@ struct InitialView: View {
             isUser: false
         ))
     }
+    
+    func pcosTest() {
+        let questions = DataController.shared.getAllPCOSQuestions()
+        messages.append(Message(
+            text: "Let’s begin the PCOS Test! \(questions[0])",
+            isUser: false
+        ))
+    }
+    
+    
 }
 
 struct UserImageAsideMessages: View {

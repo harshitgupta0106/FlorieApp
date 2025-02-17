@@ -60,7 +60,6 @@ struct SvaraaLifeView: View {
                     }
                     GeometryReader { geometry in
                         NewStoryGradientView()
-                            .ignoresSafeArea()
                             .position(x: moveToLeft ? -200 : (moveToCenter ? geometry.size.width / 2 : geometry.size.width + 100),
                                       y: geometry.size.height / 2)
                             .onAppear { restartAnimation(geometry: geometry) }
