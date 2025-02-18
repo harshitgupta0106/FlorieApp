@@ -10,7 +10,7 @@ import Foundation
 
 //Creating Singleton class
 @MainActor
-class DataController {
+class DataController: ObservableObject {
     private var user: User =
     User(
         name: UserDefaults.standard.string(forKey: "userName") ?? "User",
@@ -19,11 +19,16 @@ class DataController {
     
     private var pcodDetectQuestions: [String] = []
     private var pcosDetectQuestions: [String] = []
+    
     private var stories: [Story] = []
+    
+    private var checkLists: [CheckList] = []
+    
     static let shared = DataController()
     
     private init() {
         loadData()
+        loadCheckLists()
     }
     //MARK: - Data filling
     
@@ -302,6 +307,48 @@ class DataController {
             "On a scale of 1 - 3, How would you describe your stress level? \n(1 - Low, 2 - Moderate, 3 - High)",
             "How many hours of sleep do you get per night?"
         ]
+        
+        checkLists = [
+            CheckList(
+                
+                name: "PCOS",
+                description: "Small, consistent habits create lasting change. \n\nThis daily checklist is designed to support hormonal balance, reduce inflammation, and boost metabolism—key factors in managing PCOS & PCOD. \n\nWith mindful nutrition, movement, and recovery, you can take control of your well-being, one check at a time. ",
+                
+                morningList: [
+                    CheckListItem(name: "Drink warm lemon water / fenugreek seed water", isChecked: false),
+                    CheckListItem(name: "Eat 5 soaked almonds + 2 walnuts + 1 tsp flaxseeds", isChecked: false),
+                    CheckListItem(name: "Have a high-protein breakfast (Besan chilla / Sprouts / Ragi dosa / Eggs & toast / Paneer bhurji)", isChecked: false),
+                    CheckListItem(name: "10 mins meditation or deep breathing", isChecked: false),
+                    CheckListItem(name: "15–30 mins light exercise (walk, Surya Namaskar)", isChecked: false)
+                ],
+                
+                afternoonList: [
+                    CheckListItem(name: "Drink 1 glass coconut water / buttermilk", isChecked: false),
+                    CheckListItem(name: "Eat 1 fruit (Guava, Papaya, Apple, Pomegranate, Berries)", isChecked: false),
+                    CheckListItem(name: "Eat a balanced lunch (Dal + Millet/Brown Rice + Sabzi + Curd)", isChecked: false),
+                    CheckListItem(name: "Take a 10-minute post-lunch walk", isChecked: false)
+                ],
+                
+                eveningList: [
+                    CheckListItem(name: "Eat a healthy snack (Roasted chana / Makhana / Peanut butter toast / Nuts & seeds)", isChecked: false),
+                    CheckListItem(name: "30–45 mins of exercise (Yoga, Strength Training, Dance, Brisk Walk)", isChecked: false),
+                    CheckListItem(name: "Drink 1 cup herbal tea (Spearmint, Cinnamon, Ginger-Turmeric)", isChecked: false)
+                ],
+                
+                nightList: [
+                    CheckListItem(name: "Eat a light dinner (Moong dal khichdi + Ghee / Soup + Sautéed Veggies / 1 Roti + Sabzi + Paneer/Tofu)", isChecked: false),
+                    CheckListItem(name: "Drink 1 glass warm turmeric milk (Haldi + Almond milk)", isChecked: false),
+                    CheckListItem(name: "5 mins deep breathing / gratitude journaling", isChecked: false),
+                    CheckListItem(name: "Sleep for 7–9 hours", isChecked: false)
+                ],
+                
+                commonList: [
+                    CheckListItem(name: "Drink 2–3 liters of water", isChecked: false),
+                    CheckListItem(name: "Take 5 deep breaths before meals", isChecked: false),
+                    CheckListItem(name: "Avoid screens 30 mins before bed", isChecked: false)
+                ]
+            )
+        ]
     }
     
     //MARK: - Svaraa's Life functions
@@ -354,6 +401,57 @@ class DataController {
     func getAllPCOSQuestions() -> [String] {
         pcosDetectQuestions
     }
+    
+    //MARK: - Svaraa's Logs functions
+    
+    func getPCOSCheckList() -> CheckList? {
+        checkLists.filter { $0.name == "PCOS" }.first
+    }
+    
+    func toggleCheckItem(checkListIndex: Int, category: ChecklistCategory, itemIndex: Int) {
+        guard checkListIndex < checkLists.count else { return }
+
+        switch category {
+        case .morning:
+            guard itemIndex < checkLists[checkListIndex].morningList.count else { return }
+            checkLists[checkListIndex].morningList[itemIndex].isChecked.toggle()
+        case .afternoon:
+            guard itemIndex < checkLists[checkListIndex].afternoonList.count else { return }
+            checkLists[checkListIndex].afternoonList[itemIndex].isChecked.toggle()
+        case .evening:
+            guard itemIndex < checkLists[checkListIndex].eveningList.count else { return }
+            checkLists[checkListIndex].eveningList[itemIndex].isChecked.toggle()
+        case .night:
+            guard itemIndex < checkLists[checkListIndex].nightList.count else { return }
+            checkLists[checkListIndex].nightList[itemIndex].isChecked.toggle()
+        case .common:
+            guard itemIndex < checkLists[checkListIndex].commonList.count else { return }
+            checkLists[checkListIndex].commonList[itemIndex].isChecked.toggle()
+        }
+
+        saveCheckLists() // Save the state after toggling
+    }
+    
+    func saveCheckLists() {
+        if let encodedData = try? JSONEncoder().encode(checkLists) {
+            UserDefaults.standard.set(encodedData, forKey: "savedCheckLists")
+        }
+    }
+
+
+    func loadCheckLists() {
+        if let savedData = UserDefaults.standard.data(forKey: "savedCheckLists"),
+           let decodedCheckLists = try? JSONDecoder().decode([CheckList].self, from: savedData) {
+            checkLists = decodedCheckLists
+        }
+    }
+
+
+    func getCheckLists() -> [CheckList] {
+        return checkLists
+    }
+
+    
     
     
     

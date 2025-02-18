@@ -5,7 +5,6 @@
 //  Created by Harshit Gupta on 06/02/25.
 //
 // SvaraaTalkView.swift
-import CoreML
 import SwiftUI
 
 struct SvaraaTalkView: View {
@@ -28,15 +27,32 @@ struct SvaraaTalkView: View {
             GradientChatBot(isConversing: $isConversing)
             VStack {
                 Spacer()
-                Image("App-Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(25)
-                    .frame(width: 100, height: 100)
-                    .animation(.bouncy(duration: 4), value: isConversing)
-                    .if(!isConversing) { view in
-                        view.shadow(color: Color.purple, radius: 75, x: 3, y: 3)
+                HStack(alignment: .top, spacing: 60) {
+                    Button(action: {
+                        messages.removeAll()
+                    }) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
                     }
+                    .padding([.trailing, .top, .bottom])
+                    .padding(.leading, 10)
+                    .if(!isConversing) { view in
+                        view.hidden()
+                    }
+                    Image("App-Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(25)
+                        .frame(width: 100, height: 100)
+                        .animation(.bouncy(duration: 4), value: isConversing)
+                        .if(!isConversing) { view in
+                            view.shadow(color: Color.purple, radius: 75, x: 3, y: 3)
+                        }
+                    Spacer()
+                    Spacer()
+                }
                 if messages.isEmpty {
                     InitialView(isConversing: $isConversing, messages: $messages, isPcodTest: $isPcodTest, pcodQuestionIndex: $pcodQuestionIndex, isPcosTest: $isPcosTest, pcosQuestionIndex: $pcosQuestionIndex)
                     Spacer()
@@ -295,122 +311,6 @@ struct SvaraaTalkView: View {
         default:
             return "Your responses don’t strongly indicate PCOS. If you have concerns, a doctor’s advice is always recommended."
         }
-    }
-}
-
-struct InitialView: View {
-    @Binding var isConversing: Bool
-    @Binding var messages: [Message]
-    @Binding var isPcodTest: Bool
-    @Binding var pcodQuestionIndex: Int
-    @Binding var isPcosTest: Bool
-    @Binding var pcosQuestionIndex: Int
-    
-    var responses: [Int] = []
-    var body: some View {
-        VStack(alignment: .leading, spacing: 40.0) {
-            
-            VStack(alignment: .leading, spacing: 5.0) {
-                Text("Hello, \(DataController.shared.getUserName())")
-                    .font(.largeTitle)
-                    .foregroundColor(Color.primary)
-                Text("How can I help you?")
-                    .font(.body)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.purple)
-                
-            }
-            HStack {
-                Button("Test for PCOD") {
-                    isPcodTest = true
-                    pcodQuestionIndex = 0 // Reset question index
-                    pcodTest()
-                }
-                .buttonStyle(.borderedProminent)
-                Button("Test for PCOS") {
-                    isPcosTest = true
-                    pcosQuestionIndex = 0
-                    pcosTest()
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-        .padding(.top, 20.0)
-        .onAppear {
-            isConversing = false
-        }
-    }
-    
-    
-    func pcodTest() {
-        let questions = DataController.shared.getAllPCODQuestions()
-        messages.append(Message(
-            text: "Let's start the PCOD Test. \(questions[0])",
-            isUser: false
-        ))
-    }
-    
-    func pcosTest() {
-        let questions = DataController.shared.getAllPCOSQuestions()
-        messages.append(Message(
-            text: "Let’s begin the PCOS Test! \(questions[0])",
-            isUser: false
-        ))
-    }
-    
-    
-}
-
-struct UserImageAsideMessages: View {
-    var body: some View {
-        VStack {
-            Spacer()
-            Image(systemName: "person.crop.circle.fill")
-                .resizable()
-                .foregroundStyle(.indigo)
-                .frame(width: 25, height: 25)
-                .padding(.bottom, 6)
-        }
-    }
-}
-
-struct SvaraaImageAsideMessages: View {
-    var body: some View {
-        VStack {
-            Spacer()
-            Image("App-Logo")
-                .resizable()
-                .frame(width: 25, height: 25)
-                .cornerRadius(12.5)
-                .padding(.bottom, 6)
-                .padding(.leading, -10)
-        }
-    }
-}
-
-struct MessagesView: View {
-    var message: Message
-    var body: some View {
-        HStack {
-            if message.isUser {
-                Spacer()
-                Text(message.text)
-                    .padding()
-                    .background(Color.indigo)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                UserImageAsideMessages()
-            } else {
-                SvaraaImageAsideMessages()
-                Text(message.text)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(10)
-                Spacer()
-            }
-        }
-        .listRowSeparator(.hidden)
-        .id(message.id)
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SvaraaLogsView: View {
     var body: some View {
-        Text("SvaraaLogsView")
+        CheckListView()
     }
 }
 
