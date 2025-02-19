@@ -17,6 +17,7 @@ class DataController: ObservableObject {
         age: UserDefaults.standard.integer(forKey: "userAge") == 0 ? Int.max : UserDefaults.standard.integer(forKey: "userAge")
     )
     
+    private var qaDictionary: [String : String] = [:]
     private var pcodDetectQuestions: [String] = []
     private var pcosDetectQuestions: [String] = []
     
@@ -29,6 +30,8 @@ class DataController: ObservableObject {
     private init() {
         loadData()
         loadCheckLists()
+        loadQAData()
+//        print(qaDictionary)
     }
     //MARK: - Data filling
     
@@ -79,49 +82,6 @@ class DataController: ObservableObject {
                     svaraaImageName: "Svaraa_Satisfied"
                 )
             ),
-            
-//            Story(
-//                title: "Understanding Periods & Breaking Taboos",
-//                storyScenes: [
-//                    StoryScene(
-//                        descriptions: [
-//                            "Later that night, Svaraa sits on her bed, thinking about everything. She has so many questions. She texts Anaya:",
-//                            "Svaraa: \"Hey, I got my period today 😳\"",
-//                            "Anaya: \"Omg, really? I haven’t gotten mine yet. Does it hurt?\"",
-//                            "Svaraa: \"Not really, but I feel weird. Also, why don’t people talk about this more?\""
-//                        ],
-//                        backgroundImageName: "",
-//                        svaraaImageName: "Svaraa_Casual"
-//                    ),
-//                    StoryScene(
-//                        descriptions: [
-//                            "Her mother knocks on the door. \"Hey, Svaraa. Want to ask me anything?\""
-//                        ],
-//                        backgroundImageName: "",
-//                        svaraaImageName: "Svaraa_Happy"
-//                    )
-//                ],
-//                mcqScene: MCQScene(
-//                    question: "What should Svaraa ask?",
-//                    options: [
-//                        "Can I go swimming during my period?",
-//                        "Will everyone know I’m on my period?",
-//                        "Why do some people think periods are ‘dirty’?",
-//                        "All of the above."
-//                    ],
-//                    correctOptionIndex: 3,
-//                    backgroundImageName: "",
-//                    svaraaImageName: "Svaraa_Curious"
-//                ),
-//                finalScene: StoryScene(
-//                    descriptions: [
-//                        "There are so many questions worth asking!\n\nThere are a lot of myths about periods.\n\nSome people believe girls shouldn’t touch pickles or enter temples during their cycle—but those are just taboos, not science. \n\nYou can do everything you normally do, just with a little extra care."
-//                    ],
-//                    backgroundImageName: "",
-//                    svaraaImageName: "Svaraa_Smiling"
-//                )
-//            ),
-            
             Story(
                 title: "Svaraa’s Silent Struggle: A Lesson on UTIs",
                 storyScenes: [
@@ -351,6 +311,34 @@ class DataController: ObservableObject {
         ]
     }
     
+    func loadQAData() {
+        let fileName = "menstrual_awareness"
+            guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else {
+                print("File not found: \(fileName).csv")
+                return
+            }
+            do {
+                let content = try String(contentsOfFile: path)
+                let lines = content.components(separatedBy: "\n")
+
+                var tempDict: [String: String] = [:]
+                for line in lines.dropFirst() { // Drop header row
+                    let components = line.components(separatedBy: ",")
+                    if components.count >= 2 {
+                        let question = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                        let answer = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                        tempDict[question] = answer
+                    }
+                }
+
+                self.qaDictionary = tempDict
+                print("QA Data Loaded Successfully")
+
+            } catch {
+                print("Error loading file: \(error)")
+            }
+        }
+      
     //MARK: - Svaraa's Life functions
     
     func getAllStories() -> [Story] {
@@ -385,6 +373,10 @@ class DataController: ObservableObject {
         stories[index].title
     }
     
+    func getAllTitlesOfStories() -> [String] {
+        stories.map { $0.title }
+    }
+    
     func getMCQScene(ofStoryIndex index: Int) -> MCQScene {
         stories[index].mcqScene
     }
@@ -400,6 +392,10 @@ class DataController: ObservableObject {
     
     func getAllPCOSQuestions() -> [String] {
         pcosDetectQuestions
+    }
+    
+    func getQADictionary() -> [String: String] {
+        qaDictionary
     }
     
     //MARK: - Svaraa's Logs functions

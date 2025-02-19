@@ -139,13 +139,23 @@ struct SvaraaTalkView: View {
         }
         
         messages.append(Message(text: "Svaraa is thinking.", isUser: false))
-        let botResponse = Message(text: getBotResponse(for: inputText), isUser: false)
+        
+//        getBotResponse(for: inputText) { response in
+//            botResponse = Message(text: response, isUser: false)
+//            
+//            DispatchQueue.main.async {
+//                self.messages.append(botResponse) // ✅ Update UI safely
+//            }
+//        }
+        
+        let botResponse: String = getBotResponse(for: inputText)
         DispatchQueue.main.asyncAfter(deadline: .now() + Double.random(in: 0.5...2)) {
             messages.removeLast()
+//            messages.append(Message(text: botResponse, isUser: false))
             if messages.count == 1 {
-                messages.append(Message(text: "Svaraa here, \(botResponse.text)", isUser: false))
+                messages.append(Message(text: "Svaraa here, \(botResponse)", isUser: false))
             } else {
-                messages.append(botResponse)
+                messages.append(Message(text: botResponse, isUser: false))
             }
             generator.impactOccurred()
         }
@@ -229,24 +239,42 @@ struct SvaraaTalkView: View {
         }
     }
     
+//    private func getBotResponse(for input: String) -> String {
+//        if isPcodTest {
+//                let questions = DataController.shared.getAllPCODQuestions()
+//                return pcodQuestionIndex < questions.count ? questions[pcodQuestionIndex] : ""
+//            }
+//        
+//        let lowercasedInput = input.lowercased()
+//        
+//        if lowercasedInput.contains("uti") || lowercasedInput.contains("urination") {
+//            return "UTIs are common. Drink plenty of water and consult a doctor if symptoms persist."
+//        } else if lowercasedInput.contains("period") || lowercasedInput.contains("menstrual") {
+//            return "Irregular periods can happen. Track your cycle and consult a doctor if you're concerned."
+//        } else if lowercasedInput.contains("yeast") || lowercasedInput.contains("itching") {
+//            return "Yeast infections can cause itching. Avoid scented products and see a doctor if needed."
+//        } else {
+//            return "I’m here to help! Let’s talk to a doctor if you’re worried."
+//        }
+//    }
+    
     private func getBotResponse(for input: String) -> String {
         if isPcodTest {
-                let questions = DataController.shared.getAllPCODQuestions()
-                return pcodQuestionIndex < questions.count ? questions[pcodQuestionIndex] : ""
-            }
-        
-        let lowercasedInput = input.lowercased()
-        
-        if lowercasedInput.contains("uti") || lowercasedInput.contains("urination") {
-            return "UTIs are common. Drink plenty of water and consult a doctor if symptoms persist."
-        } else if lowercasedInput.contains("period") || lowercasedInput.contains("menstrual") {
-            return "Irregular periods can happen. Track your cycle and consult a doctor if you're concerned."
-        } else if lowercasedInput.contains("yeast") || lowercasedInput.contains("itching") {
-            return "Yeast infections can cause itching. Avoid scented products and see a doctor if needed."
-        } else {
-            return "I’m here to help! Let’s talk to a doctor if you’re worried."
+            let questions = DataController.shared.getAllPCODQuestions()
+            return pcodQuestionIndex < questions.count ? questions[pcodQuestionIndex] : ""
         }
+        
+        let chatbot = Chatbot()
+        let str = chatbot.getResponse(for: input)
+        print(str)
+        return str
+        // Access chatbot to trigger its initialization
+//        _ = chatbot
     }
+
+
+
+
     
     private func handlePcosTestResponse() {
         let questions = DataController.shared.getAllPCOSQuestions()

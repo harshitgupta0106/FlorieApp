@@ -118,7 +118,7 @@ struct CheckListView: View {
                             checkListItemName: "Morning",
                             isSmall: true,
                             imageName: "Morning",
-                            bgColor: "#C889E6",
+                            bgColor: "#A86CB8",
                             checkListItems: checkList.morningList,
                             onTap: {
                                 selectedList = checkList.morningList
@@ -130,7 +130,7 @@ struct CheckListView: View {
                             checkListItemName: "Afternoon",
                             isSmall: true,
                             imageName: "Afternoon",
-                            bgColor: "#C889E6",
+                            bgColor: "#83A852",
                             checkListItems: checkList.afternoonList,
                             onTap: {
                                 selectedList = checkList.afternoonList
