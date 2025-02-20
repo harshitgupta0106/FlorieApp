@@ -17,7 +17,10 @@ struct InitalStorySceneView: View {
                 Spacer()
             }
             
-        GradientView()
+            VStack {
+                Spacer()
+                GradientView()
+            }
             VStack(spacing: 20) {
                 Spacer()
                 Spacer()
@@ -37,15 +40,19 @@ struct GradientView: View {
         ZStack {
             LinearGradient(
                 gradient: Gradient(colors: [
+                    Color.purple.opacity(1.0),
+                    Color.purple.opacity(0.9),
                     Color.purple.opacity(0.8),
                     Color.purple.opacity(0.7),
                     Color.purple.opacity(0.3),
+                    Color.purple.opacity(0.2),
                     Color.purple.opacity(0.1),
                     Color.purple.opacity(0),
                 ]),
                 startPoint: .bottom,
                 endPoint: .top
-            ) 
+            )
+//            .frame(height: 700)
         }
         
     }

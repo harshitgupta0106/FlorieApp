@@ -11,14 +11,19 @@ struct StorySceneView: View {
     var svaraaImage: String?
     var storyTitle: String?
     var description: String?
-    
+    var backgroundImage: String?
     var body: some View {
         ZStack {
+            VStack {
+                Image(backgroundImage ?? "")
+                    .resizable()
+                Spacer()
+            }
             VStack {
                 Image(svaraaImage ?? "Svaraa_VeryHappy")
                     .resizable()
                     .scaledToFit()
-                    .animation(.smooth, value: true)
+                    .animation(.smooth, value: svaraaImage)
                 Spacer()
             }
             
@@ -81,5 +86,5 @@ struct NewStoryGradientView: View {
 }
 
 #Preview {
-    NewStoryGradientView()
+    StorySceneView()
 }

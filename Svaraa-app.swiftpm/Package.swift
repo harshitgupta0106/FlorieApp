@@ -35,11 +35,19 @@ let package = Package(
             appCategory: .healthcareFitness
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/dehesa/CodableCSV", "0.6.7"..<"1.0.0")
+    ],
     targets: [
         .executableTarget(
             name: "AppModule",
+            dependencies: [
+                .product(name: "CodableCSV", package: "codablecsv")
+            ],
             path: ".",
-            resources: [.process("Resources")]
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )

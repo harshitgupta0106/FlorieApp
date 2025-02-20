@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CodableCSV
 
 
 //Creating Singleton class
@@ -38,28 +39,36 @@ class DataController: ObservableObject {
     func loadData() {
         stories = [
             Story(
-                title: "Svaraa’s Big Day: A Story of Growing Up",
+                storyImage: "pad",
+                title: "Svaraa’s Big Day: \nA Story of Growing Up",
                 storyScenes: [
                     StoryScene(
                         descriptions: [
                             "Today is a special day—Svaraa’s birthday! She’s turning 12, and everything feels magical.",
                             "Balloons fill the room, her friends are arriving, and she’s got the prettiest dress on.",
                             ],
-                        backgroundImageName: "",
+                        backgroundImageName: "birthday-bg",
                         svaraaImageName: "Svaraa_VeryHappy"
                     ),
                     StoryScene(
                         descriptions: [
                             "But… something feels different today.",
-                            "As she laughs with her best friend, Anaya, Svaraa suddenly feels a strange wetness in her underwear.",
+                            "As she laughs with her best friend, Anaya, Svaraa suddenly feels a strange wetness in her underwear."
+                        ],
+                        backgroundImageName: "birthday-bg",
+                        svaraaImageName: "Svaraa_Shocked"
+                    ),
+                    StoryScene(
+                        descriptions: [
                             "Confused, she rushes to the bathroom.",
                             "Her heart pounds as she looks down and sees something unexpected—a deep red stain on her favorite dress.",
                             "Her mind races. Is something wrong with me?",
                             "She remembers a health class where they mentioned something about periods.",
                             "But no one really talked about what it feels like to get one for the first time."
                         ],
-                        backgroundImageName: "",
-                        svaraaImageName: "Svaraa_Shocked")
+                        backgroundImageName: "washroom-bg",
+                        svaraaImageName: "Svaraa_Shocked"
+                    )
                 ],
                 mcqScene: MCQScene(
                         question: "What should Svaraa do next?",
@@ -83,7 +92,8 @@ class DataController: ObservableObject {
                 )
             ),
             Story(
-                title: "Svaraa’s Silent Struggle: A Lesson on UTIs",
+                storyImage: "uti",
+                title: "Svaraa’s Silent Struggle: \nA Lesson on UTIs",
                 storyScenes: [
                     StoryScene(
                         descriptions: [
@@ -92,7 +102,7 @@ class DataController: ObservableObject {
                             "One evening, after rushing back from the library, she felt a burning sensation while urinating.",
                             "\"Maybe I didn’t drink enough water,\" she thought and ignored it."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Happy"
                     ),StoryScene(
                         descriptions: [
@@ -133,7 +143,8 @@ class DataController: ObservableObject {
             ),
             
             Story(
-                title: "The Hidden Itch: Svaraa’s Yeast Infection Story",
+                storyImage: "yeast_infection",
+                title: "The Hidden Itch: \nSvaraa’s Yeast Infection Story",
                 storyScenes: [
                     StoryScene(
                         descriptions: [
@@ -181,7 +192,8 @@ class DataController: ObservableObject {
             ),
             
             Story(
-                title: "Svaraa’s Mystery: When Periods Don’t Follow the Rules",
+                storyImage: "pcos",
+                title: "Svaraa’s Mystery: \nWhen Periods Don’t Follow the Rules",
                 storyScenes: [
                     StoryScene(
                         descriptions: [
@@ -313,31 +325,39 @@ class DataController: ObservableObject {
     
     func loadQAData() {
         let fileName = "menstrual_awareness"
-            guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else {
-                print("File not found: \(fileName).csv")
-                return
-            }
-            do {
-                let content = try String(contentsOfFile: path)
-                let lines = content.components(separatedBy: "\n")
-
-                var tempDict: [String: String] = [:]
-                for line in lines.dropFirst() { // Drop header row
-                    let components = line.components(separatedBy: ",")
-                    if components.count >= 2 {
-                        let question = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                        let answer = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                        tempDict[question] = answer
-                    }
-                }
-
-                self.qaDictionary = tempDict
-                print("QA Data Loaded Successfully")
-
-            } catch {
-                print("Error loading file: \(error)")
-            }
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else {
+            print("File not found: \(fileName).csv")
+            return
         }
+        
+        do {
+            let fileURL = URL(fileURLWithPath: path)
+            let fileContent = try String(contentsOf: fileURL, encoding: .utf8)
+            
+            // Parse CSV content manually
+            var tempDict: [String: String] = [:]
+            let rows = fileContent.components(separatedBy: .newlines)
+            
+            for row in rows {
+                let columns = row.components(separatedBy: ",")
+                if columns.count >= 2 {
+                    let question = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                    let answer = columns[1...].joined(separator: ",").trimmingCharacters(in: .whitespacesAndNewlines)
+                    tempDict[question] = answer
+                }
+            }
+            
+            self.qaDictionary = tempDict
+            print("QA Data Loaded Successfully")
+            print("Loaded \(qaDictionary.count) questions and answers.")
+            
+        } catch {
+            print("Error loading file: \(error)")
+        }
+    }
+
+
+    
       
     //MARK: - Svaraa's Life functions
     
@@ -375,6 +395,18 @@ class DataController: ObservableObject {
     
     func getAllTitlesOfStories() -> [String] {
         stories.map { $0.title }
+    }
+    
+    func getTitleOfStory(of index: Int) -> String {
+        getAllStories()[index].title
+    }
+    
+    func getAllImagesOfStories() -> [String] {
+        stories.map { $0.storyImage }
+    }
+    
+    func getImageOfStory(at index: Int) -> String {
+        getAllStories()[index].storyImage
     }
     
     func getMCQScene(ofStoryIndex index: Int) -> MCQScene {

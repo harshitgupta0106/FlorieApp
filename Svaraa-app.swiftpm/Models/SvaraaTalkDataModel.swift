@@ -12,3 +12,9 @@ struct Message: Identifiable, Equatable {
     let text: String
     let isUser: Bool
 }
+
+
+struct QAEntry: Codable {
+    let text: String
+    let label: String
+}
