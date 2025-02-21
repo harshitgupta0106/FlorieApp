@@ -110,14 +110,14 @@ class DataController: ObservableObject {
                             "\"Maybe I didn’t drink enough water,\" she thought and ignored it.",
                             "Days passed, and the discomfort increased. She felt the urge to pee frequently, but only a few drops would come out—each time with a painful sting."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "washroom-bg",
                         svaraaImageName: "Svaraa_Confused"
                     ),
                     StoryScene(
                         descriptions: [
                             "Then, one night, she saw something alarming—a slight trace of blood in her urine."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "washroom-bg",
                         svaraaImageName: "Svaraa_Crying"
                     )
                 ],
@@ -151,14 +151,14 @@ class DataController: ObservableObject {
                             "Life in the hostel was thrilling but hectic.",
                             "Between gym sessions, classes, and laundry delays, Svaraa often wore damp clothes or stayed in sweaty leggings for hours."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Happy"
                     ),StoryScene(
                         descriptions: [
                             "One morning, she felt a persistent itch down there.",
                             "She ignored it, assuming it would go away."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Confused"
                     ),StoryScene(
                         descriptions: [
@@ -199,7 +199,7 @@ class DataController: ObservableObject {
                         descriptions: [
                             "Svaraa always thought her period would settle into a routine, like everyone said it would."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Happy"
                     ),StoryScene(
                         descriptions: [
@@ -216,7 +216,7 @@ class DataController: ObservableObject {
                             "\"Maybe stress is messing it up,\" she told herself.",
                             "But deep down, she felt uneasy."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Dissatified"
                     ),
                     StoryScene(
@@ -226,7 +226,7 @@ class DataController: ObservableObject {
                             "One afternoon, as she tied her hair into a ponytail, she noticed something—her hairline looked thinner.",
                             "Her stomach dropped. What was happening to her?"
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Shocked"
                     ),
                     StoryScene(
@@ -234,7 +234,7 @@ class DataController: ObservableObject {
                             "She turned to her best friend, Anaya. \"My period’s been all over the place. And now my hair…\"",
                             "Anaya frowned. \"That doesn’t sound normal.\""
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Crying"
                     )
                 ],

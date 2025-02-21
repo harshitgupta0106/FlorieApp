@@ -18,3 +18,10 @@ struct QAEntry: Codable {
     let text: String
     let label: String
 }
+
+struct QuestionCategory {
+    let id = UUID()
+    let name: String
+    let questions: [String]
+    let answers: [String]
+}

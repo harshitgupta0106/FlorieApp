@@ -55,6 +55,7 @@ struct SvaraaLifeView: View {
                             .foregroundColor(.white)
                             .background(Color.indigo.opacity(0.8))
                             .cornerRadius(12)
+                            .padding(20)
 //                            .frame(width: 300)
                         Spacer()
                     }
@@ -76,6 +77,9 @@ struct SvaraaLifeView: View {
                         showFinalScene: $showFinalScene,
                         menuOpened: $menuOpened
                     )
+                    .onAppear {
+                        currentStoryIndex = storedStoryIndex == -1 ? 0 : storedStoryIndex
+                    }
                 }
                 
                 VStack {
@@ -96,14 +100,26 @@ struct SvaraaLifeView: View {
             }
                 
         }
-        .onTapGesture {
-            if currentStoryIndex == -1 {
-                // First tap: Load the stored index
-                currentStoryIndex = storedStoryIndex
-            } else if !menuOpened {
+        .if(currentStoryIndex == -1) {
+            view in
+            view.onTapGesture {
+                currentStoryIndex = storedStoryIndex == -1 ? 0 : storedStoryIndex
+            }
+        }
+        .if(!menuOpened) {
+            view in
+            view.onTapGesture {
                 progressStory()
             }
         }
+//        .onTapGesture {
+//            if currentStoryIndex == -1 {
+//                // First tap: Load the stored index
+//                currentStoryIndex = storedStoryIndex == -1 ? 0 : storedStoryIndex
+//            } else if !menuOpened {
+//                progressStory()
+//            }
+//        }
     }
     
     private func restartAnimation(geometry: GeometryProxy) {
@@ -120,7 +136,7 @@ struct SvaraaLifeView: View {
             }
         }
     }
-
+    
     private func progressStory() {
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
@@ -139,11 +155,20 @@ struct SvaraaLifeView: View {
             return
         }
 
+        if currentStoryIndex >= totalStories {
+            currentStoryIndex = 0
+            storedStoryIndex = 0
+            currentSceneIndex = 0
+            currentSceneTextIndex = 0
+            showMCQScene = false
+            showFinalScene = false
+        }
         guard currentStoryIndex < totalStories else {
             print("Error: Out-of-bounds story index.")
             return
         }
 
+        
         let totalScenes = DataController.shared.getNumberOfStoryScenes(ofStoryIndex: currentStoryIndex)
         let totalTexts = DataController.shared.getNumberOfDescriptionsInScene(ofStoryIndex: currentStoryIndex, sceneIndex: currentSceneIndex)
 
@@ -169,7 +194,7 @@ struct SvaraaLifeView: View {
             showFinalScene = false
         } else {
             currentStoryIndex = -1
-            storedStoryIndex = -1
+            storedStoryIndex = 0
             currentSceneIndex = 0
             currentSceneTextIndex = 0
             showMCQScene = false
