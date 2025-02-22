@@ -10,10 +10,10 @@ import SwiftUI
 struct InitialView: View {
     @Binding var isConversing: Bool
     @Binding var messages: [Message]
-    @Binding var isPcodTest: Bool
-    @Binding var pcodQuestionIndex: Int
-    @Binding var isPcosTest: Bool
-    @Binding var pcosQuestionIndex: Int
+//    @Binding var isPcodTest: Bool
+//    @Binding var pcodQuestionIndex: Int
+//    @Binding var isPcosTest: Bool
+//    @Binding var pcosQuestionIndex: Int
     
     var responses: [Int] = []
     var body: some View {
@@ -29,22 +29,22 @@ struct InitialView: View {
                     .foregroundStyle(.purple)
                 
             }
-            HStack {
-                Button("Test for PCOD") {
-                    isConversing = true
-                    isPcodTest = true
-                    pcodQuestionIndex = 0 // Reset question index
-                    pcodTest()
-                }
-                .buttonStyle(.borderedProminent)
-                Button("Test for PCOS") {
-                    isConversing = true
-                    isPcosTest = true
-                    pcosQuestionIndex = 0
-                    pcosTest()
-                }
-                .buttonStyle(.borderedProminent)
-            }
+//            HStack {
+//                Button("Test for PCOD") {
+//                    isConversing = true
+//                    isPcodTest = true
+//                    pcodQuestionIndex = 0 // Reset question index
+//                    pcodTest()
+//                }
+//                .buttonStyle(.borderedProminent)
+//                Button("Test for PCOS") {
+//                    isConversing = true
+//                    isPcosTest = true
+//                    pcosQuestionIndex = 0
+//                    pcosTest()
+//                }
+//                .buttonStyle(.borderedProminent)
+//            }
         }
         .padding(.top, 20.0)
         .onAppear {
@@ -53,21 +53,21 @@ struct InitialView: View {
     }
     
     
-    func pcodTest() {
-        let questions = DataController.shared.getAllPCODQuestions()
-        messages.append(Message(
-            text: "Let's start the PCOD Test. \(questions[0])",
-            isUser: false
-        ))
-    }
-    
-    func pcosTest() {
-        let questions = DataController.shared.getAllPCOSQuestions()
-        messages.append(Message(
-            text: "Let’s begin the PCOS Test! \(questions[0])",
-            isUser: false
-        ))
-    }
+//    func pcodTest() {
+//        let questions = DataController.shared.getAllPCODQuestions()
+//        messages.append(Message(
+//            text: "Let's start the PCOD Test. \(questions[0])",
+//            isUser: false
+//        ))
+//    }
+//    
+//    func pcosTest() {
+//        let questions = DataController.shared.getAllPCOSQuestions()
+//        messages.append(Message(
+//            text: "Let’s begin the PCOS Test! \(questions[0])",
+//            isUser: false
+//        ))
+//    }
     
     
 }

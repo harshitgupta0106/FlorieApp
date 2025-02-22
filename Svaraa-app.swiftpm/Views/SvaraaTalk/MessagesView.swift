@@ -19,7 +19,7 @@ struct MessagesView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 UserImageAsideMessages()
-            } else {
+            } else if !message.isUser {
                 SvaraaImageAsideMessages()
                 Text(message.text)
                     .padding()

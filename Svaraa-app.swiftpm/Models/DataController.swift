@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CodableCSV
+//import CodableCSV
 
 
 //Creating Singleton class
@@ -326,8 +326,8 @@ class DataController: ObservableObject {
     
     func loadQA() {
         questionCategories = [
-            QuestionCategory(
-                name: "Menstrual Health & Cycle",
+            QuestionCategory (
+                name: "Your Cycle, Explained",
                 items: [
                     QAItem(
                         question: "What is considered a normal menstrual flow?",
@@ -372,122 +372,138 @@ class DataController: ObservableObject {
                 ]
             ),
             QuestionCategory(
-                    name: "PCOS & PCOD",
+                    name: "Apple HealthKit: Smarter Tracking",
                     items: [
-                        QAItem(
-                            question: "What is Polycystic Ovary Syndrome (PCOS)?",
-                            answer: "PCOS is a hormonal condition where the ovaries may produce excess androgens (male hormones) and develop small fluid-filled sacs. \n\nIt can affect your cycle, skin, weight, and energy levels. The good news? Understanding it helps manage it."
-                        ),
-                        QAItem(
-                            question: "Tell me about irregular period cycles.",
-                            answer: "Irregular cycles can mean shorter than 21 days or longer than 35 days. They can be caused by stress, hormonal shifts, or underlying conditions like PCOS. If your cycle feels unpredictable, tracking it can help."
-                        ),
-                        QAItem(
-                            question: "If the period lasts 3 days, does that mean a low chance of fertility?",
-                            answer: "Not necessarily! Menstrual cycles are unique to each person. A 3-day period can be completely normal. Fertility depends on ovulation, cycle health, and hormone balance."
-                        ),
-                        QAItem(
-                            question: "What treatment modalities are available for managing endometriosis-related menstrual symptoms?",
-                            answer: "Managing endometriosis can involve hormonal therapy, pain management, or, in some cases, surgery. A tailored approach with a doctor ensures the best plan for you."
-                        ),
-                        QAItem(
-                            question: "Can PCOS cause mood swings or anxiety?",
-                            answer: "Yes! PCOS impacts hormones like estrogen and progesterone, which influence mood. Some experience anxiety or mood swings, but lifestyle changes and support can help."
-                        ),
-                        QAItem(
-                            question: "What are the early signs of PCOS in teenagers?",
-                            answer: "Early signs include irregular periods, acne, unexpected weight changes, and increased hair growth. Noticing these? A simple health check can bring clarity."
-                        ),
-                        QAItem(
-                            question: "How does PCOS affect weight and metabolism?",
-                            answer: "PCOS can make it easier to gain weight and harder to lose it due to insulin resistance. The key? Balanced nutrition, movement, and stress management—it’s about progress, not perfection."
-                        ),
-                        QAItem(
-                            question: "Can someone have PCOS without cysts on their ovaries?",
-                            answer: "Absolutely! PCOS is more about hormone imbalances than actual cysts. Some people with PCOS don’t have cysts, and some with ovarian cysts don’t have PCOS."
-                        ),
-                        QAItem(
-                            question: "Why does PCOS cause excessive hair growth?",
-                            answer: "PCOS can lead to increased levels of androgens (male hormones), which may cause extra hair growth on the face, chest, or back. It’s a common symptom, and there are ways to manage it."),
-                        QAItem(
-                            question: "Does birth control help with PCOS?",
-                            answer: "Yes! Birth control can help regulate periods, reduce acne, and manage symptoms like excess hair growth. But it’s just one option—talking to a doctor can help find what works best for you."
-                        ),
-                        QAItem(
-                            question: "What lifestyle changes can help manage PCOS symptoms?",
-                            answer: "Small, consistent changes matter—balancing meals with protein and fiber, managing stress, getting enough sleep, and staying active can all support hormone balance."
-                        ),
-                        QAItem(
-                            question: "Can PCOS go away on its own?",
-                            answer: "PCOS doesn’t ‘go away,’ but its symptoms can be managed. The right approach—lifestyle, medical support, and self-care—can make a big difference."
-                        ),
-                        QAItem(
-                            question: "What foods are good for managing PCOS?",
-                            answer: "Think whole foods: leafy greens, lean proteins, fiber-rich carbs, and healthy fats. Keeping blood sugar stable is key, so pairing carbs with protein helps."
-                        ),
-                        QAItem(
-                            question: "How does PCOS affect acne and skin health?",
-                            answer: "Hormonal imbalances can lead to breakouts, especially along the jawline. Managing stress, skincare, and balanced nutrition can help keep your skin happy."
-                        ),
-                        QAItem(
-                            question: "What’s the difference between PCOS and PCOD?",
-                            answer: "PCOS is a hormonal disorder that affects metabolism and ovulation, while PCOD (Polycystic Ovarian Disorder) is a broader term for cyst formation. PCOS has more systemic effects on health."),
-                        QAItem(
-                            question: "What is Polycystic Ovarian Disorder (PCOD)?",
-                            answer: "PCOD is when the ovaries develop multiple small follicles that can lead to irregular periods. Unlike PCOS, it doesn’t always cause major hormonal imbalances and is often managed with lifestyle changes."
-                        ),
-                        QAItem(
-                            question: "Can PCOD cause weight gain?",
-                            answer: "PCOD doesn’t always lead to weight gain, but it can impact metabolism slightly. A balanced diet and movement can help keep things in check."
-                        ),
-                        QAItem(
-                            question: "Does PCOD affect fertility?",
-                            answer: "It can, but not always. Many people with PCOD conceive naturally. Tracking ovulation and maintaining a healthy lifestyle can support fertility."
-                        ),
-                        QAItem(
-                            question: "Can stress make PCOD worse?",
-                            answer: "Yes! Stress affects cortisol levels, which in turn can disrupt ovulation and menstrual cycles. Finding ways to relax can help balance your cycle."
-                        ),
-                        QAItem(
-                            question: "Do all women with PCOD have irregular periods?",
-                            answer: "Not necessarily. Some may have regular but lighter periods, while others may experience irregular cycles. Every body is different."
-                        ),
-                        QAItem(
-                            question: "Is PCOD reversible?",
-                            answer: "PCOD can be managed effectively with diet, exercise, and lifestyle changes. Over time, symptoms can improve, but keeping a healthy routine is key."
-                        ),
-                        QAItem(
-                            question: "Can PCOD cause skin issues like acne?",
-                            answer: "Yes! Hormonal imbalances from PCOD can lead to acne, especially on the jawline and chin. Good skincare and a balanced diet can help."
-                        ),
-                        QAItem(
-                            question: "What foods should I avoid if I have PCOD?",
-                            answer: "Minimizing processed foods, excess sugar, and dairy may help some people manage symptoms. Think whole foods, fiber, and healthy fats!"
-                        ),
-                        QAItem(
-                            question: "How can I naturally regulate my periods with PCOD?",
-                            answer: "Regular movement, stress management, and balanced nutrition can support more predictable cycles. Small changes add up!"
-                        ),
-                        QAItem(
-                            question: "Does PCOD lead to excessive hair growth like PCOS?",
-                            answer: "PCOD usually doesn’t cause excessive hair growth as PCOS does, but some hormonal fluctuations can lead to mild changes."
-                        ),
-                        QAItem(
-                            question: "Can exercise help with PCOD?",
-                            answer: "Absolutely! Movement improves insulin sensitivity, supports hormone balance, and helps regulate cycles. It doesn’t have to be intense—find what you enjoy!"
-                        ),
-                        QAItem(
-                            question: "What role does insulin resistance play in PCOD?",
-                            answer: "Unlike PCOS, insulin resistance is not a major factor in PCOD. However, maintaining stable blood sugar can still support hormonal balance."
-                        ),
-                        QAItem(
-                            question: "Do I need medication for PCOD?",
-                            answer: "Not always! Many people manage PCOD with lifestyle changes alone. If symptoms persist, a doctor can help find the best approach."
-                        ),
+                        QAItem(question: "How can I track my period using Apple HealthKit?", answer: "Seamlessly. Open the Health app, \n\nTap ‘Browse’ > ‘Cycle Tracking,’ and log your period dates. \n\nApple HealthKit does the rest, providing insights over time."),
+                        QAItem(question: "What cycle data does the Apple Watch collect?", answer: "Apple Watch can track body temperature, heart rate, and even sleep changes—helping you see how your cycle influences overall health."),
+                        QAItem(question: "How accurate is period tracking with smart devices?", answer: "With consistent logging, period tracking apps can predict cycles with high accuracy. Apple HealthKit even refines predictions based on real-time body signals."),
+                        QAItem(question: "Can my Apple Watch predict my next period?", answer: "Yes! With cycle data and temperature tracking, Apple Watch offers smarter predictions over time, helping you plan ahead with confidence."),
+                        QAItem(question: "How do I enable menstrual tracking in Apple Health?", answer: "Simply go to the Health app, tap ‘Cycle Tracking,’ and start logging. You can enable reminders and sync with Apple Watch for seamless tracking."),
+                        QAItem(question: "What are the benefits of tracking my cycle using an app?", answer: "Understanding your body’s rhythm helps manage symptoms, predict fertile windows, and even spot irregularities early—so you're always in sync."),
+                        QAItem(question: "How does temperature tracking help in predicting ovulation?", answer: "Apple Watch measures wrist temperature while you sleep, detecting small shifts that indicate ovulation. A smarter way to track fertility."),
+                        QAItem(question: "Can fitness trackers like Fitbit or Garmin track my period?", answer: "Yes, many wearables offer cycle tracking, but Apple HealthKit integrates it with your overall wellness—making it more than just a calendar."),
+                        QAItem(question: "Does tracking my period help with irregular cycles?", answer: "Absolutely! Noticing patterns (or a lack of them) helps you discuss concerns with a doctor, making period tracking a key part of health awareness."),
+                        QAItem(question: "Can I use HealthKit data to track PCOS symptoms?", answer: "Yes! Logging cycle length, symptoms, and body temperature can help identify irregularities. While Apple HealthKit doesn’t diagnose, it gives you valuable insights."),
+                        QAItem(question: "How secure is my cycle tracking data in Apple Health?", answer: "Your health data stays yours. Apple HealthKit is designed with privacy in mind—your cycle data is encrypted and never shared without your consent."),
+                        QAItem(question: "Can I get notifications about my cycle on my Apple Watch?", answer: "Yes! Enable cycle tracking notifications in the Health app to get gentle reminders about upcoming periods and fertile windows."),
+                        QAItem(question: "Does tracking my period help with PMS symptoms?", answer: "Knowing when PMS is coming helps you plan self-care—whether it’s extra hydration, movement, or just some well-timed chocolate."),
                     ]
                 ),
             QuestionCategory(
-                    name: "UTI & Infections",
+                name: "PCOS & PCOD, Simplified",
+                items: [
+                    QAItem(
+                        question: "What is Polycystic Ovary Syndrome (PCOS)?",
+                        answer: "PCOS is a hormonal imbalance that can lead to irregular cycles, acne, weight changes, and excess hair growth.\n\nThe good news? It’s manageable—with the right approach, you can take control of your health."
+                    ),
+                    QAItem(
+                        question: "Tell me about irregular period cycles.",
+                        answer: "Your cycle should follow a rhythm. If it's shorter than 21 days, longer than 35, or unpredictable, stress or hormonal shifts might be at play. \n\nTracking it helps you spot patterns and stay informed."
+                    ),
+                    QAItem(
+                        question: "If my period lasts only 3 days, does that mean I have low fertility?",
+                        answer: "Not at all! Every body is unique. A 3-day period can be completely normal. What matters most? Ovulation and overall cycle health."
+                    ),
+                    QAItem(
+                        question: "What are the early signs of PCOS in teenagers?",
+                        answer: "Irregular periods, stubborn acne, weight fluctuations, and excess hair growth. Noticing these? A quick health check can bring clarity."
+                    ),
+                    QAItem(
+                        question: "Can PCOS cause mood swings or anxiety?",
+                        answer: "Yes! Hormonal shifts in PCOS can impact mood, leading to anxiety or mood swings. The key? Balanced nutrition, movement, and stress management can help bring stability."
+                    ),
+                    QAItem(
+                        question: "How does PCOS affect weight and metabolism?",
+                        answer: "PCOS can make weight management tricky due to insulin resistance. The secret? Small, consistent lifestyle changes—movement, mindful eating, and stress reduction—make all the difference."
+                    ),
+                    QAItem(
+                        question: "Can someone have PCOS without cysts on their ovaries?",
+                        answer: "Absolutely! PCOS is about hormonal imbalances, not just cysts. Some people with PCOS don’t have cysts, and some with ovarian cysts don’t have PCOS."
+                    ),
+                    QAItem(
+                        question: "Why does PCOS cause excessive hair growth?",
+                        answer: "Elevated androgens (male hormones) can trigger extra hair growth on the face, chest, or back. The good news? Treatment options exist to help manage this."
+                    ),
+                    QAItem(
+                        question: "Does birth control help with PCOS?",
+                        answer: "Yes! It can help regulate cycles, clear acne, and manage symptoms like excess hair growth. The best part? There’s no one-size-fits-all—your doctor can help find what works for you."
+                    ),
+                    QAItem(
+                        question: "What lifestyle changes help manage PCOS symptoms?",
+                        answer: "Consistency is key! A balanced diet, quality sleep, and daily movement help regulate hormones and keep symptoms in check."
+                    ),
+                    QAItem(
+                        question: "Can PCOS go away on its own?",
+                        answer: "PCOS doesn’t ‘go away,’ but its symptoms can be managed. With the right care, you can feel more in control of your health."
+                    ),
+                    QAItem(
+                        question: "What foods are good for managing PCOS?",
+                        answer: "Think whole foods—leafy greens, lean proteins, fiber-rich carbs, and healthy fats. Keeping blood sugar stable is key, so pairing carbs with protein helps."
+                    ),
+                    QAItem(
+                        question: "How does PCOS affect acne and skin health?",
+                        answer: "Hormonal imbalances can lead to stubborn breakouts, especially around the jawline. The fix? Hydration, a simple skincare routine, and balancing hormones through lifestyle choices."
+                    ),
+                    QAItem(
+                        question: "What’s the difference between PCOS and PCOD?",
+                        answer: "PCOS is a hormonal disorder that affects metabolism and ovulation, while PCOD (Polycystic Ovarian Disorder) primarily refers to ovarian cyst formation. PCOS tends to have a broader impact on health."
+                    ),
+                    QAItem(
+                        question: "What is Polycystic Ovarian Disorder (PCOD)?",
+                        answer: "PCOD occurs when the ovaries develop multiple small follicles, leading to irregular periods. The best part? Unlike PCOS, it’s often managed effectively through simple lifestyle changes."
+                    ),
+                    QAItem(
+                        question: "Can PCOD cause weight gain?",
+                        answer: "PCOD doesn’t always lead to weight gain, but metabolism can slow down slightly. A balanced diet and movement help keep things in check."
+                    ),
+                    QAItem(
+                        question: "Does PCOD affect fertility?",
+                        answer: "Not always. Many with PCOD conceive naturally. Tracking ovulation and maintaining a healthy routine can support fertility."
+                    ),
+                    QAItem(
+                        question: "Can stress make PCOD worse?",
+                        answer: "Yes! Stress disrupts hormone levels, which can throw off your cycle. Deep breathing, mindful movement, and sleep can help bring balance."
+                    ),
+                    QAItem(
+                        question: "Do all women with PCOD have irregular periods?",
+                        answer: "Not necessarily. Some have regular but lighter periods, while others experience unpredictable cycles. Every body is different."
+                    ),
+                    QAItem(
+                        question: "Is PCOD reversible?",
+                        answer: "PCOD symptoms can improve significantly with diet, movement, and stress management. Small, consistent changes make a big impact!"
+                    ),
+                    QAItem(
+                        question: "Can PCOD cause skin issues like acne?",
+                        answer: "Yes! Hormonal fluctuations can lead to acne, especially on the jawline and chin. A good skincare routine and hormone balance can help."
+                    ),
+                    QAItem(
+                        question: "What foods should I avoid if I have PCOD?",
+                        answer: "Processed foods, excess sugar, and dairy can sometimes trigger symptoms. Think whole foods, fiber, and healthy fats instead!"
+                    ),
+                    QAItem(
+                        question: "How can I naturally regulate my periods with PCOD?",
+                        answer: "Regular movement, stress management, and balanced nutrition help create a more predictable cycle. Small changes, big difference!"
+                    ),
+                    QAItem(
+                        question: "Does PCOD lead to excessive hair growth like PCOS?",
+                        answer: "PCOD usually doesn’t trigger excessive hair growth like PCOS, but mild fluctuations in hormones can lead to subtle changes."
+                    ),
+                    QAItem(
+                        question: "Can exercise help with PCOD?",
+                        answer: "Absolutely! Movement supports hormone balance, improves insulin sensitivity, and helps regulate cycles. It’s about finding what feels good for *you*."
+                    ),
+                    QAItem(
+                        question: "What role does insulin resistance play in PCOD?",
+                        answer: "Unlike PCOS, insulin resistance isn’t a major factor in PCOD. However, stabilizing blood sugar through balanced meals still supports hormonal health."
+                    ),
+                    QAItem(
+                        question: "Do I need medication for PCOD?",
+                        answer: "Not always! Many manage PCOD with lifestyle changes alone. If symptoms persist, a doctor can help explore options tailored to you."
+                    )
+                ]
+            ),
+            QuestionCategory(
+                    name: "UTIs & Infections: Stay Ahead",
                     items: [
                         QAItem(
                             question: "Can I get a urine infection if I am on my periods?",
@@ -551,7 +567,7 @@ class DataController: ObservableObject {
                     ]
                 ),
             QuestionCategory(
-                    name: "Menstrual Hygiene & Products",
+                    name: "Better Period Care",
                     items: [
                         QAItem(
                             question: "What are period panties?",
@@ -606,46 +622,147 @@ class DataController: ObservableObject {
                             answer: "Menstrual cups, cloth pads, and period panties lead the way. They’re reusable, reduce waste, and are kind to both your body and the planet."
                         ),
                     ]
+                ),
+            QuestionCategory(
+                    name: "Know the Signs",
+                    items: [
+                        QAItem(
+                            question: "Could I have PCOS?",
+                            answer: "If your periods are irregular, you’re noticing excess hair growth, unexplained weight changes, or persistent acne, PCOS *might* be a factor.\n\nTracking symptoms and checking with a doctor can help bring clarity."
+                        ),
+                        QAItem(
+                            question: "Could I have PCOD?",
+                            answer: "PCOD often presents with irregular periods and multiple small ovarian follicles. Unlike PCOS, it’s usually less severe and manageable with lifestyle changes.\n\nIf your cycle feels off, tracking patterns is the first step."
+                        ),
+                        QAItem(
+                            question: "What are signs of hormonal imbalance?",
+                            answer: "Sudden mood swings, extreme fatigue, unexpected weight gain, or acne that won’t budge? Your hormones might be asking for attention.\n\nA simple blood test can help uncover the cause."
+                        ),
+                        QAItem(
+                            question: "Could I have endometriosis?",
+                            answer: "If your cramps feel unbearable, periods are extremely heavy, or you experience pain during intimacy, endometriosis *could* be the reason.\n\nA doctor’s visit can provide answers and relief."
+                        ),
+                        QAItem(
+                            question: "Could my period symptoms mean I have thyroid issues?",
+                            answer: "A period that’s too light, too heavy, or missing altogether? Paired with fatigue, dry skin, or hair loss? Your thyroid might be out of sync.\n\nA quick test can help rule it out."
+                        ),
+                        QAItem(
+                            question: "Could I have anemia from heavy periods?",
+                            answer: "Feeling dizzy, weak, or constantly exhausted during or after your period? Heavy bleeding can deplete iron levels, leading to anemia.\n\nIron-rich foods and a check-in with a doctor can make all the difference."
+                        ),
+                        QAItem(
+                            question: "Are my cramps normal or a sign of something more?",
+                            answer: "Mild cramps? Normal. Pain that keeps you from daily life? Not normal.\n\nSevere cramps could indicate endometriosis, fibroids, or PCOS—tracking pain patterns helps uncover the cause."
+                        ),
+                        QAItem(
+                            question: "What if my period has stopped suddenly?",
+                            answer: "Missed a period (and you're not pregnant)? Stress, hormonal shifts, extreme exercise, or medical conditions could be the cause.\n\nIf it happens often, a health check can provide answers."
+                        )
+                    ]
+                ),
+            QuestionCategory(
+                    name: "Symptoms & Solutions",
+                    items: [
+                        QAItem(question: "What are some nutrient-rich foods that support menstrual health?", answer: "Fuel your cycle with iron-rich spinach, magnesium-packed dark chocolate, and omega-3-rich nuts. Your body works hard—give it what it needs."),
+                        QAItem(question: "What are some dietary strategies for managing common menstrual symptoms?", answer: "Small changes, big relief. Balance your plate with whole foods, fiber, and protein. Reduce salty, processed foods to keep bloating at bay."),
+                        QAItem(question: "What should I do when I get cramps?", answer: "Heat, movement, and hydration. A warm compress, gentle stretching, or sipping ginger tea can ease the discomfort. Your body is adjusting—be kind to it."),
+                        QAItem(question: "When should I see a doctor for cramps and pain?", answer: "If cramps stop you from living your day, last longer than normal, or don’t improve with home remedies, it’s worth checking in with a doctor."),
+                        QAItem(question: "What is causing my Heavy Menstrual Bleeding?", answer: "Hormones, fibroids, or even stress could be at play. If you're soaking through pads quickly or feeling extra fatigued, it's time to seek guidance."),
+                        QAItem(question: "How do symptoms vary throughout the cycle?", answer: "Your cycle is a rhythm, not a straight line. Energy may soar after your period, emotions may shift mid-cycle, and cravings or cramps might appear before your next flow."),
+                        QAItem(question: "What role does hydration play in menstrual health?", answer: "Water helps everything flow smoothly—literally. Staying hydrated reduces bloating, fatigue, and headaches while keeping your body balanced."),
+                        QAItem(question: "Why do I feel exhausted during my period?", answer: "Your body is losing iron, and hormones are shifting. Rest, fuel up on leafy greens, and listen to what your body needs."),
+                        QAItem(question: "Is it normal to feel dizzy during my period?", answer: "A little lightheadedness can happen due to low iron or blood pressure shifts. But if it’s frequent or severe, checking with a doctor is a good call."),
+                        QAItem(question: "Why do I get headaches before my period?", answer: "Hormonal drops before your period can trigger headaches. Staying hydrated, managing stress, and keeping blood sugar stable can help."),
+                        QAItem(question: "Can my period cause nausea?", answer: "Yes, period-related nausea is common due to hormonal shifts and prostaglandins. Small, frequent meals and ginger tea can ease the queasiness."),
+                        QAItem(question: "Why do my breasts hurt before my period?", answer: "Hormones cause fluid retention, making breasts feel sore. Wearing a supportive bra and reducing salty foods can help."),
+                        QAItem(question: "Is it normal to feel emotional before my period?", answer: "Completely. Mood swings are linked to hormonal shifts. Gentle movement, fresh air, and balanced meals can help stabilize emotions."),
+                        QAItem(question: "Why do I crave junk food before my period?", answer: "Your body is prepping for hormone changes, making carbs and sugar extra tempting. Balance cravings with nutrient-rich snacks."),
+                        QAItem(question: "Can my period make my skin break out?", answer: "Yes, hormonal fluctuations can cause breakouts, especially around the jawline. A simple, gentle skincare routine keeps things under control."),
+                    ]
+                ),
+            QuestionCategory(
+                    name: "Breaking the Myths",
+                    items: [
+                        QAItem(question: "Is menstruation a taboo subject?", answer: "In many places, yes—but it shouldn’t be. Periods are a natural, biological process. Breaking the silence starts with open conversations."),
+                        QAItem(question: "Why do some Indian mothers still tell their daughters to hide their period products?", answer: "Years of conditioning have made periods something to ‘conceal.’ But new generations are rewriting this narrative with openness and confidence."),
+                        QAItem(question: "How can LGBTQ+ individuals access menstrual products without stigma?", answer: "Gender-neutral product packaging, inclusive restroom policies, and education help create a more accessible, stigma-free experience for all."),
+                        QAItem(question: "How can LGBTQ+ organizations and community centers support menstrual health initiatives?", answer: "By recognizing that not all who menstruate identify as women. Inclusive education, gender-neutral product access, and safe spaces help all individuals manage their health."),
+                        QAItem(question: "What role do menstrual taboos play in maintaining social order in certain cultures?", answer: "In some cultures, menstrual taboos stem from ancient beliefs about purity and impurity. While traditions shape societies, education helps rewrite the narrative."),
+                        QAItem(question: "How does menstrual inequity impact girls' education in developing nations?", answer: "Lack of access to menstrual products and hygiene facilities forces many girls to miss school. When periods become a barrier, education and opportunity suffer."),
+                        QAItem(question: "How did early menstrual product advertisements reflect societal attitudes towards menstruation?", answer: "Early ads avoided direct language, using ‘hygiene’ instead of ‘periods.’ Over time, marketing evolved—now, brands embrace transparency and empowerment."),
+                        QAItem(question: "What were some cultural clashes that arose regarding menstrual practices during colonial rule?", answer: "Colonial rulers often dismissed indigenous menstrual practices, imposing Western norms. This led to clashes over beliefs, hygiene, and women’s autonomy."),
+                        QAItem(question: "How can sexual health education address menstrual equity and social justice?", answer: "By making periods part of the conversation. Normalizing menstrual health in schools and communities ensures access, dignity, and informed choices for all."),
+                        QAItem(question: "How does a father's attitude towards menstruation influence their daughters' perceptions of menstrual health?", answer: "Fathers who talk openly about periods help normalize them. A supportive dad can empower his daughter to embrace her cycle with confidence."),
+                        QAItem(question: "How can fathers help reduce menstrual stigma and shame experienced by their daughters?", answer: "By learning, listening, and normalizing. Simple acts—like buying menstrual products or discussing periods casually—break outdated taboos."),
+                        QAItem(question: "How do workplace policies regarding menstrual leave vary across different countries?", answer: "Some countries, like Japan and Indonesia, offer menstrual leave, while others barely acknowledge period pain. The conversation on workplace equity is growing."),
+                        QAItem(question: "Why are menstruating women still banned from temples in parts of India?", answer: "This belief ties back to purity myths. But times are changing—activists and communities are challenging these outdated restrictions."),
+                        QAItem(question: "Why do some Indian families still avoid discussing periods?", answer: "Generations of silence have made periods a ‘women’s issue.’ But with education and awareness, open discussions are finally becoming the norm."),
+                        QAItem(question: "Why do some cultures believe menstruating women shouldn't cook or touch food?", answer: "These myths stem from historical misconceptions. Science says otherwise—menstruation doesn’t affect food or energy in any way."),
+                        QAItem(question: "How can schools in India improve menstrual health awareness?", answer: "By introducing period education early, providing free products, and training teachers to create safe, stigma-free spaces."),
+                        QAItem(question: "How does social media impact menstrual stigma?", answer: "Social media is both a myth-buster and an amplifier of stigma. More open discussions are breaking taboos, one post at a time."),
+                        QAItem(question: "What’s the impact of pink tax on menstrual products?", answer: "Some countries still tax pads and tampons as ‘luxury’ items, making them less accessible. Activists worldwide are pushing for tax-free period care."),
+                    ]
+                ),
+            QuestionCategory(
+                    name: "When to See a Doctor",
+                    items: [
+                        QAItem(question: "When should I see a doctor about my irregular periods?", answer: "If your cycle is constantly unpredictable, missing for months, or shorter than 21 days, it’s worth a check-in. Your period should work for you, not against you."),
+                        QAItem(question: "How many days of period delay is normal before I should worry?", answer: "A few days’ delay is common due to stress, travel, or hormonal shifts. But if you miss multiple cycles or experience sudden changes, a doctor can help."),
+                        QAItem(question: "What does it mean if my period suddenly stops?", answer: "Pregnancy, stress, excessive exercise, or hormone imbalances could be at play. If it’s been months with no period, getting checked is a good idea."),
+                        QAItem(question: "When should I be concerned about heavy menstrual bleeding?", answer: "If you’re soaking through pads every 1-2 hours, passing large clots, or feeling weak and lightheaded, heavy bleeding isn’t just inconvenient—it’s a sign to seek medical advice."),
+                        QAItem(question: "How do I know if my period cramps are abnormal?", answer: "Mild cramps are normal, but if pain keeps you from school, work, or daily activities—even with pain relief—it’s time to explore underlying causes."),
+                        QAItem(question: "Is spotting between periods a sign of a serious issue?", answer: "Occasional light spotting can be normal, but if it’s frequent, heavy, or happens after intimacy, it’s best to check in with a doctor."),
+                        QAItem(question: "Should I see a doctor if my periods are less than 21 days apart?", answer: "Yes! Frequent cycles could indicate hormonal imbalances or other underlying conditions that need attention."),
+                        QAItem(question: "How can I tell if my discharge is normal or a sign of infection?", answer: "Healthy discharge is clear or white with a mild scent. If it's thick, greenish, has a strong odor, or comes with itching, it's time to check in."),
+                        QAItem(question: "What symptoms of PCOS or PCOD should I watch out for?", answer: "Irregular cycles, acne, unexplained weight changes, and excess hair growth can be signs. If something feels off, tracking symptoms helps."),
+                        QAItem(question: "When should I get tested for hormonal imbalances?", answer: "If you’re dealing with irregular periods, persistent acne, mood swings, or extreme fatigue, testing your hormones can offer answers."),
+                        QAItem(question: "What are the signs of anemia due to heavy periods?", answer: "Feeling constantly tired, dizzy, pale, or short of breath? These could be signs of iron deficiency caused by heavy bleeding."),
+                        QAItem(question: "How do I know if I have endometriosis?", answer: "Severe cramps, pain during intimacy, heavy bleeding, or trouble with digestion during your cycle might indicate endometriosis. A doctor can help diagnose it."),
+                        QAItem(question: "Why do I experience dizziness or fainting during my period?", answer: "Low blood pressure, anemia, or sudden hormonal shifts can cause dizziness. If it’s frequent or extreme, getting checked is a good call."),
+                        QAItem(question: "Why do I feel nauseous or have digestive issues during my period?", answer: "Hormones can slow digestion, leading to nausea, bloating, or even period-related diarrhea. If it's severe, a doctor can help."),
+                        QAItem(question: "When should I see a doctor about period-related migraines?", answer: "If headaches are intense, happen every cycle, or come with vision issues, period-related migraines could be the cause—and treatment options exist."),
+                        QAItem(question: "Can birth control affect my period symptoms?", answer: "Yes! It can lighten periods, ease cramps, or regulate cycles—but it can also cause spotting or changes. A doctor can help find the right fit for you."),
+                        QAItem(question: "What does it mean if my periods are extremely painful?", answer: "Pain that interrupts your life isn’t normal. Conditions like endometriosis, fibroids, or hormonal imbalances could be the cause—checking with a doctor helps."),
+                        QAItem(question: "Could stress be making my periods irregular?", answer: "Absolutely. Stress affects hormones, which can delay or even skip cycles. Finding ways to relax can help bring your cycle back on track."),
+                    ]
+                ),
+            QuestionCategory(
+                    name: "The Little Things That Matter",
+                    items: [
+                        QAItem(
+                            question: "How does my hair change during periods?",
+                            answer: "Ever had a great hair day right before your period? That’s estrogen at work. But during your period, oil production shifts, making hair feel drier or greasier. A little extra care goes a long way!"
+                        ),
+                        QAItem(
+                            question: "How does my menstrual cycle affect my mood?",
+                            answer: "Your cycle is a wave of hormonal changes. Some days, you’ll feel energized and social; others, a little more reflective. Knowing your cycle means understanding yourself better."
+                        ),
+                        QAItem(
+                            question: "Is it true that menstruating individuals should avoid physical activity during their period?",
+                            answer: "Nope! Movement can actually help with cramps, boost mood, and reduce bloating. Listen to your body—some days call for yoga, others for a rest day."
+                        ),
+                        QAItem(
+                            question: "Why is syncing with your cycle important?",
+                            answer: "Your cycle isn’t just about periods—it’s about energy, focus, and emotions. Syncing your workouts, work schedule, and self-care with your cycle helps you feel your best every day."
+                        ),
+                        QAItem(
+                            question: "How does exercise affect my menstrual cycle?",
+                            answer: "Movement supports hormone balance, reduces stress, and even helps regulate cycles. Just don’t overdo it—too much intensity can disrupt your cycle."
+                        ),
+                        QAItem(
+                            question: "What should I do when I get cramps?",
+                            answer: "Heat, hydration, and movement are your best friends. A warm compress, gentle stretching, or sipping ginger tea can make a world of difference."
+                        ),
+                        QAItem(
+                            question: "At what age do periods stop?",
+                            answer: "Menopause typically happens between 45-55 years old. But every body is different—genetics, lifestyle, and health all play a role in the timing."
+                        )
+                    ]
                 )
+            
         ]
 
     }
-    
-//    func loadQAData() {
-//        let fileName = "menstrual_awareness"
-//        guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else {
-//            print("File not found: \(fileName).csv")
-//            return
-//        }
-//        
-//        do {
-//            let fileURL = URL(fileURLWithPath: path)
-//            let fileContent = try String(contentsOf: fileURL, encoding: .utf8)
-//            
-//            // Parse CSV content manually
-//            var tempDict: [String: String] = [:]
-//            let rows = fileContent.components(separatedBy: .newlines)
-//            
-//            for row in rows {
-//                let columns = row.components(separatedBy: ",")
-//                if columns.count >= 2 {
-//                    let question = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
-//                    let answer = columns[1...].joined(separator: ",").trimmingCharacters(in: .whitespacesAndNewlines)
-//                    tempDict[question] = answer
-//                }
-//            }
-//            
-//            self.qaDictionary = tempDict
-//            print("QA Data Loaded Successfully")
-//            print("Loaded \(qaDictionary.count) questions and answers.")
-//            
-//        } catch {
-//            print("Error loading file: \(error)")
-//        }
-//    }
-
-
-    
       
     //MARK: - Svaraa's Life functions
     
@@ -716,6 +833,9 @@ class DataController: ObservableObject {
     
     func getQADictionary() -> [String: String] {
         qaDictionary
+    }
+    func getAllQuestionCategories() -> [QuestionCategory] {
+        questionCategories
     }
     
     //MARK: - Svaraa's Logs functions
