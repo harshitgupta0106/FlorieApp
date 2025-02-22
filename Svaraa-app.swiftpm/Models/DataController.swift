@@ -21,6 +21,7 @@ class DataController: ObservableObject {
     private var qaDictionary: [String : String] = [:]
     private var pcodDetectQuestions: [String] = []
     private var pcosDetectQuestions: [String] = []
+    private var questionCategories: [QuestionCategory] = []
     
     private var stories: [Story] = []
     
@@ -31,7 +32,7 @@ class DataController: ObservableObject {
     private init() {
         loadData()
         loadCheckLists()
-        loadQAData()
+        loadQA()
 //        print(qaDictionary)
     }
     //MARK: - Data filling
@@ -323,38 +324,325 @@ class DataController: ObservableObject {
         ]
     }
     
-    func loadQAData() {
-        let fileName = "menstrual_awareness"
-        guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else {
-            print("File not found: \(fileName).csv")
-            return
-        }
-        
-        do {
-            let fileURL = URL(fileURLWithPath: path)
-            let fileContent = try String(contentsOf: fileURL, encoding: .utf8)
-            
-            // Parse CSV content manually
-            var tempDict: [String: String] = [:]
-            let rows = fileContent.components(separatedBy: .newlines)
-            
-            for row in rows {
-                let columns = row.components(separatedBy: ",")
-                if columns.count >= 2 {
-                    let question = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
-                    let answer = columns[1...].joined(separator: ",").trimmingCharacters(in: .whitespacesAndNewlines)
-                    tempDict[question] = answer
-                }
-            }
-            
-            self.qaDictionary = tempDict
-            print("QA Data Loaded Successfully")
-            print("Loaded \(qaDictionary.count) questions and answers.")
-            
-        } catch {
-            print("Error loading file: \(error)")
-        }
+    func loadQA() {
+        questionCategories = [
+            QuestionCategory(
+                name: "Menstrual Health & Cycle",
+                items: [
+                    QAItem(
+                        question: "What is considered a normal menstrual flow?",
+                        answer: "A normal menstrual flow is one that is neither too heavy nor too light. Typically, it means changing a pad or tampon every 4 to 6 hours. Your body follows its rhythm—some variations are normal."
+                    ),
+                    QAItem(
+                        question: "I do not understand periods. What is a period?",
+                        answer: "A period is the body’s way of resetting. Every month, the uterus prepares for a possible pregnancy. If that doesn’t happen, the lining sheds, leading to a period. It's natural, it's normal, and it’s a sign of a healthy cycle."
+                    ),
+                    QAItem(
+                        question: "When did a person find out about periods?",
+                        answer: "The moment of discovery is different for everyone. Some learn about it in school, others through family. It’s a journey, and the more you know, the more confident you become."
+                    ),
+                    QAItem(
+                        question: "How long does ovulation usually last during the menstrual cycle?",
+                        answer: "Ovulation typically lasts 24 to 48 hours. This is when the ovary releases an egg, making it the most fertile time in the cycle."
+                    ),
+                    QAItem(
+                        question: "What percentage of menstruating individuals experience mood swings during their cycle?",
+                        answer: "Science says nearly 75% experience mood shifts due to hormonal changes. Think of it as your body fine-tuning emotions—sometimes subtly, sometimes noticeably."
+                    ),
+                    QAItem(
+                        question: "What is the difference between hormonal imbalance and irregular periods?",
+                        answer: "Hormonal imbalance means your body has too much or too little of a hormone like estrogen or progesterone. \n\nThis can be triggered by stress, diet, or medical conditions. Irregular periods, on the other hand, happen when your cycle doesn’t follow a predictable pattern. If things seem off, it’s always good to check in with a doctor."
+                    ),
+                    QAItem(
+                        question: "What does it mean if my period blood is pink?",
+                        answer: "Pink period blood often means it's mixed with cervical fluid. It could be spotting between cycles, ovulation bleeding, or even a sign of low estrogen levels. If it happens frequently, a doctor’s advice can help."
+                    ),
+                    QAItem(
+                        question: "My periods are a weird color. What should I do?",
+                        answer: "Your period’s color can range from bright red to dark brown—it’s all part of the cycle. But if you notice anything unusual, like grayish tones or a sudden drastic change, it might be worth checking in with a healthcare provider."
+                    ),
+                    QAItem(
+                        question: "What are the small clots in my period?",
+                        answer: "Period clots are completely normal! They’re just the uterus shedding its lining. As long as they’re small and occasional, there's nothing to worry about."
+                    ),
+                    QAItem(
+                        question: "Why does period blood smell bad?",
+                        answer: "Period blood itself doesn’t have an odor, but when it mixes with bacteria, it can develop a scent. \n\nKeeping good hygiene, like changing pads or tampons regularly, helps keep things fresh and comfortable."
+                    )
+                ]
+            ),
+            QuestionCategory(
+                    name: "PCOS & PCOD",
+                    items: [
+                        QAItem(
+                            question: "What is Polycystic Ovary Syndrome (PCOS)?",
+                            answer: "PCOS is a hormonal condition where the ovaries may produce excess androgens (male hormones) and develop small fluid-filled sacs. \n\nIt can affect your cycle, skin, weight, and energy levels. The good news? Understanding it helps manage it."
+                        ),
+                        QAItem(
+                            question: "Tell me about irregular period cycles.",
+                            answer: "Irregular cycles can mean shorter than 21 days or longer than 35 days. They can be caused by stress, hormonal shifts, or underlying conditions like PCOS. If your cycle feels unpredictable, tracking it can help."
+                        ),
+                        QAItem(
+                            question: "If the period lasts 3 days, does that mean a low chance of fertility?",
+                            answer: "Not necessarily! Menstrual cycles are unique to each person. A 3-day period can be completely normal. Fertility depends on ovulation, cycle health, and hormone balance."
+                        ),
+                        QAItem(
+                            question: "What treatment modalities are available for managing endometriosis-related menstrual symptoms?",
+                            answer: "Managing endometriosis can involve hormonal therapy, pain management, or, in some cases, surgery. A tailored approach with a doctor ensures the best plan for you."
+                        ),
+                        QAItem(
+                            question: "Can PCOS cause mood swings or anxiety?",
+                            answer: "Yes! PCOS impacts hormones like estrogen and progesterone, which influence mood. Some experience anxiety or mood swings, but lifestyle changes and support can help."
+                        ),
+                        QAItem(
+                            question: "What are the early signs of PCOS in teenagers?",
+                            answer: "Early signs include irregular periods, acne, unexpected weight changes, and increased hair growth. Noticing these? A simple health check can bring clarity."
+                        ),
+                        QAItem(
+                            question: "How does PCOS affect weight and metabolism?",
+                            answer: "PCOS can make it easier to gain weight and harder to lose it due to insulin resistance. The key? Balanced nutrition, movement, and stress management—it’s about progress, not perfection."
+                        ),
+                        QAItem(
+                            question: "Can someone have PCOS without cysts on their ovaries?",
+                            answer: "Absolutely! PCOS is more about hormone imbalances than actual cysts. Some people with PCOS don’t have cysts, and some with ovarian cysts don’t have PCOS."
+                        ),
+                        QAItem(
+                            question: "Why does PCOS cause excessive hair growth?",
+                            answer: "PCOS can lead to increased levels of androgens (male hormones), which may cause extra hair growth on the face, chest, or back. It’s a common symptom, and there are ways to manage it."),
+                        QAItem(
+                            question: "Does birth control help with PCOS?",
+                            answer: "Yes! Birth control can help regulate periods, reduce acne, and manage symptoms like excess hair growth. But it’s just one option—talking to a doctor can help find what works best for you."
+                        ),
+                        QAItem(
+                            question: "What lifestyle changes can help manage PCOS symptoms?",
+                            answer: "Small, consistent changes matter—balancing meals with protein and fiber, managing stress, getting enough sleep, and staying active can all support hormone balance."
+                        ),
+                        QAItem(
+                            question: "Can PCOS go away on its own?",
+                            answer: "PCOS doesn’t ‘go away,’ but its symptoms can be managed. The right approach—lifestyle, medical support, and self-care—can make a big difference."
+                        ),
+                        QAItem(
+                            question: "What foods are good for managing PCOS?",
+                            answer: "Think whole foods: leafy greens, lean proteins, fiber-rich carbs, and healthy fats. Keeping blood sugar stable is key, so pairing carbs with protein helps."
+                        ),
+                        QAItem(
+                            question: "How does PCOS affect acne and skin health?",
+                            answer: "Hormonal imbalances can lead to breakouts, especially along the jawline. Managing stress, skincare, and balanced nutrition can help keep your skin happy."
+                        ),
+                        QAItem(
+                            question: "What’s the difference between PCOS and PCOD?",
+                            answer: "PCOS is a hormonal disorder that affects metabolism and ovulation, while PCOD (Polycystic Ovarian Disorder) is a broader term for cyst formation. PCOS has more systemic effects on health."),
+                        QAItem(
+                            question: "What is Polycystic Ovarian Disorder (PCOD)?",
+                            answer: "PCOD is when the ovaries develop multiple small follicles that can lead to irregular periods. Unlike PCOS, it doesn’t always cause major hormonal imbalances and is often managed with lifestyle changes."
+                        ),
+                        QAItem(
+                            question: "Can PCOD cause weight gain?",
+                            answer: "PCOD doesn’t always lead to weight gain, but it can impact metabolism slightly. A balanced diet and movement can help keep things in check."
+                        ),
+                        QAItem(
+                            question: "Does PCOD affect fertility?",
+                            answer: "It can, but not always. Many people with PCOD conceive naturally. Tracking ovulation and maintaining a healthy lifestyle can support fertility."
+                        ),
+                        QAItem(
+                            question: "Can stress make PCOD worse?",
+                            answer: "Yes! Stress affects cortisol levels, which in turn can disrupt ovulation and menstrual cycles. Finding ways to relax can help balance your cycle."
+                        ),
+                        QAItem(
+                            question: "Do all women with PCOD have irregular periods?",
+                            answer: "Not necessarily. Some may have regular but lighter periods, while others may experience irregular cycles. Every body is different."
+                        ),
+                        QAItem(
+                            question: "Is PCOD reversible?",
+                            answer: "PCOD can be managed effectively with diet, exercise, and lifestyle changes. Over time, symptoms can improve, but keeping a healthy routine is key."
+                        ),
+                        QAItem(
+                            question: "Can PCOD cause skin issues like acne?",
+                            answer: "Yes! Hormonal imbalances from PCOD can lead to acne, especially on the jawline and chin. Good skincare and a balanced diet can help."
+                        ),
+                        QAItem(
+                            question: "What foods should I avoid if I have PCOD?",
+                            answer: "Minimizing processed foods, excess sugar, and dairy may help some people manage symptoms. Think whole foods, fiber, and healthy fats!"
+                        ),
+                        QAItem(
+                            question: "How can I naturally regulate my periods with PCOD?",
+                            answer: "Regular movement, stress management, and balanced nutrition can support more predictable cycles. Small changes add up!"
+                        ),
+                        QAItem(
+                            question: "Does PCOD lead to excessive hair growth like PCOS?",
+                            answer: "PCOD usually doesn’t cause excessive hair growth as PCOS does, but some hormonal fluctuations can lead to mild changes."
+                        ),
+                        QAItem(
+                            question: "Can exercise help with PCOD?",
+                            answer: "Absolutely! Movement improves insulin sensitivity, supports hormone balance, and helps regulate cycles. It doesn’t have to be intense—find what you enjoy!"
+                        ),
+                        QAItem(
+                            question: "What role does insulin resistance play in PCOD?",
+                            answer: "Unlike PCOS, insulin resistance is not a major factor in PCOD. However, maintaining stable blood sugar can still support hormonal balance."
+                        ),
+                        QAItem(
+                            question: "Do I need medication for PCOD?",
+                            answer: "Not always! Many people manage PCOD with lifestyle changes alone. If symptoms persist, a doctor can help find the best approach."
+                        ),
+                    ]
+                ),
+            QuestionCategory(
+                    name: "UTI & Infections",
+                    items: [
+                        QAItem(
+                            question: "Can I get a urine infection if I am on my periods?",
+                            answer: "Yes, but not because of your period itself. Menstrual hygiene plays a big role—changing pads or tampons regularly and staying hydrated helps keep infections away."
+                        ),
+                        QAItem(
+                            question: "Why do I feel itchy during my periods?",
+                            answer: "Itching during periods can be due to dryness, irritation from pads, or even mild infections. Switching to breathable cotton underwear and fragrance-free products can help."
+                        ),
+                        QAItem(
+                            question: "What is a Urinary Tract Infection (UTI)?",
+                            answer: "A UTI happens when bacteria enter the urinary tract, causing symptoms like burning while peeing, frequent urges, or cloudy urine. It’s common and treatable!"),
+                        QAItem(
+                            question: "How do I know if I have a UTI?",
+                            answer: "If peeing feels like fire, your lower belly aches, or you feel the need to go constantly—those could be signs of a UTI. Drinking water and seeing a doctor early can help."
+                        ),
+                        QAItem(
+                            question: "Can poor menstrual hygiene cause infections?", 
+                            answer: "Yes! Changing pads or tampons every 4-6 hours, wiping front to back, and staying dry help prevent bacterial growth and infections."
+                        ),
+                        QAItem(
+                            question: "Why does my urine smell strong during my period?",
+                            answer: "Period blood itself doesn’t smell, but when it mixes with natural bacteria, it can create an odor. Staying hydrated and practicing good hygiene helps."
+                        ),
+                        QAItem(
+                            question: "Is it normal to feel a burning sensation while urinating on my period?",
+                            answer: "Burning while urinating isn’t a normal period symptom—it could be a UTI, irritation, or even a mild infection. A doctor’s advice can help if it persists."
+                        ),
+                        QAItem(
+                            question: "Can using pads or tampons cause infections?", 
+                            answer: "They don’t directly cause infections, but not changing them often enough can trap bacteria and moisture, increasing the risk."
+                        ),
+                        QAItem(
+                            question: "How can I prevent UTIs naturally?",
+                            answer: "Simple habits make a big difference! Drink plenty of water, don’t hold your pee, wipe front to back, and urinate after intimacy to flush out bacteria."
+                        ),
+                        QAItem(
+                            question: "What’s the difference between a UTI and a yeast infection?",
+                            answer: "UTIs affect the urinary tract, causing pain while peeing. Yeast infections cause itching, thick discharge, and irritation in the vaginal area."
+                        ),
+                        QAItem(
+                            question: "Why do yeast infections happen after my period?",
+                            answer: "Hormonal shifts during your cycle can disrupt vaginal pH, making it easier for yeast to grow. Probiotics and breathable fabrics can help."
+                        ),
+                        QAItem(
+                            question: "Can holding pee for too long cause an infection?",
+                            answer: "Yes! Holding it too long lets bacteria multiply in the bladder, increasing the risk of UTIs. Listen to your body and go when you need to."
+                        ),
+                        QAItem(
+                            question: "What foods help prevent UTIs?",
+                            answer: "Cranberries, blueberries, and probiotic-rich foods like yogurt help keep the urinary tract healthy and balanced."
+                        ),
+                        QAItem(
+                            question: "How do I keep my vaginal area clean during periods?",
+                            answer: "Less is more—warm water is enough! Avoid scented products, wear breathable underwear, and change menstrual products regularly."
+                        ),
+                        QAItem(
+                            question: "Does drinking more water help prevent infections?",
+                            answer: "Yes! Staying hydrated helps flush out bacteria, keeping your urinary and vaginal health in check."
+                        ),
+                    ]
+                ),
+            QuestionCategory(
+                    name: "Menstrual Hygiene & Products",
+                    items: [
+                        QAItem(
+                            question: "What are period panties?",
+                            answer: "Period panties are leak-proof, reusable underwear designed to absorb menstrual flow. Think of them as a backup for pads or tampons—or even a standalone option for lighter days."
+                        ),
+                        QAItem(
+                            question: "What is the main advantage of reusable menstrual products?",
+                            answer: "Sustainability meets savings. Reusable products like menstrual cups and cloth pads reduce waste, save money over time, and offer a comfortable, leak-free experience."
+                        ),
+                        QAItem(
+                            question: "What is the main advantage of menstrual cups in terms of environmental sustainability?",
+                            answer: "One cup, years of impact. Unlike disposables, a single menstrual cup can last up to 10 years, drastically cutting down on plastic waste and landfill buildup."
+                        ),
+                        QAItem(
+                            question: "How do eco-friendly menstrual products contribute to reducing waste in landfills?",
+                            answer: "Every pad and tampon adds up. By choosing reusable products, you help divert thousands of disposables from landfills, making a small switch with a big environmental impact."
+                        ),
+                        QAItem(
+                            question: "How often should I change my pad or tampon?",
+                            answer: "Every 4-6 hours is ideal. For heavier flows, you might need to change more often. Staying fresh means staying comfortable."
+                        ),
+                        QAItem(
+                            question: "Are menstrual cups safe?",
+                            answer: "Yes! They’re made from medical-grade silicone, creating a leak-proof seal without disrupting your body’s natural balance. Plus, no more dryness or irritation."
+                        ),
+                        QAItem(
+                            question: "Do menstrual cups hurt?",
+                            answer: "Not at all! It’s all about the right fold and placement. With practice, you won’t even feel it—just like wearing your favorite comfy sneakers."
+                        ),
+                        QAItem(
+                            question: "Can I swim while using a menstrual cup?",
+                            answer: "Absolutely! Menstrual cups create a secure seal, so no leaks, no worries. Dive in, swim, and enjoy."
+                        ),
+                        QAItem(
+                            question: "What’s the best way to clean a menstrual cup?",
+                            answer: "Rinse with warm water and mild soap between uses, and boil for a few minutes at the end of each cycle. Clean, simple, and ready for next time."
+                        ),
+                        QAItem(
+                            question: "What are the benefits of organic cotton pads and tampons?",
+                            answer: "Gentle on you, gentle on the planet. Organic products skip the chemicals, dyes, and synthetic fibers—so they’re better for your body and biodegrade faster."
+                        ),
+                        QAItem(
+                            question: "Are period tracking apps useful?",
+                            answer: "Absolutely! They help you predict your cycle, track symptoms, and even notice patterns over time. Knowledge is power, and your cycle shouldn’t be a mystery."
+                        ),
+                        QAItem(
+                            question: "Do scented pads or tampons cause irritation?",
+                            answer: "They can! Fragrances and synthetic chemicals may disrupt your body’s natural balance, so unscented, breathable options are always a safer choice."
+                        ),
+                        QAItem(
+                            question: "What’s the most eco-friendly menstrual product?",
+                            answer: "Menstrual cups, cloth pads, and period panties lead the way. They’re reusable, reduce waste, and are kind to both your body and the planet."
+                        ),
+                    ]
+                )
+        ]
+
     }
+    
+//    func loadQAData() {
+//        let fileName = "menstrual_awareness"
+//        guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else {
+//            print("File not found: \(fileName).csv")
+//            return
+//        }
+//        
+//        do {
+//            let fileURL = URL(fileURLWithPath: path)
+//            let fileContent = try String(contentsOf: fileURL, encoding: .utf8)
+//            
+//            // Parse CSV content manually
+//            var tempDict: [String: String] = [:]
+//            let rows = fileContent.components(separatedBy: .newlines)
+//            
+//            for row in rows {
+//                let columns = row.components(separatedBy: ",")
+//                if columns.count >= 2 {
+//                    let question = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
+//                    let answer = columns[1...].joined(separator: ",").trimmingCharacters(in: .whitespacesAndNewlines)
+//                    tempDict[question] = answer
+//                }
+//            }
+//            
+//            self.qaDictionary = tempDict
+//            print("QA Data Loaded Successfully")
+//            print("Loaded \(qaDictionary.count) questions and answers.")
+//            
+//        } catch {
+//            print("Error loading file: \(error)")
+//        }
+//    }
 
 
     

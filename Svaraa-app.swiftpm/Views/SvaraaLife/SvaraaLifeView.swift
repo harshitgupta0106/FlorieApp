@@ -56,7 +56,6 @@ struct SvaraaLifeView: View {
                             .background(Color.indigo.opacity(0.8))
                             .cornerRadius(12)
                             .padding(20)
-//                            .frame(width: 300)
                         Spacer()
                     }
                     GeometryReader { geometry in
@@ -112,14 +111,6 @@ struct SvaraaLifeView: View {
                 progressStory()
             }
         }
-//        .onTapGesture {
-//            if currentStoryIndex == -1 {
-//                // First tap: Load the stored index
-//                currentStoryIndex = storedStoryIndex == -1 ? 0 : storedStoryIndex
-//            } else if !menuOpened {
-//                progressStory()
-//            }
-//        }
     }
     
     private func restartAnimation(geometry: GeometryProxy) {

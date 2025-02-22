@@ -222,7 +222,7 @@ struct SvaraaTalkView: View {
         // 3. Convert values safely
          let heightMeters = Double(heightCM) / 100.0
          let bmi = Double(weightKG) / pow(heightMeters, 2)
-         if (cycleLength > 35 && cycleLength < 21) || bmi < 25 || bleedingResponse == "no" {
+         if (cycleLength > 35 || cycleLength < 21) || bmi < 25 || bleedingResponse == "no" {
              return 0
          }
         return 1

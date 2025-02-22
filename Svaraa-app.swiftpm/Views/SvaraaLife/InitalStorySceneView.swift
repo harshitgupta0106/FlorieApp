@@ -52,7 +52,6 @@ struct GradientView: View {
                 startPoint: .bottom,
                 endPoint: .top
             )
-//            .frame(height: 700)
         }
         
     }

@@ -14,14 +14,16 @@ struct Message: Identifiable, Equatable {
 }
 
 
-struct QAEntry: Codable {
-    let text: String
-    let label: String
-}
-
-struct QuestionCategory {
+struct QuestionCategory: Identifiable {
     let id = UUID()
     let name: String
-    let questions: [String]
-    let answers: [String]
+    let items: [QAItem]
 }
+
+struct QAItem: Identifiable {
+    let id = UUID()
+    let question: String
+    let answer: String
+}
+
+
