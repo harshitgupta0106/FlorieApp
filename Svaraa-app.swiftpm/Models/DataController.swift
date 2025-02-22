@@ -25,13 +25,19 @@ class DataController: ObservableObject {
     
     private var stories: [Story] = []
     
-    private var checkLists: [CheckList] = []
+//    private var checkLists: [CheckList] = []
+    @Published var checkLists: [CheckList] = [] {
+            didSet {
+                saveCheckLists()
+            }
+        }
     
     static let shared = DataController()
     
     private init() {
         loadData()
         loadCheckLists()
+        checkAndResetIfNewDay()
         loadQA()
 //        print(qaDictionary)
     }
@@ -281,47 +287,7 @@ class DataController: ObservableObject {
             "How many hours of sleep do you get per night?"
         ]
         
-        checkLists = [
-            CheckList(
-                
-                name: "PCOS",
-                description: "Small, consistent habits create lasting change. \n\nThis daily checklist is designed to support hormonal balance, reduce inflammation, and boost metabolism—key factors in managing PCOS & PCOD. \n\nWith mindful nutrition, movement, and recovery, you can take control of your well-being, one check at a time. ",
-                
-                morningList: [
-                    CheckListItem(name: "Drink warm lemon water / fenugreek seed water", isChecked: false),
-                    CheckListItem(name: "Eat 5 soaked almonds + 2 walnuts + 1 tsp flaxseeds", isChecked: false),
-                    CheckListItem(name: "Have a high-protein breakfast (Besan chilla / Sprouts / Ragi dosa / Eggs & toast / Paneer bhurji)", isChecked: false),
-                    CheckListItem(name: "10 mins meditation or deep breathing", isChecked: false),
-                    CheckListItem(name: "15–30 mins light exercise (walk, Surya Namaskar)", isChecked: false)
-                ],
-                
-                afternoonList: [
-                    CheckListItem(name: "Drink 1 glass coconut water / buttermilk", isChecked: false),
-                    CheckListItem(name: "Eat 1 fruit (Guava, Papaya, Apple, Pomegranate, Berries)", isChecked: false),
-                    CheckListItem(name: "Eat a balanced lunch (Dal + Millet/Brown Rice + Sabzi + Curd)", isChecked: false),
-                    CheckListItem(name: "Take a 10-minute post-lunch walk", isChecked: false)
-                ],
-                
-                eveningList: [
-                    CheckListItem(name: "Eat a healthy snack (Roasted chana / Makhana / Peanut butter toast / Nuts & seeds)", isChecked: false),
-                    CheckListItem(name: "30–45 mins of exercise (Yoga, Strength Training, Dance, Brisk Walk)", isChecked: false),
-                    CheckListItem(name: "Drink 1 cup herbal tea (Spearmint, Cinnamon, Ginger-Turmeric)", isChecked: false)
-                ],
-                
-                nightList: [
-                    CheckListItem(name: "Eat a light dinner (Moong dal khichdi + Ghee / Soup + Sautéed Veggies / 1 Roti + Sabzi + Paneer/Tofu)", isChecked: false),
-                    CheckListItem(name: "Drink 1 glass warm turmeric milk (Haldi + Almond milk)", isChecked: false),
-                    CheckListItem(name: "5 mins deep breathing / gratitude journaling", isChecked: false),
-                    CheckListItem(name: "Sleep for 7–9 hours", isChecked: false)
-                ],
-                
-                commonList: [
-                    CheckListItem(name: "Drink 2–3 liters of water", isChecked: false),
-                    CheckListItem(name: "Take 5 deep breaths before meals", isChecked: false),
-                    CheckListItem(name: "Avoid screens 30 mins before bed", isChecked: false)
-                ]
-            )
-        ]
+        
     }
     
     func loadQA() {
@@ -330,6 +296,9 @@ class DataController: ObservableObject {
                 name: "Your Cycle, Explained",
                 items: [
                     QAItem(
+                        question: "What should I know about my first period?",
+                        answer: "Your first period is your body’s way of saying, \"You're growing beautifully.\" It might bring surprises—cramps, mood swings, or a \"Wait, what?!\" moment—but don’t worry, you’ve got this. \n\nStay prepared, listen to your body (hello, snacks and cozy blankets!), and remember—every cycle is unique, just like you. \n\nIf you’re unsure, talk to someone you trust. You’re not alone."
+                    ),QAItem(
                         question: "What is considered a normal menstrual flow?",
                         answer: "A normal menstrual flow is one that is neither too heavy nor too light. Typically, it means changing a pad or tampon every 4 to 6 hours. Your body follows its rhythm—some variations are normal."
                     ),
@@ -490,7 +459,7 @@ class DataController: ObservableObject {
                     ),
                     QAItem(
                         question: "Can exercise help with PCOD?",
-                        answer: "Absolutely! Movement supports hormone balance, improves insulin sensitivity, and helps regulate cycles. It’s about finding what feels good for *you*."
+                        answer: "Absolutely! Movement supports hormone balance, improves insulin sensitivity, and helps regulate cycles. It’s about finding what feels good for you."
                     ),
                     QAItem(
                         question: "What role does insulin resistance play in PCOD?",
@@ -628,7 +597,7 @@ class DataController: ObservableObject {
                     items: [
                         QAItem(
                             question: "Could I have PCOS?",
-                            answer: "If your periods are irregular, you’re noticing excess hair growth, unexplained weight changes, or persistent acne, PCOS *might* be a factor.\n\nTracking symptoms and checking with a doctor can help bring clarity."
+                            answer: "If your periods are irregular, you’re noticing excess hair growth, unexplained weight changes, or persistent acne, PCOS might be a factor.\n\nTracking symptoms and checking with a doctor can help bring clarity."
                         ),
                         QAItem(
                             question: "Could I have PCOD?",
@@ -640,7 +609,7 @@ class DataController: ObservableObject {
                         ),
                         QAItem(
                             question: "Could I have endometriosis?",
-                            answer: "If your cramps feel unbearable, periods are extremely heavy, or you experience pain during intimacy, endometriosis *could* be the reason.\n\nA doctor’s visit can provide answers and relief."
+                            answer: "If your cramps feel unbearable, periods are extremely heavy, or you experience pain during intimacy, endometriosis could be the reason.\n\nA doctor’s visit can provide answers and relief."
                         ),
                         QAItem(
                             question: "Could my period symptoms mean I have thyroid issues?",
@@ -840,8 +809,8 @@ class DataController: ObservableObject {
     
     //MARK: - Svaraa's Logs functions
     
-    func getPCOSCheckList() -> CheckList? {
-        checkLists.filter { $0.name == "PCOS" }.first
+    func getPCOSCheckList() -> CheckList {
+        checkLists.first ?? CheckList(name: "", description: "", morningList: [], afternoonList: [], eveningList: [], nightList: [], commonList: [])
     }
     
     func toggleCheckItem(checkListIndex: Int, category: ChecklistCategory, itemIndex: Int) {
@@ -879,6 +848,48 @@ class DataController: ObservableObject {
         if let savedData = UserDefaults.standard.data(forKey: "savedCheckLists"),
            let decodedCheckLists = try? JSONDecoder().decode([CheckList].self, from: savedData) {
             checkLists = decodedCheckLists
+        } else {
+            checkLists = [
+                CheckList(
+                    
+                    name: "PCOS",
+                    description: "Small, consistent habits create lasting change. \n\nThis daily checklist is designed to support hormonal balance, reduce inflammation, and boost metabolism—key factors in managing PCOS & PCOD. \n\nWith mindful nutrition, movement, and recovery, you can take control of your well-being, one check at a time. ",
+                    
+                    morningList: [
+                        CheckListItem(name: "Drink warm lemon water / fenugreek seed water"),
+                        CheckListItem(name: "Eat 5 soaked almonds + 2 walnuts + 1 tsp flaxseeds"),
+                        CheckListItem(name: "Have a high-protein breakfast (Besan chilla / Sprouts / Ragi dosa / Eggs & toast / Paneer bhurji)"),
+                        CheckListItem(name: "10 mins meditation or deep breathing"),
+                        CheckListItem(name: "15–30 mins light exercise (walk, Surya Namaskar)")
+                    ],
+                    
+                    afternoonList: [
+                        CheckListItem(name: "Drink 1 glass coconut water / buttermilk"),
+                        CheckListItem(name: "Eat 1 fruit (Guava, Papaya, Apple, Pomegranate, Berries)"),
+                        CheckListItem(name: "Eat a balanced lunch (Dal + Millet/Brown Rice + Sabzi + Curd)"),
+                        CheckListItem(name: "Take a 10-minute post-lunch walk")
+                    ],
+                    
+                    eveningList: [
+                        CheckListItem(name: "Eat a healthy snack (Roasted chana / Makhana / Peanut butter toast / Nuts & seeds)"),
+                        CheckListItem(name: "30–45 mins of exercise (Yoga, Strength Training, Dance, Brisk Walk)"),
+                        CheckListItem(name: "Drink 1 cup herbal tea (Spearmint, Cinnamon, Ginger-Turmeric)")
+                    ],
+                    
+                    nightList: [
+                        CheckListItem(name: "Eat a light dinner (Moong dal khichdi + Ghee / Soup + Sautéed Veggies / 1 Roti + Sabzi + Paneer/Tofu)"),
+                        CheckListItem(name: "Drink 1 glass warm turmeric milk (Haldi + Almond milk)"),
+                        CheckListItem(name: "5 mins deep breathing / gratitude journaling"),
+                        CheckListItem(name: "Sleep for 7–9 hours")
+                    ],
+                    
+                    commonList: [
+                        CheckListItem(name: "Drink 2–3 liters of water"),
+                        CheckListItem(name: "Take 5 deep breaths before meals"),
+                        CheckListItem(name: "Avoid screens 30 mins before bed")
+                    ]
+                )
+            ]
         }
     }
 
@@ -886,7 +897,45 @@ class DataController: ObservableObject {
     func getCheckLists() -> [CheckList] {
         return checkLists
     }
+    
+    func getCheckListsProgress() -> Double {
+        getPCOSCheckList().progress
+    }
 
+    
+    private func checkAndResetIfNewDay() {
+            let calendar = Calendar.current
+            let lastSavedDate = UserDefaults.standard.object(forKey: "lastSavedDate") as? Date ?? Date()
+            let currentDate = Date()
+            
+            if !calendar.isDate(lastSavedDate, inSameDayAs: currentDate) {
+                resetAllCheckItems()
+                UserDefaults.standard.set(currentDate, forKey: "lastSavedDate")
+            }
+        }
+        
+        private func resetAllCheckItems() {
+            for i in checkLists.indices {
+                resetListItems(&checkLists[i].morningList)
+                resetListItems(&checkLists[i].afternoonList)
+                resetListItems(&checkLists[i].eveningList)
+                resetListItems(&checkLists[i].nightList)
+                resetListItems(&checkLists[i].commonList)
+            }
+            saveCheckLists()
+        }
+        
+        private func resetListItems(_ list: inout [CheckListItem]) {
+            for j in list.indices {
+                list[j].isChecked = false
+            }
+        }
+        
+//        private func setupNotifications() {
+//            NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] _ in
+//                self?.checkAndResetIfNewDay()
+//            }
+//        }
     
     
     

@@ -1,24 +1,22 @@
 import SwiftUI
-
 struct CheckListView: View {
-    @State var checkList: CheckList? = DataController.shared.getPCOSCheckList()
+    @State var checkList: CheckList = DataController.shared.getPCOSCheckList()
     @State private var selectedList: [CheckListItem] = []
-    @State private var isSheetPresented: Bool = false
+    @State var isSheetPresented: Bool = false
     @State private var selectedTimeOfDay: ChecklistCategory = .morning
-
+    @State var overallProgress: Double = DataController.shared.getCheckListsProgress()
 
     var body: some View {
-        if let checkList {
             ScrollView {
                 VStack(alignment: .center, spacing: 15) {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(String(format: "%.0f", checkList.progress))%")
+                            Text("\(String(format: "%.0f", overallProgress))%")
                                 .font(.title)
                                 .bold()
                             Text("Overall progress")
                                 .font(.headline)
-                            ProgressView(value: checkList.progress, total: 100)
+                            ProgressView(value: overallProgress, total: 100)
                         }
                         .padding(15)
                         Spacer()
@@ -29,7 +27,6 @@ struct CheckListView: View {
                             checkListItemName: "Morning",
                             isSmall: true,
                             imageName: "Morning",
-                            bgColor: "#A86CB8",
                             checkListItems: checkList.morningList,
                             onTap: {
                                 selectedList = checkList.morningList
@@ -41,7 +38,6 @@ struct CheckListView: View {
                             checkListItemName: "Afternoon",
                             isSmall: true,
                             imageName: "Afternoon",
-                            bgColor: "#83A852",
                             checkListItems: checkList.afternoonList,
                             onTap: {
                                 selectedList = checkList.afternoonList
@@ -55,7 +51,6 @@ struct CheckListView: View {
                             checkListItemName: "Evening",
                             isSmall: true,
                             imageName: "Evening",
-                            bgColor: "#0097B2",
                             checkListItems: checkList.eveningList,
                             onTap: {
                                 selectedList = checkList.eveningList
@@ -67,7 +62,6 @@ struct CheckListView: View {
                             checkListItemName: "Night",
                             isSmall: true,
                             imageName: "Night",
-                            bgColor: "#EF8E6D",
                             checkListItems: checkList.nightList,
                             onTap: {
                                 selectedList = checkList.morningList
@@ -82,7 +76,6 @@ struct CheckListView: View {
                         checkListItemName: "Whole day common",
                         isSmall: false,
                         imageName: "Common",
-                        bgColor: "#A86CB8",
                         checkListItems: checkList.commonList,
                         onTap: {
                             selectedList = checkList.commonList
@@ -92,13 +85,15 @@ struct CheckListView: View {
                     )
                     Spacer()
                 }
+                .onAppear {
+                    overallProgress = DataController.shared.getCheckListsProgress()
+                }
             }
-            .sheet(isPresented: $isSheetPresented) {
-                CheckBoxListItemView(timeOfDay: selectedTimeOfDay, checkListItems: $selectedList)
+            .sheet(isPresented: $isSheetPresented, onDismiss: {
+                overallProgress = DataController.shared.getCheckListsProgress()
+            }) {
+                CheckBoxListItemView(selectedTimeOfDay: $selectedTimeOfDay, checkList: $checkList, isSheetPresented: $isSheetPresented)
             }
-
-
-        }
     }
 }
 
@@ -106,15 +101,12 @@ struct CheckListItemView: View {
     var checkListItemName: String
     var isSmall: Bool
     var imageName: String
-    var bgColor: String
     var checkListItems: [CheckListItem]
-    var onTap: () -> Void  // Closure for handling tap event
-//    @State var checkedItem: Int = 0
+    var onTap: () -> Void
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-//                Text("\(checkedItem)/\(checkListItems.count)")
-                Text("1/\(checkListItems.count)")
+                Text("\(completedTasksCount(for: checkListItems))/\(checkListItems.count)")
                     .font(.headline)
                 Text(checkListItemName)
                     .font(.subheadline)
@@ -129,24 +121,143 @@ struct CheckListItemView: View {
         }
         .frame(width: isSmall ? 150 : 345, height: 150)
         .padding()
-        .background(Color(hex: bgColor))
+        .background(Color.accentColor.opacity(0.8))
         .cornerRadius(12)
         .onTapGesture {
             onTap()  // Call the closure to update selectedList & show sheet
         }
     }
     
-//    func calculateCheckedItems() -> Int {
-//        checkedItem = checkListItems.reduce(into: 0) { result, item in
-//            if item.isChecked {
-//                result += 1
-//            }
-//        }
-//    }
+    func completedTasksCount(for list: [CheckListItem]) -> Int {
+        return list.filter { $0.isChecked }.count
+    }
 }
-
-
 
 #Preview {
     CheckListView()
 }
+
+
+//struct CheckListView: View {
+//    @ObservedObject var dataController = DataController.shared
+//    @State private var isSheetPresented: Bool = false
+//    @State private var selectedTimeOfDay: ChecklistCategory = .morning
+//    @State private var selectedCheckListId: UUID?
+//    
+//    var body: some View {
+//        ScrollView {
+//            if let checkList = dataController.getPCOSCheckList() {
+//                VStack(alignment: .center, spacing: 15) {
+//                    ProgressSection(checkList: checkList)
+//                    TimeOfDayButtons(checkList: checkList,
+//                                    selectedTimeOfDay: $selectedTimeOfDay,
+//                                    isSheetPresented: $isSheetPresented,
+//                                    selectedCheckListId: $selectedCheckListId)
+//                }
+//            }
+//        }
+//        .sheet(isPresented: $isSheetPresented) {
+//            if let checkListId = selectedCheckListId {
+//                CheckBoxListItemView(checkListId: checkListId,
+//                                     timeOfDay: selectedTimeOfDay,
+//                                     isSheetPresented: $isSheetPresented)
+//            }
+//        }
+//    }
+//}
+//
+//struct ProgressSection: View {
+//    let checkList: CheckList
+//    
+//    var body: some View {
+//        HStack {
+//            VStack(alignment: .leading) {
+//                Text("\(String(format: "%.0f", checkList.progress))%")
+//                    .font(.title).bold()
+//                Text("Overall progress").font(.headline)
+//                ProgressView(value: checkList.progress, total: 100)
+//            }
+//            Spacer()
+//        }
+//        .padding()
+//    }
+//}
+//
+//struct TimeOfDayButtons: View {
+//    let checkList: CheckList
+//    @Binding var selectedTimeOfDay: ChecklistCategory
+//    @Binding var isSheetPresented: Bool
+//    @Binding var selectedCheckListId: UUID?
+//    
+//    var body: some View {
+//        VStack(spacing: 20) {
+//            HStack(spacing: 10) {
+//                TimeOfDayButton(category: .morning, checkList: checkList,
+//                                selectedTimeOfDay: $selectedTimeOfDay,
+//                                isSheetPresented: $isSheetPresented,
+//                                selectedCheckListId: $selectedCheckListId)
+//                TimeOfDayButton(category: .afternoon, checkList: checkList,
+//                                selectedTimeOfDay: $selectedTimeOfDay,
+//                                isSheetPresented: $isSheetPresented,
+//                                selectedCheckListId: $selectedCheckListId)
+//            }
+//            HStack {
+//                TimeOfDayButton(category: .evening, checkList: checkList,
+//                                selectedTimeOfDay: $selectedTimeOfDay,
+//                                isSheetPresented: $isSheetPresented,
+//                                selectedCheckListId: $selectedCheckListId)
+//                TimeOfDayButton(category: .night, checkList: checkList,
+//                                selectedTimeOfDay: $selectedTimeOfDay,
+//                                isSheetPresented: $isSheetPresented,
+//                                selectedCheckListId: $selectedCheckListId)
+//            }
+//            TimeOfDayButton(category: .common, checkList: checkList,
+//                            selectedTimeOfDay: $selectedTimeOfDay,
+//                            isSheetPresented: $isSheetPresented,
+//                            selectedCheckListId: $selectedCheckListId,
+//                            isFullWidth: true)
+//        }
+//    }
+//}
+//
+//struct TimeOfDayButton: View {
+//    let category: ChecklistCategory
+//    let checkList: CheckList
+//    @Binding var selectedTimeOfDay: ChecklistCategory
+//    @Binding var isSheetPresented: Bool
+//    @Binding var selectedCheckListId: UUID?
+//    var isFullWidth: Bool = false
+//    
+//    var items: [CheckListItem] {
+//        checkList.getItems(for: category)
+//    }
+//    
+//    var body: some View {
+//        Button(action: {
+//            selectedTimeOfDay = category
+//            selectedCheckListId = checkList.id
+//            isSheetPresented = true
+//        }) {
+//            ZStack {
+//                VStack(alignment: .leading) {
+//                    Text("1/\(items.count)")
+//                        .font(.headline)
+//                    Text("checkListItemName")
+//                        .font(.subheadline)
+//                    HStack {
+//                        Spacer()
+////                        Image(imageName)
+////                            .resizable()
+////                            .scaledToFit()
+//                    }
+//                }
+//                .foregroundStyle(Color.white)
+//            }
+//            .frame(width: !isFullWidth ? 150 : 345, height: 150)
+//            .padding()
+//            .background(Color.accentColor.opacity(0.8))
+//            .cornerRadius(12)
+//        }
+//        .frame(width: isFullWidth ? 345 : 150, height: 150)
+//    }
+//}

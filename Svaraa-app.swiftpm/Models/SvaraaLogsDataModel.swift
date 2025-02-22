@@ -24,6 +24,16 @@ struct CheckList: Identifiable, Codable {
         let checkedItemsCount = totalItems.filter { $0.isChecked }.count
         return totalItems.isEmpty ? 0 : round(Double(checkedItemsCount) / Double(totalItems.count) * 100)
     }
+    
+    func getItems(for category: ChecklistCategory) -> [CheckListItem] {
+            switch category {
+            case .morning: return morningList
+            case .afternoon: return afternoonList
+            case .evening: return eveningList
+            case .night: return nightList
+            case .common: return commonList
+            }
+        }
 }
 
 
@@ -42,6 +52,6 @@ struct CheckListItem: Identifiable, Codable {
 }
 
 enum ChecklistCategory: String, CaseIterable {
-    case morning, afternoon, evening, night, common
+    case morning = "Morning", afternoon = "Afternoon", evening = "Evening", night = "Night", common = "Common"
 }
 
