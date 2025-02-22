@@ -14,8 +14,25 @@ struct QuestionCategorySelectionView: View {
     let onQuestionSelected: (QAItem) -> Void
     
     var body: some View {
+//        List {
+//            ForEach(categories) { category in
+//                NavigationLink {
+//                    QuestionListView(isConversing: $isConversing, isShowingQuestionSelector: $isShowingQuestionSelector, category: category, onSelect: onQuestionSelected)
+//                }
+//                label: {
+//                    Text(category.name)
+//                        .padding()
+//                        .frame(maxWidth: .infinity, minHeight: 50)
+//                        .background(Color(hex: "#564A73"))
+//                        .foregroundColor(.white)
+//                        .cornerRadius(12)
+//                        .shadow(radius: 3)
+//                }
+//                .listRowSeparator(.hidden)
+//            }
+//        }
         ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible())], spacing: 16) {
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible())], spacing: 12) {
                 ForEach(categories) { category in
                     NavigationLink {
                         QuestionListView(isConversing: $isConversing, isShowingQuestionSelector: $isShowingQuestionSelector, category: category, onSelect: onQuestionSelected)
@@ -24,7 +41,7 @@ struct QuestionCategorySelectionView: View {
                         Text(category.name)
                             .padding()
                             .frame(maxWidth: .infinity, minHeight: 100)
-                            .background(Color.accentColor.opacity(0.8))
+                            .background(Color(hex: "#564A73"))
                             .foregroundColor(.white)
                             .cornerRadius(12)
                             .shadow(radius: 3)

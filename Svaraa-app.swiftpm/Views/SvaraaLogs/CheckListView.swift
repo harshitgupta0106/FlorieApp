@@ -121,7 +121,7 @@ struct CheckListItemView: View {
         }
         .frame(width: isSmall ? 150 : 345, height: 150)
         .padding()
-        .background(Color.accentColor.opacity(0.8))
+        .background(Color(hex: "#564A73"))
         .cornerRadius(12)
         .onTapGesture {
             onTap()  // Call the closure to update selectedList & show sheet

@@ -15,7 +15,7 @@ struct MessagesView: View {
                 Spacer()
                 Text(message.text)
                     .padding()
-                    .background(Color.indigo)
+                    .background(Color(hex: "#564A73"))
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 UserImageAsideMessages()
@@ -39,7 +39,7 @@ struct UserImageAsideMessages: View {
             Spacer()
             Image(systemName: "person.crop.circle.fill")
                 .resizable()
-                .foregroundStyle(.indigo)
+                .foregroundStyle(Color(hex: "#564A73"))
                 .frame(width: 25, height: 25)
                 .padding(.bottom, 6)
         }

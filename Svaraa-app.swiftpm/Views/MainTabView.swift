@@ -30,6 +30,7 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Svaraa's Logs", systemImage: "chart.bar.doc.horizontal")
                 }
+                .navigationTitle(Text("vbnm"))
                 .tag(SvaraaTab.logs)
         }
         .navigationBarBackButtonHidden()

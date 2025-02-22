@@ -73,7 +73,8 @@ struct SvaraaTalkView: View {
                             .frame(maxWidth: .infinity)
                     }
                 .buttonStyle(.automatic)
-                .padding(.vertical, 20)
+                .padding(20)
+                .frame(width: 250)
             }
             .sheet(isPresented: $isShowingQuestionSelector) {
                 NavigationStack {

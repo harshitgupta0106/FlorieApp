@@ -48,7 +48,7 @@ struct MenuView: View {
                     .foregroundStyle(Color.white)
                     .frame(width: 360,height: 170)
                     .listRowSeparator(.hidden)
-                    .background(Color.accentColor.opacity(0.8))
+                    .background(Color(hex: "#564A73"))
                     .cornerRadius(15)
                     .onTapGesture {
                         generator.impactOccurred()
