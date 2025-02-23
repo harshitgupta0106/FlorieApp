@@ -8,20 +8,20 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "Florie-app",
+    name: "Svaraa",
     platforms: [
-        .iOS("16.0")
+        .iOS("17.0")
     ],
     products: [
         .iOSApplication(
-            name: "Florie-app",
+            name: "Svaraa",
             targets: ["AppModule"],
-            bundleIdentifier: "com.example.Florie-app",
+            bundleIdentifier: "com.example.Florieapp",
             teamIdentifier: "8GKUH9M4ZV",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .weights),
-            accentColor: .presetColor(.pink),
+            appIcon: .asset("AppIcon"),
+            accentColor: .presetColor(.purple),
             supportedDeviceFamilies: [
                 .pad,
                 .phone
@@ -31,7 +31,8 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
-            ]
+            ],
+            appCategory: .healthcareFitness
         )
     ],
     targets: [
@@ -39,6 +40,5 @@ let package = Package(
             name: "AppModule",
             path: "."
         )
-    ],
-    swiftLanguageVersions: [.version("6")]
+    ]
 )
