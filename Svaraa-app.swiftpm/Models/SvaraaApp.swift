@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 16/02/25.
-//
-
 import SwiftUI
 
 enum SvaraaTab: String {

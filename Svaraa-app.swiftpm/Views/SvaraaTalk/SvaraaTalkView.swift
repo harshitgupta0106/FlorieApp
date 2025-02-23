@@ -39,7 +39,7 @@ struct SvaraaTalkView: View {
                     Spacer()
                 }
                 if messages.isEmpty {
-                    InitialView(isConversing: $isConversing, messages: $messages/*, isPcodTest: $isPcodTest, pcodQuestionIndex: $pcodQuestionIndex, isPcosTest: $isPcosTest, pcosQuestionIndex: $pcosQuestionIndex*/)
+                    InitialView(isConversing: $isConversing, messages: $messages)
                     Spacer()
                 } else {
                     ScrollViewReader { proxy in

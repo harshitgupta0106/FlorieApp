@@ -34,7 +34,7 @@ struct MCQSceneView: View {
                 
                 Spacer()
                 
-                // Options placed at the bottom
+                // Options
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(Array(options?.enumerated() ?? defaultOptions().enumerated()), id: \.element) { index, option in
                         Button(action: {
@@ -62,7 +62,6 @@ struct MCQSceneView: View {
         }
     }
 
-    // Function to highlight selected answer
     func getOptionColor(_ index: Int) -> Color {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         if let selected = selectedOptionIndex {
@@ -88,7 +87,6 @@ struct MCQSceneView: View {
         }
     }
 
-    // Default options in case no options are passed
     func defaultOptions() -> [String] {
         return [
             "Panic and hide it from everyone.",

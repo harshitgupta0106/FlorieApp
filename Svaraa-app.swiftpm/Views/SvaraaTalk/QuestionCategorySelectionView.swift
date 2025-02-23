@@ -25,7 +25,6 @@ struct QuestionCategorySelectionView: View {
                             .background(Color(hex: isEvenDiagonal ? "#DBBBF5" : "#DDF0FF"))
                             .foregroundColor(Color(hex: "#504136"))
                             .cornerRadius(12)
-//                            .shadow(radius: 3)
                     }
                 }
             }
@@ -62,7 +61,3 @@ struct QuestionListView: View {
     }
 }
 
-
-//#Preview {
-//    FrameQuestionView()
-//}

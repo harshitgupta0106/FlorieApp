@@ -9,7 +9,5 @@ struct ContentView: View {
                 OnboardingView()
             }
         }
-
-        //        OnboardingView()
     }
 }

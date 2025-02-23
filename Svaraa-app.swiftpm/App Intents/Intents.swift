@@ -96,10 +96,9 @@ struct CheckListItemQuery: EntityQuery {
     }
 
     func suggestedEntities() async throws -> [CheckListItemOption] {
-        return try await fetchEntities(for: nil) // Fetch some suggested checklist items
+        return try await fetchEntities(for: nil)
     }
 
-    // Fetch checklist items based on the selected category (only unchecked items)
     func fetchEntities(for category: ChecklistCategory?) async throws -> [CheckListItemOption] {
         let checklist = await DataController.shared.getPCOSCheckList()
 
@@ -112,8 +111,6 @@ struct CheckListItemQuery: EntityQuery {
             case .some(.common): filteredList = checklist.commonList
         case .none: filteredList = (checklist.morningList + checklist.afternoonList + checklist.eveningList + checklist.nightList + checklist.commonList)
         }
-
-        // Only return unchecked items from the selected category
         return filteredList
             .filter { !$0.isChecked }
             .map { CheckListItemOption(id: $0.id.uuidString, name: $0.name, category: category ?? .morning) }
@@ -150,15 +147,12 @@ struct MarkChecklist: AppIntent {
     var checklistItem: CheckListItemOption
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
-        // Fetch the PCOS checklist
         let checklist = await DataController.shared.getPCOSCheckList()
 
-        // Function to find the index of the checklist item
         func getItemIndex(in list: [CheckListItem]) -> Int? {
             return list.firstIndex(where: { $0.name == checklistItem.name })
         }
 
-        // Find the item index in the selected category
         guard let itemIndex: Int = {
             switch timeOfDay {
                 case .morning: return getItemIndex(in: checklist.morningList)
@@ -171,7 +165,6 @@ struct MarkChecklist: AppIntent {
             return .result(dialog: "Checklist item '\(checklistItem.name)' not found in \(timeOfDay.rawValue).")
         }
 
-        // Toggle the item as done
         await DataController.shared.toggleCheckItem(checkListIndex: 0, category: timeOfDay, itemIndex: itemIndex)
 
         return .result(dialog: "Marked '\(checklistItem.name)' as done in \(timeOfDay.rawValue) checklist!")

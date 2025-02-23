@@ -1,12 +1,4 @@
-//
-//  File.swift
-//  Florie-app
-//
-//  Created by Harshit Gupta on 06/02/25.
-//
-
 import Foundation
-//import CodableCSV
 
 
 //Creating Singleton class
@@ -100,9 +92,7 @@ class DataController: ObservableObject {
                     StoryScene(
                         descriptions: [
                             "Svaraa had settled into hostel life—early morning lectures, late-night study sessions, and endless cups of chai. ",
-                            "She was so busy that she barely noticed small changes in her body.",
-                            "One evening, after rushing back from the library, she felt a burning sensation while urinating.",
-                            "\"Maybe I didn’t drink enough water,\" she thought and ignored it."
+                            "She was so busy that she barely noticed small changes in her body."
                         ],
                         backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Happy"
@@ -516,6 +506,9 @@ class DataController: ObservableObject {
                     name: "Better Period Care",
                     items: [
                         QAItem(
+                            question: "How to use a tampon?",
+                            answer: "Think of it like learning to tie your shoelaces—tricky at first, easy with practice. \n\nWash your hands, get comfy, angle the tampon slightly toward your lower back, and gently insert. If it feels off, adjust. Remove the applicator, leave the string, and change it every 4–8 hours. You’ve got this!"
+                        ),QAItem(
                             question: "What are period panties?",
                             answer: "Period panties are leak-proof, reusable underwear designed to absorb menstrual flow. Think of them as a backup for pads or tampons—or even a standalone option for lighter days."
                         ),
@@ -850,7 +843,7 @@ class DataController: ObservableObject {
             checkLists[checkListIndex].commonList[itemIndex].isChecked.toggle()
         }
 
-        saveCheckLists() // Save the state after toggling
+        saveCheckLists()
     }
     
     func saveCheckLists() {
@@ -858,9 +851,6 @@ class DataController: ObservableObject {
             UserDefaults.standard.set(encodedData, forKey: "savedCheckLists")
         }
     }
-
-
-    
 
 
     func getCheckLists() -> [CheckList] {

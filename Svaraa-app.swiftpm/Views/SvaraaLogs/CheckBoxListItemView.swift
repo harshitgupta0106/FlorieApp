@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 18/02/25.
-//
-
 import SwiftUI
 
 

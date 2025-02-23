@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 20/02/25.
-//
-
 import SwiftUI
 
 struct MenuView: View {
@@ -62,11 +55,9 @@ struct MenuView: View {
         }
     }
     private func handleStorySelection(index: Int) {
-        print("Tapped on story \(index)")
         
         DispatchQueue.main.async {
             menuOpened = false
-            print("menuOpened set to false")
             
             currentStoryIndex = index
             storedStoryIndex = index

@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 18/02/25.
-//
-
 import SwiftUI
 
 struct MessagesView: View {
@@ -14,12 +7,10 @@ struct MessagesView: View {
             if message.isUser {
                 Spacer()
                 Text(message.text)
-                    .frame(maxWidth: 230)
                     .padding()
                     .background(Color(hex: "#DDF0FF"))
                     .foregroundColor(.black)
                     .cornerRadius(10)
-//                UserImageAsideMessages()
             } else if !message.isUser {
                 SvaraaImageAsideMessages()
                 Text(message.text)
