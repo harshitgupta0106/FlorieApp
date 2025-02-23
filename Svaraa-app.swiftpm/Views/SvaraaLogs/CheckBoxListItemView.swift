@@ -31,6 +31,7 @@ struct CheckBoxListItemView: View {
             
             List {
                 ForEach(getTimeOfDay().indices, id: \.self) { index in
+                    let isEven = index % 2 == 0
                     Button(action: {
                         toggleCheckItem(index: index)
                     }) {
@@ -43,7 +44,7 @@ struct CheckBoxListItemView: View {
                                         .frame(width: 50, height: 50) // Ensure consistent size
                                 } else {
                                     Image(systemName: "circle")
-                                        .foregroundColor(.white)
+                                        .foregroundColor(Color(hex: "#504136"))
                                         .font(.system(size: 20))
                                         .frame(width: 40, height: 40)
                                 }
@@ -51,7 +52,7 @@ struct CheckBoxListItemView: View {
                             .frame(width: 50, alignment: .leading)
 
                             Text(getTimeOfDay()[index].name)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color(hex: "#504136"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.vertical, 22)
                                 .multilineTextAlignment(.leading)
@@ -59,7 +60,7 @@ struct CheckBoxListItemView: View {
                     }
                     .padding(5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(hex: "#564A73"))
+                    .background(Color(hex: isEven ? "#DBBBF5" : "#DDF0FF"))
                     .cornerRadius(12)
                     .padding(.vertical, 10)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))

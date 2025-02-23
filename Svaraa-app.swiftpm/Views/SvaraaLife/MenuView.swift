@@ -24,7 +24,7 @@ struct MenuView: View {
                 ForEach(allStories.indices, id: \.self) { index in
                     let imageName = allStories[index].storyImage
                     let title = allStories[index].title
-                    let isEven = index % 2 == 0  // Check if index is even or odd
+                    let isEven = index % 2 == 0 
                     let backgroundColor = Color(hex: isEven ? "#DBBBF5" : "#DDF0FF")
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {

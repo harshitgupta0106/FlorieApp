@@ -42,12 +42,13 @@ struct MCQSceneView: View {
                             self.showResult = true
                         }) {
                             Text(option)
+                                .multilineTextAlignment(.leading)
+                                .frame(minWidth: 330, alignment: .leading)
                                 .font(.body)
                                 .padding()
                                 .foregroundColor(.white)
                                 .background(getOptionColor(index))
                                 .cornerRadius(12)
-                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                 }
