@@ -1,24 +1,22 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 14/02/25.
-//
-
 import SwiftUI
 
 struct StorySceneView: View {
     var svaraaImage: String?
     var storyTitle: String?
     var description: String?
-    
+    var backgroundImage: String?
     var body: some View {
         ZStack {
+            VStack {
+                Image(backgroundImage ?? "")
+                    .resizable()
+                Spacer()
+            }
             VStack {
                 Image(svaraaImage ?? "Svaraa_VeryHappy")
                     .resizable()
                     .scaledToFit()
-                    .animation(.smooth, value: true)
+                    .animation(.smooth, value: svaraaImage)
                 Spacer()
             }
             
@@ -49,33 +47,37 @@ struct NewStoryGradientView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(
+                LinearGradient(
                 gradient: Gradient(colors: [
-                    Color.purple.opacity(0.7),
-                    Color.purple.opacity(0.3),
+                    Color.purple.opacity(0),
                     Color.purple.opacity(0.1),
                     Color.purple.opacity(0.3),
-                    Color.purple.opacity(0.7),
+                    Color.purple.opacity(0.4),
+                    Color.purple.opacity(0.5),
+                    Color.purple.opacity(0.5),
+                    Color.purple.opacity(0.5),
+                    Color.purple.opacity(0.5),
+                    Color.purple.opacity(0.4),
+                    Color.purple.opacity(0.3),
+                    Color.purple.opacity(0.1),
+                    Color.purple.opacity(0),
                 ]),
-                startPoint: .bottom,
-                endPoint: .top
+                startPoint: .trailing,
+                endPoint: .leading
             )
             Text("New Story")
                 .font(.system(size: 50,weight: .bold))
                 .bold()
                 .foregroundColor(.yellow)
                 .shadow(color: .purple, radius: 30)
-//                .shadow(color: .purple, radius: 30)
                 .shadow(color: .purple, radius: 50)
                 .shadow(color: .purple, radius: 50)
                 .shadow(color: .purple, radius: 50)
-//                .shadow(color: .purple, radius: 10)
-//                .shadow(color: .black, radius: 60)
             
         }
     }
 }
 
 #Preview {
-    NewStoryGradientView()
+    StorySceneView()
 }

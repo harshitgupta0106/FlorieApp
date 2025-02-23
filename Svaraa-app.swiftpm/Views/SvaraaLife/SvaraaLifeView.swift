@@ -1,14 +1,16 @@
 import SwiftUI
 
 struct SvaraaLifeView: View {
+    @AppStorage("currentStoryIndex") private var storedStoryIndex: Int = -1
     @State private var currentStoryIndex: Int = -1
     @State private var currentSceneIndex: Int = 0
     @State private var currentSceneTextIndex: Int = 0
-    @State var showMCQScene: Bool = false
-    @State var showFinalScene: Bool = false
+    @State private var showMCQScene: Bool = false
+    @State private var showFinalScene: Bool = false
     @State private var moveToCenter = false
     @State private var moveToLeft = false
-
+    @State private var menuOpened: Bool = false
+    
     var body: some View {
         ZStack {
             if showFinalScene && currentStoryIndex >= 0 {
@@ -37,14 +39,12 @@ struct SvaraaLifeView: View {
                         StorySceneView(
                             svaraaImage: story.storyScenes[currentSceneIndex].svaraaImageName,
                             storyTitle: story.title,
-                            description: story.storyScenes[currentSceneIndex].descriptions[currentSceneTextIndex]
+                            description: story.storyScenes[currentSceneIndex].descriptions[currentSceneTextIndex],
+                            backgroundImage: story.storyScenes[currentSceneIndex].backgroundImageName
                         )
                     }
                 }
-                .onTapGesture {
-                    progressStory()
-                }
-
+                
                 if currentStoryIndex > -1 && currentSceneIndex == 0 && currentSceneTextIndex == 0 {
                     VStack {
                         Text(DataController.shared.getTitleOfStory(ofStoryIndex: currentStoryIndex))
@@ -55,18 +55,60 @@ struct SvaraaLifeView: View {
                             .foregroundColor(.white)
                             .background(Color.indigo.opacity(0.8))
                             .cornerRadius(12)
-                            .frame(width: 350)
+                            .padding(20)
                         Spacer()
                     }
                     GeometryReader { geometry in
                         NewStoryGradientView()
-                            .ignoresSafeArea()
                             .position(x: moveToLeft ? -200 : (moveToCenter ? geometry.size.width / 2 : geometry.size.width + 100),
                                       y: geometry.size.height / 2)
                             .onAppear { restartAnimation(geometry: geometry) }
                             .onChange(of: currentStoryIndex) { restartAnimation(geometry: geometry) }
                     }
                 }
+                
+                if menuOpened {
+                    MenuView(
+                        currentStoryIndex: $currentStoryIndex,
+                        currentSceneIndex: $currentSceneIndex,
+                        currentSceneTextIndex: $currentSceneTextIndex,
+                        showMCQScene: $showMCQScene,
+                        showFinalScene: $showFinalScene,
+                        menuOpened: $menuOpened
+                    )
+                    .onAppear {
+                        currentStoryIndex = storedStoryIndex == -1 ? 0 : storedStoryIndex
+                    }
+                }
+                
+                VStack {
+                    HStack(alignment: .top) {
+                        Button(action: {
+                            menuOpened.toggle()
+                        }) {
+                            Image(systemName: "list.dash")
+                                .fontWeight(.black)
+                        }
+                        .buttonStyle(.automatic)
+                        .padding()
+                        Spacer()
+                    }
+                    Spacer()
+                }
+                
+            }
+                
+        }
+        .if(currentStoryIndex == -1) {
+            view in
+            view.onTapGesture {
+                currentStoryIndex = storedStoryIndex == -1 ? 0 : storedStoryIndex
+            }
+        }
+        .if(!menuOpened) {
+            view in
+            view.onTapGesture {
+                progressStory()
             }
         }
     }
@@ -78,17 +120,14 @@ struct SvaraaLifeView: View {
         withAnimation(.bouncy(duration: 1)) {
             moveToCenter = true
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // Delay for smooth transition
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 withAnimation(.bouncy(duration: 1)) {
                     moveToLeft = true
                 }
             }
         }
     }
-
-
-
-
+    
     private func progressStory() {
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
@@ -98,6 +137,7 @@ struct SvaraaLifeView: View {
         if currentStoryIndex == -1 {
             if totalStories > 0 {
                 currentStoryIndex = 0
+                storedStoryIndex = 0
                 currentSceneIndex = 0
                 currentSceneTextIndex = 0
                 showMCQScene = false
@@ -106,11 +146,20 @@ struct SvaraaLifeView: View {
             return
         }
 
+        if currentStoryIndex >= totalStories {
+            currentStoryIndex = 0
+            storedStoryIndex = 0
+            currentSceneIndex = 0
+            currentSceneTextIndex = 0
+            showMCQScene = false
+            showFinalScene = false
+        }
         guard currentStoryIndex < totalStories else {
-            print("Error: Attempted to access an out-of-bounds story index.")
+            print("Error: Out-of-bounds story index.")
             return
         }
 
+        
         let totalScenes = DataController.shared.getNumberOfStoryScenes(ofStoryIndex: currentStoryIndex)
         let totalTexts = DataController.shared.getNumberOfDescriptionsInScene(ofStoryIndex: currentStoryIndex, sceneIndex: currentSceneIndex)
 
@@ -123,18 +172,20 @@ struct SvaraaLifeView: View {
             showMCQScene = true
         }
     }
-    
+
     private func moveToNextStory() {
         let totalStories = DataController.shared.getNumberOfStories()
-
+        
         if currentStoryIndex < totalStories - 1 {
             currentStoryIndex += 1
+            storedStoryIndex = currentStoryIndex
             currentSceneIndex = 0
             currentSceneTextIndex = 0
             showMCQScene = false
             showFinalScene = false
         } else {
             currentStoryIndex = -1
+            storedStoryIndex = 0
             currentSceneIndex = 0
             currentSceneTextIndex = 0
             showMCQScene = false
@@ -142,6 +193,7 @@ struct SvaraaLifeView: View {
         }
     }
 }
+
 
 #Preview {
     SvaraaLifeView()

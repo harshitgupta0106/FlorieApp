@@ -12,7 +12,7 @@ struct MCQSceneView: View {
     var body: some View {
         ZStack {
             VStack {
-                Image("Svaraa_Confused")
+                Image("Svaraa_Question")
                     .resizable()
                     .scaledToFit()
                 Spacer()
@@ -34,7 +34,7 @@ struct MCQSceneView: View {
                 
                 Spacer()
                 
-                // Options placed at the bottom
+                // Options
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(Array(options?.enumerated() ?? defaultOptions().enumerated()), id: \.element) { index, option in
                         Button(action: {
@@ -42,29 +42,26 @@ struct MCQSceneView: View {
                             self.showResult = true
                         }) {
                             Text(option)
+                                .multilineTextAlignment(.leading)
+                                .frame(minWidth: 330, alignment: .leading)
                                 .font(.body)
                                 .padding()
                                 .foregroundColor(.white)
                                 .background(getOptionColor(index))
                                 .cornerRadius(12)
-                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
-//                        .disabled(selectedOptionIndex != nil) // Disable after selection
                     }
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 40) // Push options closer to the bottom
+                .padding(.bottom, 40)
             }
             .frame(maxHeight: .infinity, alignment: .bottom) 
         }
-        .onChange(of: selectedOptionIndex) { newValue in
-            if newValue != nil {
+        .onChange(of: selectedOptionIndex) {
                 checkIfRight()
-            }
         }
     }
 
-    // Function to highlight selected answer
     func getOptionColor(_ index: Int) -> Color {
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         if let selected = selectedOptionIndex {
@@ -73,7 +70,7 @@ struct MCQSceneView: View {
                 return selected == correctOptionIndex ? Color.green.opacity(0.7) : Color.red.opacity(0.7)
             }
         }
-        return Color.indigo.opacity(0.8) // Default color
+        return Color.indigo.opacity(0.8)
     }
     
     func checkIfRight() {
@@ -82,7 +79,7 @@ struct MCQSceneView: View {
                 let generator = UIImpactFeedbackGenerator(style: .light)
                 generator.impactOccurred()
                 // Show final scene after a delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     showFinalScene = true
                     showMCQScene = false
                 }
@@ -90,7 +87,6 @@ struct MCQSceneView: View {
         }
     }
 
-    // Default options in case no options are passed
     func defaultOptions() -> [String] {
         return [
             "Panic and hide it from everyone.",

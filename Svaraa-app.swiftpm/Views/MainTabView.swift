@@ -1,11 +1,3 @@
-//
-//  File.swift
-//  Florie-app
-//
-//  Created by Harshit Gupta on 06/02/25.
-//
-
-// MainTabView.swift
 import SwiftUI
 
 
@@ -28,7 +20,7 @@ struct MainTabView: View {
             
             SvaraaLogsView()
                 .tabItem {
-                    Label("Svaraa's Logs", systemImage: "chart.bar.doc.horizontal")
+                    Label("Svaraa's Plan", systemImage: "chart.bar.doc.horizontal")
                 }
                 .tag(SvaraaTab.logs)
         }

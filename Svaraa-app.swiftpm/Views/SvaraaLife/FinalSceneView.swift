@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 15/02/25.
-//
-
 import SwiftUI
 
 struct FinalSceneView: View {

@@ -1,9 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 15/02/25.
-//
 
 import SwiftUI
 struct OnboardingView: View {
@@ -103,9 +97,12 @@ struct AgeFormView: View {
                         .font(.system(size: 50))
                         .background(Color.clear)
                         Spacer()
-                        Text("\(age)")
-                            .font(.largeTitle)
-                            .padding(10)
+                        VStack {
+                            Text("\(age)")
+                                .font(.largeTitle)
+                                .padding([.horizontal], 10)
+                            Text("YEARS")
+                        }
                         Spacer()
                         Button("", systemImage: "plus.circle.fill") {
                             generator.impactOccurred()

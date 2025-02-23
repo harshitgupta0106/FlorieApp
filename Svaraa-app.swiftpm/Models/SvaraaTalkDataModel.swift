@@ -12,3 +12,18 @@ struct Message: Identifiable, Equatable {
     let text: String
     let isUser: Bool
 }
+
+
+struct QuestionCategory: Identifiable {
+    let id = UUID()
+    let name: String
+    let items: [QAItem]
+}
+
+struct QAItem: Identifiable {
+    let id = UUID()
+    let question: String
+    let answer: String
+}
+
+

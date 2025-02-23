@@ -10,10 +10,11 @@ import Foundation
 
 struct Story {
     let id = UUID()
+    let storyImage: String
     let title: String
-    var storyScenes: [StoryScene]
-    var mcqScene: MCQScene
-    var finalScene: StoryScene
+    let storyScenes: [StoryScene]
+    let mcqScene: MCQScene
+    let finalScene: StoryScene
 }
 
 struct StoryScene {
