@@ -18,14 +18,10 @@ class DataController: ObservableObject {
         age: UserDefaults.standard.integer(forKey: "userAge") == 0 ? Int.max : UserDefaults.standard.integer(forKey: "userAge")
     )
     
-    private var qaDictionary: [String : String] = [:]
-    private var pcodDetectQuestions: [String] = []
-    private var pcosDetectQuestions: [String] = []
     private var questionCategories: [QuestionCategory] = []
     
     private var stories: [Story] = []
     
-//    private var checkLists: [CheckList] = []
     @Published var checkLists: [CheckList] = [] {
             didSet {
                 saveCheckLists()
@@ -39,7 +35,6 @@ class DataController: ObservableObject {
         loadCheckLists()
         checkAndResetIfNewDay()
         loadQA()
-//        print(qaDictionary)
     }
     //MARK: - Data filling
     
@@ -173,7 +168,7 @@ class DataController: ObservableObject {
                             "Sitting in lectures became unbearable.",
                             "She tried washing the area with strong soap, but that only made things worse."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Crying"
                     )
                 ],
@@ -212,7 +207,7 @@ class DataController: ObservableObject {
                         descriptions: [
                             "But at 16, things weren’t adding up."
                         ],
-                        backgroundImageName: "",
+                        backgroundImageName: "bedroom-bg",
                         svaraaImageName: "Svaraa_Casual"
                     ),StoryScene(
                         descriptions: [
@@ -268,24 +263,6 @@ class DataController: ObservableObject {
 
         ]
         
-        pcodDetectQuestions = [
-            "\nWhat is your height in meters?",
-            "What is your weight in kg?",
-            "What is the length of your menstrual cycle?",
-            "Do you have unsual bleeding? (yes/no)"
-        ]
-        
-        pcosDetectQuestions = [
-            "\nDo you feel that your menstrual cycle is Irregular? (Yes/No)",
-            "What is your weight in kg?",
-            "What is your height in meters?",
-            "Do you experience excessive hair growth on your face or body? (Yes/No)",
-            "On a scale of 0 - 3, how severe is your acne? \n(0 - None, 1 - Mild, 2 - Moderate, 3 - Severe)",
-            "Do you experience hair thinning or hair loss? (Yes/No)",
-            "Do you have sudden weight gain or difficulty losing weight? (Yes/No)",
-            "On a scale of 1 - 3, How would you describe your stress level? \n(1 - Low, 2 - Moderate, 3 - High)",
-            "How many hours of sleep do you get per night?"
-        ]
         
         
     }
@@ -732,6 +709,55 @@ class DataController: ObservableObject {
         ]
 
     }
+    
+    func loadCheckLists() {
+        if let savedData = UserDefaults.standard.data(forKey: "savedCheckLists"),
+           let decodedCheckLists = try? JSONDecoder().decode([CheckList].self, from: savedData) {
+            checkLists = decodedCheckLists
+        } else {
+            checkLists = [
+                CheckList(
+                    
+                    name: "PCOS",
+                    description: "Small, consistent habits create lasting change. \n\nThis daily checklist is designed to support hormonal balance, reduce inflammation, and boost metabolism—key factors in managing PCOS & PCOD. \n\nWith mindful nutrition, movement, and recovery, you can take control of your well-being, one check at a time. ",
+                    
+                    morningList: [
+                        CheckListItem(name: "Drink warm lemon water / fenugreek seed water"),
+                        CheckListItem(name: "Eat 5 soaked almonds + 2 walnuts + 1 tsp flaxseeds"),
+                        CheckListItem(name: "Have a high-protein breakfast (Besan chilla / Sprouts / Ragi dosa / Eggs & toast / Paneer bhurji)"),
+                        CheckListItem(name: "10 mins meditation or deep breathing"),
+                        CheckListItem(name: "15–30 mins light exercise (walk, Surya Namaskar)")
+                    ],
+                    
+                    afternoonList: [
+                        CheckListItem(name: "Drink 1 glass coconut water / buttermilk"),
+                        CheckListItem(name: "Eat 1 fruit (Guava, Papaya, Apple, Pomegranate, Berries)"),
+                        CheckListItem(name: "Eat a balanced lunch (Dal + Millet/Brown Rice + Sabzi + Curd)"),
+                        CheckListItem(name: "Take a 10-minute post-lunch walk")
+                    ],
+                    
+                    eveningList: [
+                        CheckListItem(name: "Eat a healthy snack (Roasted chana / Makhana / Peanut butter toast / Nuts & seeds)"),
+                        CheckListItem(name: "30–45 mins of exercise (Yoga, Strength Training, Dance, Brisk Walk)"),
+                        CheckListItem(name: "Drink 1 cup herbal tea (Spearmint, Cinnamon, Ginger-Turmeric)")
+                    ],
+                    
+                    nightList: [
+                        CheckListItem(name: "Eat a light dinner (Moong dal khichdi + Ghee / Soup + Sautéed Veggies / 1 Roti + Sabzi + Paneer/Tofu)"),
+                        CheckListItem(name: "Drink 1 glass warm turmeric milk (Haldi + Almond milk)"),
+                        CheckListItem(name: "5 mins deep breathing / gratitude journaling"),
+                        CheckListItem(name: "Sleep for 7–9 hours")
+                    ],
+                    
+                    commonList: [
+                        CheckListItem(name: "Drink 2–3 liters of water"),
+                        CheckListItem(name: "Take 5 deep breaths before meals"),
+                        CheckListItem(name: "Avoid screens 30 mins before bed")
+                    ]
+                )
+            ]
+        }
+    }
       
     //MARK: - Svaraa's Life functions
     
@@ -792,17 +818,7 @@ class DataController: ObservableObject {
     }
     
     //MARK: - Svaraa's Talk functions
-    func getAllPCODQuestions() -> [String] {
-        pcodDetectQuestions
-    }
-    
-    func getAllPCOSQuestions() -> [String] {
-        pcosDetectQuestions
-    }
-    
-    func getQADictionary() -> [String: String] {
-        qaDictionary
-    }
+
     func getAllQuestionCategories() -> [QuestionCategory] {
         questionCategories
     }
@@ -844,54 +860,7 @@ class DataController: ObservableObject {
     }
 
 
-    func loadCheckLists() {
-        if let savedData = UserDefaults.standard.data(forKey: "savedCheckLists"),
-           let decodedCheckLists = try? JSONDecoder().decode([CheckList].self, from: savedData) {
-            checkLists = decodedCheckLists
-        } else {
-            checkLists = [
-                CheckList(
-                    
-                    name: "PCOS",
-                    description: "Small, consistent habits create lasting change. \n\nThis daily checklist is designed to support hormonal balance, reduce inflammation, and boost metabolism—key factors in managing PCOS & PCOD. \n\nWith mindful nutrition, movement, and recovery, you can take control of your well-being, one check at a time. ",
-                    
-                    morningList: [
-                        CheckListItem(name: "Drink warm lemon water / fenugreek seed water"),
-                        CheckListItem(name: "Eat 5 soaked almonds + 2 walnuts + 1 tsp flaxseeds"),
-                        CheckListItem(name: "Have a high-protein breakfast (Besan chilla / Sprouts / Ragi dosa / Eggs & toast / Paneer bhurji)"),
-                        CheckListItem(name: "10 mins meditation or deep breathing"),
-                        CheckListItem(name: "15–30 mins light exercise (walk, Surya Namaskar)")
-                    ],
-                    
-                    afternoonList: [
-                        CheckListItem(name: "Drink 1 glass coconut water / buttermilk"),
-                        CheckListItem(name: "Eat 1 fruit (Guava, Papaya, Apple, Pomegranate, Berries)"),
-                        CheckListItem(name: "Eat a balanced lunch (Dal + Millet/Brown Rice + Sabzi + Curd)"),
-                        CheckListItem(name: "Take a 10-minute post-lunch walk")
-                    ],
-                    
-                    eveningList: [
-                        CheckListItem(name: "Eat a healthy snack (Roasted chana / Makhana / Peanut butter toast / Nuts & seeds)"),
-                        CheckListItem(name: "30–45 mins of exercise (Yoga, Strength Training, Dance, Brisk Walk)"),
-                        CheckListItem(name: "Drink 1 cup herbal tea (Spearmint, Cinnamon, Ginger-Turmeric)")
-                    ],
-                    
-                    nightList: [
-                        CheckListItem(name: "Eat a light dinner (Moong dal khichdi + Ghee / Soup + Sautéed Veggies / 1 Roti + Sabzi + Paneer/Tofu)"),
-                        CheckListItem(name: "Drink 1 glass warm turmeric milk (Haldi + Almond milk)"),
-                        CheckListItem(name: "5 mins deep breathing / gratitude journaling"),
-                        CheckListItem(name: "Sleep for 7–9 hours")
-                    ],
-                    
-                    commonList: [
-                        CheckListItem(name: "Drink 2–3 liters of water"),
-                        CheckListItem(name: "Take 5 deep breaths before meals"),
-                        CheckListItem(name: "Avoid screens 30 mins before bed")
-                    ]
-                )
-            ]
-        }
-    }
+    
 
 
     func getCheckLists() -> [CheckList] {
@@ -930,14 +899,6 @@ class DataController: ObservableObject {
                 list[j].isChecked = false
             }
         }
-        
-//        private func setupNotifications() {
-//            NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] _ in
-//                self?.checkAndResetIfNewDay()
-//            }
-//        }
-    
-    
     
     
     //MARK: - User functions

@@ -14,14 +14,16 @@ struct MessagesView: View {
             if message.isUser {
                 Spacer()
                 Text(message.text)
+                    .frame(maxWidth: 230)
                     .padding()
-                    .background(Color(hex: "#564A73"))
-                    .foregroundColor(.white)
+                    .background(Color(hex: "#DDF0FF"))
+                    .foregroundColor(.black)
                     .cornerRadius(10)
-                UserImageAsideMessages()
+//                UserImageAsideMessages()
             } else if !message.isUser {
                 SvaraaImageAsideMessages()
                 Text(message.text)
+                    .frame(width: 290)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(10)
@@ -39,9 +41,10 @@ struct UserImageAsideMessages: View {
             Spacer()
             Image(systemName: "person.crop.circle.fill")
                 .resizable()
-                .foregroundStyle(Color(hex: "#564A73"))
+                .foregroundStyle(Color(hex: "#DDF0FF"))
                 .frame(width: 25, height: 25)
                 .padding(.bottom, 6)
+            
         }
     }
 }

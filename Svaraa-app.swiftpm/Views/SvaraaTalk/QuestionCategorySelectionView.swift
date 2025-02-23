@@ -1,9 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Svaraa
-//
-//  Created by Harshit Gupta on 22/02/25.
-//
 
 import SwiftUI
 
@@ -14,37 +8,24 @@ struct QuestionCategorySelectionView: View {
     let onQuestionSelected: (QAItem) -> Void
     
     var body: some View {
-//        List {
-//            ForEach(categories) { category in
-//                NavigationLink {
-//                    QuestionListView(isConversing: $isConversing, isShowingQuestionSelector: $isShowingQuestionSelector, category: category, onSelect: onQuestionSelected)
-//                }
-//                label: {
-//                    Text(category.name)
-//                        .padding()
-//                        .frame(maxWidth: .infinity, minHeight: 50)
-//                        .background(Color(hex: "#564A73"))
-//                        .foregroundColor(.white)
-//                        .cornerRadius(12)
-//                        .shadow(radius: 3)
-//                }
-//                .listRowSeparator(.hidden)
-//            }
-//        }
         ScrollView {
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible())], spacing: 12) {
-                ForEach(categories) { category in
+                ForEach(categories.indices, id: \.self) { index in
+                    let row = index / 2
+                    let col = index % 2
+                    let isEvenDiagonal = (row + col) % 2 == 0
+                    
                     NavigationLink {
-                        QuestionListView(isConversing: $isConversing, isShowingQuestionSelector: $isShowingQuestionSelector, category: category, onSelect: onQuestionSelected)
+                        QuestionListView(isConversing: $isConversing, isShowingQuestionSelector: $isShowingQuestionSelector, category: categories[index], onSelect: onQuestionSelected)
                     }
                     label: {
-                        Text(category.name)
+                        Text(categories[index].name)
                             .padding()
                             .frame(maxWidth: .infinity, minHeight: 100)
-                            .background(Color(hex: "#564A73"))
-                            .foregroundColor(.white)
+                            .background(Color(hex: isEvenDiagonal ? "#DBBBF5" : "#DDF0FF"))
+                            .foregroundColor(Color(hex: "#504136"))
                             .cornerRadius(12)
-                            .shadow(radius: 3)
+//                            .shadow(radius: 3)
                     }
                 }
             }

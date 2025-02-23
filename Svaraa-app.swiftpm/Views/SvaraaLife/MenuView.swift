@@ -24,6 +24,8 @@ struct MenuView: View {
                 ForEach(allStories.indices, id: \.self) { index in
                     let imageName = allStories[index].storyImage
                     let title = allStories[index].title
+                    let isEven = index % 2 == 0  // Check if index is even or odd
+                    let backgroundColor = Color(hex: isEven ? "#DBBBF5" : "#DDF0FF")
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {
                             Image("Svaraa_Tick")
@@ -45,10 +47,10 @@ struct MenuView: View {
                     }
                     .listRowBackground(Color.clear)
                     .font(.headline)
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color(hex: "#504136"))
                     .frame(width: 360,height: 170)
                     .listRowSeparator(.hidden)
-                    .background(Color(hex: "#564A73"))
+                    .background(backgroundColor)
                     .cornerRadius(15)
                     .onTapGesture {
                         generator.impactOccurred()

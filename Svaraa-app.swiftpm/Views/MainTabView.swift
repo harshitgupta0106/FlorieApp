@@ -28,9 +28,8 @@ struct MainTabView: View {
             
             SvaraaLogsView()
                 .tabItem {
-                    Label("Svaraa's Logs", systemImage: "chart.bar.doc.horizontal")
+                    Label("Svaraa's Plan", systemImage: "chart.bar.doc.horizontal")
                 }
-                .navigationTitle(Text("vbnm"))
                 .tag(SvaraaTab.logs)
         }
         .navigationBarBackButtonHidden()

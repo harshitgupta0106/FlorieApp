@@ -27,6 +27,7 @@ struct CheckListView: View {
                             checkListItemName: "Morning",
                             isSmall: true,
                             imageName: "Morning",
+                            bg: "#DBBBF5",
                             checkListItems: checkList.morningList,
                             onTap: {
                                 selectedList = checkList.morningList
@@ -37,7 +38,7 @@ struct CheckListView: View {
                         CheckListItemView(
                             checkListItemName: "Afternoon",
                             isSmall: true,
-                            imageName: "Afternoon",
+                            imageName: "Afternoon", bg: "#DDF0FF",
                             checkListItems: checkList.afternoonList,
                             onTap: {
                                 selectedList = checkList.afternoonList
@@ -50,7 +51,7 @@ struct CheckListView: View {
                         CheckListItemView(
                             checkListItemName: "Evening",
                             isSmall: true,
-                            imageName: "Evening",
+                            imageName: "Evening", bg: "#DDF0FF",
                             checkListItems: checkList.eveningList,
                             onTap: {
                                 selectedList = checkList.eveningList
@@ -61,7 +62,7 @@ struct CheckListView: View {
                         CheckListItemView(
                             checkListItemName: "Night",
                             isSmall: true,
-                            imageName: "Night",
+                            imageName: "Night", bg: "#DBBBF5",
                             checkListItems: checkList.nightList,
                             onTap: {
                                 selectedList = checkList.morningList
@@ -75,7 +76,7 @@ struct CheckListView: View {
                     CheckListItemView(
                         checkListItemName: "Whole day common",
                         isSmall: false,
-                        imageName: "Common",
+                        imageName: "Common", bg: "#DBBBF5",
                         checkListItems: checkList.commonList,
                         onTap: {
                             selectedList = checkList.commonList
@@ -101,6 +102,7 @@ struct CheckListItemView: View {
     var checkListItemName: String
     var isSmall: Bool
     var imageName: String
+    var bg: String
     var checkListItems: [CheckListItem]
     var onTap: () -> Void
     var body: some View {
@@ -117,12 +119,13 @@ struct CheckListItemView: View {
                         .scaledToFit()
                 }
             }
-            .foregroundStyle(Color.white)
+            .foregroundStyle(Color(hex: "#504136"))
         }
         .frame(width: isSmall ? 150 : 345, height: 150)
         .padding()
-        .background(Color(hex: "#564A73"))
+        .background(Color(hex: bg))
         .cornerRadius(12)
+//        .shadow(radius: 3)
         .onTapGesture {
             onTap()  // Call the closure to update selectedList & show sheet
         }

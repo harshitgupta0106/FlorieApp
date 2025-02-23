@@ -24,7 +24,7 @@ struct InitalStorySceneView: View {
             VStack(spacing: 20) {
                 Spacer()
                 Spacer()
-                Text("Tap to start the game!")
+                Text("Adventure starts with a tap!")
                     .font(.title)
                     .foregroundStyle(.white)
                     .shadow(radius: 20)

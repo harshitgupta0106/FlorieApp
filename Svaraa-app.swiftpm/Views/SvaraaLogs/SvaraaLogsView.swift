@@ -9,7 +9,10 @@ import SwiftUI
 
 struct SvaraaLogsView: View {
     var body: some View {
-        CheckListView()
+        NavigationStack {
+            CheckListView()
+                .navigationTitle("Daily Health Checklist")
+        }
     }
 }
 

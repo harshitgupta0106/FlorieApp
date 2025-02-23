@@ -51,7 +51,10 @@ struct CheckListItem: Identifiable, Codable {
     }
 }
 
-enum ChecklistCategory: String, CaseIterable {
-    case morning = "Morning", afternoon = "Afternoon", evening = "Evening", night = "Night", common = "Common"
-}
+//enum ChecklistCategory: String, CaseIterable {
+//    case morning = "Morning", afternoon = "Afternoon", evening = "Evening", night = "Night", common = "Common"
+//}
 
+//enum ChecklistCategory: String, CaseIterable, Codable {
+//    case morning, afternoon, evening, night, common
+//}
