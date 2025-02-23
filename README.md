@@ -1,21 +1,28 @@
-# **Svaraa** – A New Era of Women’s Health  
+# **Svaraa – The Gamified Health Mentor**   
 
-**Because no girl should suffer in silence.**  
+### **Empowering Girls with Knowledge, Confidence, and Control**  
 
-Svaraa is a discreet, AI-powered health mentor designed to redefine how teen girls understand and manage their well-being. Built with **privacy at its core** and **intelligence at its heart**, Svaraa offers an **intuitive, stigma-free** experience that empowers young women with the right tools to make informed health decisions.  
+**Svaraa** is a discreet, interactive, and stigma-free health mentor designed to help **teen girls recognize early signs of PCOS, UTIs, and menstrual irregularities**—before symptoms turn into bigger concerns.  
 
-### **What Svaraa Aims to Do**  
-- **AI-Powered Symptom Chatbot** – Currently in **training** to recognize UTIs, yeast infections, and menstrual irregularities, providing **reliable** and **actionable** insights.  
-- **Interactive Scenarios** – Engaging “What Should She Do?” challenges encourage proactive decision-making in real-life situations.  
-- **Apple Watch Integration** – Thoughtfully crafted **haptic reminders**, hydration tracking, and cycle insights ensure self-care never feels like an afterthought.  
+## **Features**  
 
-### **Built for Impact**  
-With **300M+ teen girls globally** facing critical gaps in reproductive health education (UNICEF), Svaraa is being developed to **bridge knowledge and action**. Early intervention has the potential to **reduce ER visits by 40%** (Journal of Pediatrics), proving that the right information, at the right time, changes lives.  
+- **🗣️ Svaraa’s Talk** – A structured Q&A system that simplifies complex health topics, ensuring reliable, easy-to-digest answers.  
+- **📖 Svaraa’s Life** – Interactive, real-life health stories where users experience key moments like their first period, first UTI, and PCOS symptoms.  
+- **📋 Svaraa’s Plan** – A daily health checklist powered by **App Intents**, allowing users to track habits effortlessly through the Shortcuts app.  
+- **🔒 Privacy-First** – Built with **no tracking, no data sharing**, ensuring personal health stays personal.  
 
-### **A Commitment to Privacy**  
-Inspired by **Apple’s privacy-first ethos**, Svaraa is being built with security at its foundation—ensuring personal health data remains exactly that—personal. **No tracking. No compromise.** Just intelligent, user-centric care.  
+## **Why Svaraa?**  
 
-### **Join the Movement**  
-Svaraa is more than an app. It’s a revolution against stigma. A **data-driven, heart-led** initiative to give every girl the confidence to advocate for her health—effortlessly, fearlessly.  
+With **300M+ teen girls globally lacking reproductive health education (UNICEF)**, many miss early warning signs of health conditions. **Svaraa bridges that gap—making learning interactive, engaging, and stigma-free.**  
 
-**Follow the journey.** The future of women’s health is in the making. 🚀  
+## **Built With**  
+
+- **Swift & SwiftUI** – A fluid, modern, and intuitive user experience.  
+- **App Intents & Shortcuts** – Quick, effortless habit tracking.  
+- **Core Data** – Efficient offline storage for user progress.  
+
+## **Link**  
+
+- **Demo Video**: [[YouTube Link] ](https://youtu.be/MXZgfW_FakE)  
+
+**Follow the journey.** The future of women’s health is in the making. 🚀 
